@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/gradiente_informacion"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configuracion"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorBlanco"
+            android:textStyle="italic"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/gradiente_perfil2"
+            />
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:background="@drawable/gradiente_perfil2">
+
+                <Switch
+                    android:id="@+id/seleccVaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vacaciones"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+                <Switch
+                    android:id="@+id/seleccCasaSola"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Casa sola"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+                <Switch
+                    android:id="@+id/seleccVisitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Visitas en casa"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+                <Switch
+                    android:id="@+id/seleccIgnorar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ignorar todo"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+                <Switch
+                    android:id="@+id/seleccNoMolestar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No molestar"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+
+            </LinearLayout>
+
+            <!--si elije vaciones-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:background="@drawable/gradiente_perfil"
+
+                >
+
+                <!--inicio... fin-->
+
+                <LinearLayout
+                    android:id="@+id/lay_fechas_vacaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="@dimen/activity_horizontal_margin">
+
+                    <DatePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/select_vacaciones">
+                    </DatePicker>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_hora_no_molestar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="@dimen/activity_horizontal_margin">
+
+                    <TimePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/select_noMolestar">
+                    </TimePicker>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/activity_horizontal_margin">
+
+                <Button
+                    android:id="@+id/btnAceptarConfiguracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btt_aceptar"/>
+
+                <Button
+                    android:id="@+id/btnVolverMenuConfiguracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btt_back"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+

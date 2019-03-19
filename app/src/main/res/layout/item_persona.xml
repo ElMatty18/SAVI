@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBlanco">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="90dp"
+        android:id="@+id/imagenPersona"
+        android:layout_margin="@dimen/margin_item"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_item"
+        >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:id="@+id/nombrePersona"
+                android:textColor="@color/colorNegro"
+                />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorNegro"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:id="@+id/descripcion"
+                android:textColor="@color/colorNegro"/>
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/borrarPersona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/ic_delete" />
+
+            <ImageButton
+                android:id="@+id/verDetallePersona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/ic_dialog_info" />
+
+            <ImageButton
+                android:id="@+id/verAlertasPersona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/ic_popup_reminder" />
+        </LinearLayout>-->
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <LinearLayout
+                    android:id="@+id/familiarAlarmas"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    />
+                    <ImageView
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/menu_alarma"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/familiarInfo"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/menu_notificacion"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/familiarBorrar"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/menu_cancel"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.MenuPrincipalActivity"
+    android:background="@drawable/gradiente"
+    android:id="@+id/layout_menu">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorGris"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include android:id="@+id/contenido_menu_principal" layout="@layout/content_menu_principal" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/crearAlertaVecinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorAmarillo"
+        app:srcCompat="@android:drawable/ic_dialog_alert" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/alertaAutoridades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorRojo"
+        app:srcCompat="@android:drawable/ic_lock_lock" />
+
+
+</android.support.design.widget.CoordinatorLayout>

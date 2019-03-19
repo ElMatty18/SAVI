@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tangorra.matias.savi">
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="24" />
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <protected-broadcast android:name="com.motorola.motocare.INTENT_TRIGGER" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/icon_casa"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".Activitys.MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activitys.AccesoActivity"  android:clearTaskOnLaunch="true"/>
+
+        <activity
+            android:name=".Activitys.MenuPrincipalActivity"
+            android:label="@string/title_activity_menu_principal"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:clearTaskOnLaunch="true"
+            />
+
+        <activity android:name=".Activitys.GrupoVecinalActivity" />
+        <activity
+            android:name=".Activitys.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Activitys.AlertaActivity" />
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <activity android:name=".Activitys.PerfilViewActivity" />
+
+        <!-- service -->
+
+        <service
+            android:name=".Service.EventIntentService"
+            />
+        <!-- fin -->
+
+        <service android:name=".FirebaseService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+        <!--<receiver android:name=".BroadCastReciber.EstadoDispositivo" >
+            <intent-filter>
+                <action android:name="Intent.ACTION_POWER_CONNECTED" >
+                </action>
+            </intent-filter>
+        </receiver>-->
+
+        <activity android:name=".Activitys.PerfilActivity" />
+        <activity android:name=".Activitys.FamiliaActivity" />
+        <activity android:name=".Activitys.ConfiguracionActivity" />
+        <activity android:name=".Activitys.GrupoVecinalViewActivity" />
+
+
+        <activity android:name=".View.PopUpAlarmasGrupo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpNotificaciones" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpAlarmasFamilia" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+
+        <activity android:name=".View.PopUpDomicilio" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpDomicilioAlternativo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpDomiciliosMenu" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+
+        <activity android:name=".View.PopUpViewQRGrupo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpViewQRPersona" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpViewPersona" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+
+        <activity android:name=".View.PopUpViewInfoFamiliar" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpFamiliarAlarmas" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+
+
+    </application>
+
+</manifest>

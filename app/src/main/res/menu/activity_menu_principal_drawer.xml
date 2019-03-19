@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Grupo Vecinal">
+            <menu>
+                <!--
+                //if no tiene grupo
+                    //crear grupo
+                        //GrupoVecinal
+                    //unirse a grupo
+                        //AgregarGrupo
+                //if tiene grupo
+                    //detalles y opcion de borrarse
+                    //ver codigp grupo
+                        //GrupoVecinalView
+                    //if es el creador
+                     //opciones para borrar integrantes
+                 -->
+                <item
+                    android:id="@+id/crear_grupo"
+                    android:icon="@android:drawable/ic_menu_compass"
+                    android:title="@string/crear_grupo" />
+                <item
+                    android:id="@+id/unirseGrupo"
+                    android:icon="@android:drawable/ic_menu_add"
+                    android:title="@string/unirse_grupo" />
+
+                <item
+                    android:id="@+id/mostarGrupo"
+                    android:icon="@android:drawable/ic_menu_search"
+                    android:title="Ver grupo (Si tiene)" />
+
+            </menu>
+        </item>
+
+    </group>
+
+    <item android:title="Ajustes">
+        <menu>
+            <item
+                android:id="@+id/datosPersonales"
+                android:icon="@android:drawable/ic_menu_edit"
+                android:title="Perfil" />
+            <item
+                android:id="@+id/familiares"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="Familiares" />
+            <item
+                android:id="@+id/agregarDomicilio"
+                android:icon="@android:drawable/ic_menu_mylocation"
+                android:title="Domicilios" />
+        </menu>
+    </item>
+
+    <item android:title="Configuaracion">
+        <menu>
+            <item
+                android:id="@+id/configurarCuenta"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="Configuracion" />
+
+        </menu>
+    </item>
+
+    <item android:title="Terminos">
+        <menu>
+        <item
+            android:id="@+id/terminos"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Compromiso" />
+        </menu>
+    </item>
+
+</menu>

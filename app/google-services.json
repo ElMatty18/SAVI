@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "440631164846",
+    "firebase_url": "https://savitesis.firebaseio.com",
+    "project_id": "savitesis",
+    "storage_bucket": "savitesis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440631164846:android:665629a25fec9e99",
+        "android_client_info": {
+          "package_name": "com.tangorra.matias.savi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440631164846-jdjkuc8ev26bc86hrvuaqgshlrdq7r7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tangorra.matias.savi",
+            "certificate_hash": "643e5e58e99427250fde3ab81572f135a67733ba"
+          }
+        },
+        {
+          "client_id": "440631164846-3p5io7gi7jce1spfisf696m43cdtj817.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxVEaDlUq-DpXIWEIxjhjPgYiawDpAKrQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440631164846-3p5io7gi7jce1spfisf696m43cdtj817.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

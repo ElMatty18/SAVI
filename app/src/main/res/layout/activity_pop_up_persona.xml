@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF"
+    tools:context=".View.PopUpViewQRGrupo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detalle Persona"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorNegro"
+            android:textStyle="italic"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorNegro"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+
+            <ImageView
+                android:id="@+id/imgUsuarioMenuPrincipal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icon_casa"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:background="@color/colorBlanco"
+                >
+
+                <EditText android:id="@+id/txtNombreUsuario"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:hint="Nombre"
+                    android:inputType="text" />
+
+                <EditText android:id="@+id/txtApellidoUsuario"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:hint="Apellido"
+                    android:inputType="text" />
+
+                <EditText android:id="@+id/txtDniUsuario"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:hint="Nro. Documento"
+                    android:inputType="number"
+                    android:ems="8"/>
+
+                <EditText
+                    android:id="@+id/dateFechaNacimientoUsuario"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="8"
+                    android:hint="Fecha Nacimiento"
+                    android:inputType="datetime" />
+
+                <EditText android:id="@+id/txtCelularUsuario"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:hint="Telefono Celular"
+                    android:ems="8"
+                    android:inputType="phone" />
+
+                <EditText android:id="@+id/txtTelefonoUsuario"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:hint="Telefono Fijo"
+                    android:ems="8"
+                    android:inputType="phone" />
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

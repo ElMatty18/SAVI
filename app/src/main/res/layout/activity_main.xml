@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Activitys.MainActivity"
+    android:background="@drawable/gradiente"
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+    <ImageView
+        android:id="@+id/im_icono"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:contentDescription="@string/main_imagen"
+        android:background="@drawable/icon_casa"
+         />
+
+    <TextView
+        android:id="@+id/tituloPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoText="true"
+        android:editable="false"
+        android:gravity="center"
+        android:text="  Sistema de Alerta \n Vecinal Inteligente"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlanco"
+        android:textSize="30dp"/>
+
+</LinearLayout>

@@ -1,0 +1,98 @@
+<resources>
+    <string name="app_name">SAVI</string>
+
+
+    <string name="default_notification_channel_id">default</string>
+
+    <!--botones-->
+    <string name="btt_confirmar">Confirmar</string>
+    <string name="btt_emitir">Emitir Alarma</string>
+    <string name="btt_cancel">Cancelar</string>
+    <string name="btt_aceptar">Aceptar</string>
+    <string name="btt_agregar">Agregar</string>
+    <string name="btt_save">Guardar</string>
+    <string name="btt_ok">OK</string>
+    <string name="btt_nook">No OK</string>
+    <string name="btt_addFoto">Agregar foto</string>
+    <string name="btt_back">Volver</string>
+    <string name="btt_add_familia">Agregar Familia</string>
+    <string name="btt_search_familia">Buscar Familia</string>
+    <string name="btt_codigo_persona">Ver Codigo Personal</string>
+    <string name="btt_salir_familia">Salir Grupo Familiar</string>
+
+
+    <!-- login -->
+    <string name="prompt_email">Usuario</string>
+    <string name="prompt_password">Clave</string>
+    <string name="action_sign_in">Ingresar o Registrarse</string>
+    <string name="action_sign_in_short">Ingresar</string>
+    <string name="error_invalid_email">El email ingresado es invalido</string>
+    <string name="error_invalid_password">La contraseña es corta</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Campo requerido</string>
+    <string name="permission_rationale">"Son necesarios permisos para acceder a sus contactos"</string>
+    <string name="title_activity_menu_principal">SAVI</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Telefonos Utiles</string>
+
+    <!-- menu principal -->
+    <string name="crear_grupo">Crear Grupo</string>
+    <string name="unirse_grupo">Unirse a Grupo Vecinal</string>
+    <string name="enviar_invitacion">Enviar Invitacion</string>
+    <string name="emitir_alerta">Emitir Alerta Vecinal</string>
+    <string name="emitir_emergencia">Emitir Emergencia</string>
+    <string name="grupos_ver">Ver Grupos</string>
+    <string name="sala_chat">Sala Chat</string>
+
+
+    <!-- datos de usuario en registrarse -->
+    <string name="agregar_domicilio">Agregar Domicilio</string>
+    <string name="info_personal">Registro</string>
+    <string name="info_nombre">Nombre</string>
+    <string name="info_apellido">Apellido</string>
+    <string name="info_nacimiento">Fecha de Nacimiento</string>
+    <string name="info_ciudad">Ciudad</string>
+    <string name="info_direccion">Dirección</string>
+    <string name="info_numero">Numero</string>
+    <string name="info_cuenta">Creacion de cuenta</string>
+    <string name="info_email">Email</string>
+    <string name="info_contrasena">Contraseña</string>
+    <string name="info_confirme_contrasena">Confirme Contraseña</string>
+
+    <!-- informacion personal + datos domicilio -->
+
+    <!-- menu principal -->
+
+
+    <!-- descripcion de elementos-->
+    <string name="main_imagen">imagen principal</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps2">Map</string>
+
+    <!-- AlertaActivity Vecinal -->
+    <string name="alerta_titulo">SAVI - Creacion de Alarma</string>
+    <string name="alerta_grupo">Grupo</string>
+    <string name="alerta_tipo">Tipo de Alarma</string>
+    <string name="alerta_contacto_p">Contacto principal</string>
+
+    <string name="alerta_usuario">Contacto principal</string>
+
+    <string name="alerta_disparada_titulo">SAVI - Alarma</string>
+    <string name="alerta_todos">Todos</string>
+
+
+    <!-- buscar grupo vecinal -->
+    <string name="nombre_grupo">Nombre del Grupo</string>
+    <string name="codigo_grupo">Codigo del Grupo</string>
+
+    <!-- buscar Familiares -->
+    <string name="codigo_familiar">Codigo Familiar</string>
+
+    <string name="buscar_grupo">Buscar Grupo</string>
+
+
+</resources>

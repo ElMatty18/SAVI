@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF"
+    tools:context=".View.PopUpAlarmasGrupo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Domicilios"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorNegro"
+            android:textStyle="italic"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorNegro"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/activity_horizontal_margin">
+
+            <Button
+                android:id="@+id/viewDomicilioPrincipal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hogar"/>
+
+            <Button
+                android:id="@+id/viewDomicilioSecundario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trabajo"/>
+
+        </LinearLayout>
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/mapDomicilios"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:context=".Activitys.MapsActivity"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            />
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

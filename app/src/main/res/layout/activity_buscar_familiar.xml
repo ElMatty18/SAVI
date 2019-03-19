@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradiente_perfil"
+    >
+
+    <LinearLayout
+        android:id="@+id/lay_icono"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="top|center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/familiares" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_grupo_vecinal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlanco"
+                android:hint="@string/codigo_familiar"
+                android:lines="1"
+                android:focusableInTouchMode="true"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnBuscarFamiliar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_buscar_familia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btt_search_familia" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listResultSearchFamilia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@color/colorBlanco"/>
+
+    <LinearLayout
+        android:id="@+id/lay_botones_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_backFamilia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btt_back" />
+
+        <!--<Button
+            android:id="@+id/btn_enviarMensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar Mensaje" />-->
+    </LinearLayout>
+
+</LinearLayout>

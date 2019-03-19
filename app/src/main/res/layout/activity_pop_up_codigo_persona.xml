@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF"
+    tools:context=".View.PopUpViewQRPersona">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Codigo Persona"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorNegro"
+            android:textStyle="italic"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorNegro"
+            />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+
+            <TextView
+                android:id="@+id/textViewNombrePersona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre Persona"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorNegro"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                />
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/persona_codigo_qr"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:contentDescription="@string/main_imagen"
+            app:srcCompat="@drawable/codigo_grupo"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            >
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                app:srcCompat="@drawable/menu_familia"/>
+
+            <TextView
+                android:id="@+id/textViewExplicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Muestre este codigo a los usuarios que desea inviar a que sean parte de su grupo familiar."
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorNegro"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
