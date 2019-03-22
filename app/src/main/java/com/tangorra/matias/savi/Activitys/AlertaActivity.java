@@ -33,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.tangorra.matias.savi.Entidades.Alarma;
+import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
@@ -209,8 +209,8 @@ public class AlertaActivity extends AppCompatActivity {
 
     private void persistir(String lugar, String descripcion){
        String id = dbGrupoVecinal.push().getKey();
-       Alarma alarma = new Alarma(id, lugar, descripcion, new Date());
-       dbGrupoVecinal.child("alarmas").child(id).setValue(alarma);
+       Alerta alerta = new Alerta(id, lugar, descripcion, new Date(), SesionManager.getUsuario().getId());
+       dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
     }
 
     @Override

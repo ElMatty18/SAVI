@@ -1,9 +1,9 @@
 package com.tangorra.matias.savi.View;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,31 +14,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
-import com.tangorra.matias.savi.Entidades.Alarma;
+import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
 
-public class PopUpAlarmasFamilia extends AppCompatActivity {
+public class PopUpAlertasGrupo extends AppCompatActivity {
 
     private DatabaseReference dbGrupoVecinal;
 
     private TextView alarmaMuestra;
     private AdaptadorAlertas adapAlarmas;
-    final ArrayList<Alarma> alarmas=new ArrayList<Alarma>();
+    final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
 
     private ListView listAlarmas;
 
-    private Context popAlarmasFamilia;
+    private Context popAlarmas;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_pop_up_alarmas_familia);
+        setContentView(R.layout.activity_pop_up_alarmas_grupo);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -50,20 +50,20 @@ public class PopUpAlarmasFamilia extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        popAlarmasFamilia =this;
+        popAlarmas=this;
 
         //consulta a base de datos
-        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getNombre()).child("alarmas");
+        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas");
 
         dbGrupoVecinal.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                alarmas.clear();
+                alertas.clear();
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
-                    Alarma alarma = imageSnapshot.getValue(Alarma.class);
-                    alarmas.add(alarma);
+                    Alerta alerta = imageSnapshot.getValue(Alerta.class);
+                    alertas.add(alerta);
                 }
-                adapAlarmas = new AdaptadorAlertas(popAlarmasFamilia, alarmas);
+                adapAlarmas = new AdaptadorAlertas(popAlarmas, alertas);
                 listAlarmas = findViewById(R.id.listHistorialAlarmas);
 
                 listAlarmas.setAdapter(adapAlarmas);
@@ -75,8 +75,6 @@ public class PopUpAlarmasFamilia extends AppCompatActivity {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
-
 
 
     }

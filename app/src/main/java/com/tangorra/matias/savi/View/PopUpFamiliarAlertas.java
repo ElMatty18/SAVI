@@ -1,9 +1,10 @@
 package com.tangorra.matias.savi.View;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,31 +15,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
-import com.tangorra.matias.savi.Entidades.Alarma;
-import com.tangorra.matias.savi.Entidades.SesionManager;
+import com.tangorra.matias.savi.Entidades.Alerta;
+import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
 
-public class PopUpAlarmasGrupo extends AppCompatActivity {
+public class PopUpFamiliarAlertas extends AppCompatActivity {
 
     private DatabaseReference dbGrupoVecinal;
+    private ValueEventListener alarmasFamiliar = getAlarmasFamiliarListener();
+
+    private Usuario usuario;
+
 
     private TextView alarmaMuestra;
     private AdaptadorAlertas adapAlarmas;
-    final ArrayList<Alarma> alarmas=new ArrayList<Alarma>();
+    final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
 
     private ListView listAlarmas;
 
-    private Context popAlarmas;
+    private Context popAlarmasFamilia;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_pop_up_alarmas_grupo);
+        setContentView(R.layout.activity_pop_up_alarmas_familia);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -50,33 +55,41 @@ public class PopUpAlarmasGrupo extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        popAlarmas=this;
+        popAlarmasFamilia = this;
+
+        usuario = (Usuario) getIntent().getSerializableExtra("usuarioSelecc");
 
         //consulta a base de datos
-        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alarmas");
+        if (usuario.getIdGrupo() != null){
+            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(usuario.getIdGrupo()).child("alertas");
+            dbGrupoVecinal.addValueEventListener(alarmasFamiliar);
+        }
+    }
 
-        dbGrupoVecinal.addValueEventListener(new ValueEventListener() {
+
+    @NonNull
+    private ValueEventListener getAlarmasFamiliarListener() {
+        return new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                alarmas.clear();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                alertas.clear();
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
-                    Alarma alarma = imageSnapshot.getValue(Alarma.class);
-                    alarmas.add(alarma);
+                    Alerta alerta = imageSnapshot.getValue(Alerta.class);
+                    alertas.add(alerta);
                 }
-                adapAlarmas = new AdaptadorAlertas(popAlarmas, alarmas);
+                adapAlarmas = new AdaptadorAlertas(popAlarmasFamilia, alertas);
                 listAlarmas = findViewById(R.id.listHistorialAlarmas);
 
                 listAlarmas.setAdapter(adapAlarmas);
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
-
-
+        };
     }
+
+
 
 }

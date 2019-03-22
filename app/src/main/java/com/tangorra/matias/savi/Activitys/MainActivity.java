@@ -9,7 +9,6 @@ import android.view.Window;
 import com.tangorra.matias.savi.BroadCastReciber.EstadoDispositivo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
-import com.tangorra.matias.savi.Service.EventIntentService;
 
 import java.util.Timer;
 import java.util.TimerTask;

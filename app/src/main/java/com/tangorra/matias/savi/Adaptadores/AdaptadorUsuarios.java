@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,12 +26,11 @@ import com.google.firebase.storage.StorageReference;
 import com.tangorra.matias.savi.Activitys.FamiliaActivity;
 import com.tangorra.matias.savi.Entidades.Domicilio;
 import com.tangorra.matias.savi.Entidades.Grupo;
-import com.tangorra.matias.savi.Entidades.PerfilUsuario;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
-import com.tangorra.matias.savi.View.PopUpFamiliarAlarmas;
+import com.tangorra.matias.savi.View.PopUpFamiliarAlertas;
 import com.tangorra.matias.savi.View.PopUpViewInfoFamiliar;
 
 import java.util.ArrayList;
@@ -126,7 +123,7 @@ public class AdaptadorUsuarios extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     usuarioSelecc= personas.get(position);
-                    ((FamiliaActivity)context).startActivity(new Intent(context, PopUpFamiliarAlarmas.class).putExtra("usuarioSelecc", usuarioSelecc));
+                    ((FamiliaActivity)context).startActivity(new Intent(context, PopUpFamiliarAlertas.class).putExtra("usuarioSelecc", usuarioSelecc));
                 }
             });
         }

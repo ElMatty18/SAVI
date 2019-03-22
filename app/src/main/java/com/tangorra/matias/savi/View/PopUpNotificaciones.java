@@ -20,10 +20,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Activitys.MainActivity;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
-import com.tangorra.matias.savi.Entidades.Alarma;
+import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
 
@@ -35,7 +34,7 @@ public class PopUpNotificaciones extends AppCompatActivity {
 
     private TextView alarmaMuestra;
     private AdaptadorAlertas adapAlarmas;
-    final ArrayList<Alarma> alarmas=new ArrayList<Alarma>();
+    final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
 
     private ListView listAlarmas;
 
@@ -68,8 +67,8 @@ public class PopUpNotificaciones extends AppCompatActivity {
         dbGrupoVecinal.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Alarma alarma = dataSnapshot.getValue(Alarma.class);
-                showNotification(alarma.getAlarma(),alarma.getCasa());
+                Alerta alerta = dataSnapshot.getValue(Alerta.class);
+                showNotification(alerta.getAlarma(), alerta.getCasa());
                 System.out.println("Previous Post ID: " + prevChildKey);
             }
 
@@ -78,8 +77,8 @@ public class PopUpNotificaciones extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Alarma alarma = dataSnapshot.getValue(Alarma.class);
-                showNotification("FINALIZO "+alarma.getAlarma(),alarma.getCasa());
+                Alerta alerta = dataSnapshot.getValue(Alerta.class);
+                showNotification("FINALIZO "+ alerta.getAlarma(), alerta.getCasa());
             }
 
 

@@ -13,10 +13,10 @@ public class Grupo implements Serializable {
     private Double lng;
     private Integer maxRango;
 
-    private List<Alarma> alarmas;
+    private List<Alerta> alertas;
 
     private List<Usuario> integrantes;
-    private List<Alarma> historial;
+    private List<Alerta> historial;
 
     public Grupo() {
     }
@@ -28,7 +28,7 @@ public class Grupo implements Serializable {
         this.lat = lat;
         this.lng = lng;
         this.maxRango = maxRango;
-        this.alarmas=new ArrayList<Alarma>();
+        this.alertas =new ArrayList<Alerta>();
     }
 
 
@@ -92,11 +92,11 @@ public class Grupo implements Serializable {
         this.integrantes = integrantes;
     }
 
-    public List<Alarma> getHistorial() {
+    public List<Alerta> getHistorial() {
         return historial;
     }
 
-    public void setHistorial(List<Alarma> historial) {
+    public void setHistorial(List<Alerta> historial) {
         this.historial = historial;
     }
 }

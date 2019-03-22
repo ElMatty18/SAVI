@@ -86,7 +86,7 @@
         <!-- service -->
 
         <service
-            android:name=".Service.EventIntentService"
+            android:name=".Service.AlertaService"
             />
         <!-- fin -->
 
@@ -115,9 +115,9 @@
         <activity android:name=".Activitys.GrupoVecinalViewActivity" />
 
 
-        <activity android:name=".View.PopUpAlarmasGrupo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpAlertasGrupo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
         <activity android:name=".View.PopUpNotificaciones" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpAlarmasFamilia" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpAlertasFamilia" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
 
         <activity android:name=".View.PopUpDomicilio" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
         <activity android:name=".View.PopUpDomicilioAlternativo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
@@ -128,7 +128,7 @@
         <activity android:name=".View.PopUpViewPersona" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
 
         <activity android:name=".View.PopUpViewInfoFamiliar" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpFamiliarAlarmas" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
+        <activity android:name=".View.PopUpFamiliarAlertas" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
 
 
     </application>

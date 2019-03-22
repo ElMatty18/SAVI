@@ -8,8 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tangorra.matias.savi.Entidades.Alarma;
-import com.tangorra.matias.savi.Entidades.Persona;
+import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
@@ -19,17 +18,17 @@ import java.util.ArrayList;
 public class AdaptadorAlertas extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Alarma> alarmas;
+    private ArrayList<Alerta> alertas;
 
     @Override
     public int getCount() {
-        return alarmas.size();
+        return alertas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (position < alarmas.size()){
-            return alarmas.get(position);
+        if (position < alertas.size()){
+            return alertas.get(position);
         }
         return null;
     }
@@ -41,7 +40,7 @@ public class AdaptadorAlertas extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Alarma item = (Alarma) getItem(position);
+        Alerta item = (Alerta) getItem(position);
 
         convertView = LayoutInflater.from(context).inflate(R.layout.item_alarma,null);
         TextView tipoAlerta = convertView.findViewById(R.id.viewTipoAlarma);
@@ -51,7 +50,7 @@ public class AdaptadorAlertas extends BaseAdapter {
 
         tipoAlerta.setText(item.getAlarma());
         usuario.setText(item.getCasa());
-        fecha.setText(DateUtils.sdf.format(item.getCreacion()));
+        fecha.setText(DateUtils.sdf2.format(item.getCreacion()));
 
         if (tipoAlerta.getText().equals(StringUtils.ALARMA_SONANDO)){
             imagenAlerta.setImageResource(R.drawable.alarma1);
@@ -72,9 +71,9 @@ public class AdaptadorAlertas extends BaseAdapter {
         return convertView;
     }
 
-    public AdaptadorAlertas(Context context, ArrayList<Alarma> alarmas) {
+    public AdaptadorAlertas(Context context, ArrayList<Alerta> alertas) {
         this.context = context;
-        this.alarmas = alarmas;
+        this.alertas = alertas;
     }
 
 

@@ -4,24 +4,29 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Alarma implements Serializable {
+public class Alerta implements Serializable {
 
     private String id;
     private String casa;
     private String alarma;
+
+
     private Date creacion;
+    private String creadoBy;
+
 
     private List<String> vistoPor;
 
 
-    public Alarma(String id, String casa, String alarma, Date creacion) {
+    public Alerta(String id, String casa, String alarma, Date creacion, String creadoBy) {
         this.id = id;
         this.casa = casa;
         this.alarma = alarma;
         this.creacion = creacion;
+        this.creadoBy = creadoBy;
     }
 
-    public Alarma() {
+    public Alerta() {
     }
 
     public String getId() {
@@ -64,9 +69,18 @@ public class Alarma implements Serializable {
         this.vistoPor = vistoPor;
     }
 
+    public String getCreadoBy() {
+        return creadoBy;
+    }
+
+    public void setCreadoBy(String creadoBy) {
+        this.creadoBy = creadoBy;
+    }
+
+
     @Override
     public String toString() {
-        return "Alarma{" +
+        return "Alerta{" +
                 "id='" + id + '\'' +
                 ", casa='" + casa + '\'' +
                 ", alarma='" + alarma + '\'' +

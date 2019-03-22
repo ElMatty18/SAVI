@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorF"
-    tools:context=".View.PopUpAlarmasGrupo">
+    tools:context=".View.PopUpAlertasGrupo">
 
     <LinearLayout
         android:layout_width="match_parent"

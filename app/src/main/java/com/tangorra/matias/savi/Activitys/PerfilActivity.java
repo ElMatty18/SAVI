@@ -7,33 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.tangorra.matias.savi.Adaptadores.AdaptadorCasas;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorPersonas;
-import com.tangorra.matias.savi.Entidades.Casa;
-import com.tangorra.matias.savi.Entidades.Persona;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
-import com.tangorra.matias.savi.View.PopUpAlarmasGrupo;
 import com.tangorra.matias.savi.View.PopUpDomicilio;
 import com.tangorra.matias.savi.View.PopUpDomicilioAlternativo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PerfilActivity extends AppCompatActivity {
 

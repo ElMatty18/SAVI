@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:text="Alerta: "
+                android:text="Tipo: "
                 />
 
             <TextView
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:text="Fecha: "/>
+                android:text="Creada: "/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -4,11 +4,9 @@ import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
-import android.os.IBinder;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -19,26 +17,24 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Activitys.MainActivity;
-import com.tangorra.matias.savi.Entidades.Alarma;
+import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
-import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventIntentService extends IntentService {
+public class AlertaService extends IntentService {
 
-    private static final String TAG = "EventIntentService";
+    private static final String TAG = "AlertaService";
 
     private DatabaseReference dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
     private ChildEventListener listenerAlertas = getListenerAlertas();
 
-    public EventIntentService() {
-        super("EventIntentService");
+    public AlertaService() {
+        super("AlertaService");
     }
 
     @Override
@@ -46,11 +42,9 @@ public class EventIntentService extends IntentService {
         String dataString = workIntent.getDataString();
         Log.i(TAG, "The service is on");
 
-        dbGrupoVecinal.child("alarmas").addChildEventListener(listenerAlertas);
+        dbGrupoVecinal.child("alertas").addChildEventListener(listenerAlertas);
 
     }
-
-
 
 
     @NonNull
@@ -58,29 +52,26 @@ public class EventIntentService extends IntentService {
         return new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    Alarma alarma = dataSnapshot.getValue(Alarma.class);
-                    if (!vistoUsuario(alarma.getVistoPor(), SesionManager.getUsuario().getId())
-                            && (alarma.getId() != null) && (alarma.getCasa() != null)){
-                        showNotification(alarma.getAlarma(), alarma.getCasa());
-                        marcarVisto(alarma, SesionManager.getUsuario().getId());
+                    Alerta alerta = dataSnapshot.getValue(Alerta.class);
+                    if (condicionNotificacionAlerta(alerta)){
+                        showNotification(alerta.getAlarma(), alerta.getCasa());
+                        marcarVisto(alerta, SesionManager.getUsuario().getId());
                     }
 
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                Alarma alarma = dataSnapshot.getValue(Alarma.class);
-                if (!vistoUsuario(alarma.getVistoPor(), SesionManager.getUsuario().getId())
-                        && (alarma.getId() != null) && (alarma.getCasa() != null)){
-                    showNotification(alarma.getAlarma(), alarma.getCasa());
-                    marcarVisto(alarma, SesionManager.getUsuario().getId());
+                Alerta alerta = dataSnapshot.getValue(Alerta.class);
+                if (condicionNotificacionAlerta(alerta)){
+                    showNotification(alerta.getAlarma(), alerta.getCasa());
+                    marcarVisto(alerta, SesionManager.getUsuario().getId());
                 }
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //Alarma alarma = dataSnapshot.getValue(Alarma.class);
-                //showNotification(alarma.getAlarma(), alarma.getCasa());
+
             }
 
             @Override
@@ -91,13 +82,13 @@ public class EventIntentService extends IntentService {
         };
     }
 
-    private void marcarVisto(Alarma alarma, String id) {
-        if (alarma.getVistoPor() == null){
-            alarma.setVistoPor(new ArrayList<String>());
+    private void marcarVisto(Alerta alerta, String id) {
+        if (alerta.getVistoPor() == null){
+            alerta.setVistoPor(new ArrayList<String>());
         }
-        alarma.getVistoPor().add(id);
-        if (alarma.getId() != null){
-            dbGrupoVecinal.child("alarmas").child(alarma.getId()).setValue(alarma);
+        alerta.getVistoPor().add(id);
+        if (alerta.getId() != null){
+            dbGrupoVecinal.child("alertas").child(alerta.getId()).setValue(alerta);
         }
 
     }
@@ -134,5 +125,16 @@ public class EventIntentService extends IntentService {
         PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pi);
         mNotificationManager.notify(0, mBuilder.build());
+    }
+
+    private Boolean condicionNotificacionAlerta(Alerta alerta){
+        if ((alerta.getCreadoBy() != null) && (alerta.getCreadoBy().equals(SesionManager.getUsuario().getId()))){
+            return false;
+        }
+        if (!vistoUsuario(alerta.getVistoPor(), SesionManager.getUsuario().getId())
+                && (alerta.getId() != null) && (alerta.getCasa() != null)){
+            return true;
+        }
+        return false;
     }
 }

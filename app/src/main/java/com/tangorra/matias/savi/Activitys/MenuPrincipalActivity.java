@@ -2,7 +2,6 @@ package com.tangorra.matias.savi.Activitys;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,14 +38,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.StringUtils;
-import com.tangorra.matias.savi.View.PopUpAlarmasFamilia;
-import com.tangorra.matias.savi.View.PopUpAlarmasGrupo;
-import com.tangorra.matias.savi.View.PopUpDomicilio;
+import com.tangorra.matias.savi.View.PopUpAlertasFamilia;
+import com.tangorra.matias.savi.View.PopUpAlertasGrupo;
 import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.View.PopUpNotificaciones;
 
@@ -148,14 +145,14 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         lyAlarmasGrupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuPrincipalActivity.this, PopUpAlarmasGrupo.class));
+                startActivity(new Intent(MenuPrincipalActivity.this, PopUpAlertasGrupo.class));
             }
         });
 
         lyAlarmasFamilia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuPrincipalActivity.this, PopUpAlarmasFamilia.class));
+                startActivity(new Intent(MenuPrincipalActivity.this, PopUpAlertasFamilia.class));
             }
         });
 

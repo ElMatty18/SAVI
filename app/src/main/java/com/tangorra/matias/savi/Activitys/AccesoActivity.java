@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +28,7 @@ import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
-import com.tangorra.matias.savi.Service.EventIntentService;
+import com.tangorra.matias.savi.Service.AlertaService;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 
@@ -279,7 +278,7 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     private void listenerAlertas() {
-        Intent intent = new Intent(this, EventIntentService.class);
+        Intent intent = new Intent(this, AlertaService.class);
         startService(intent);
     }
 
