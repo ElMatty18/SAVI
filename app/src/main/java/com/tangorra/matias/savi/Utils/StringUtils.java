@@ -36,9 +36,15 @@ public  class StringUtils {
     public static String DESCRIP_SOSPECHA_ROBO = "La alarma sera ruidosa para todos los usuarios excepto para el que fue destinada. Se recomendara contactar a las autoridades en caso de que la sospecha sea concreta";
     public static String DESCRIP_ACTITUD_SOSPECHOSA = "Se da aviso sonoro a todos los usuarios";
     public static String DESCRIP_DANO_VEHICULO = "Si existe una alerta de Daño al vehiculo, informara al usuario respectivo. En caso de que el usuario no ese en su domicilio se informara dicha situacion y se les informa a sus familiares";
-    public static String DESCRIP_PRINCIPIO_FUEGO = "Se crara una alama sonora para el usuario destinatario de dicha alerta, y una notificacion silenciosa a los demas usuarios";
+    public static String DESCRIP_PRINCIPIO_FUEGO = "Se creara una alama sonora para el usuario destinatario de dicha alerta, y una notificacion silenciosa a los demas usuarios";
     public static String DESCRIP_AGRESION = "Se creara una alerta sonora para el usuario destinatario";
     public static String DESCRIP_MAL_ESTACIONADO = "Se crea una alarta silenciosa para todos los usuarios";
+
+
+    public static String openScanGroup = "SAVI ScanQR - Grupo";
+    public static String cancelScan = "Se cancelo Scan";
+
+    public static String denegatePermission = "Permiso denegado";
 
 
     public static String getTextoFormateado(String texto){

@@ -2,6 +2,7 @@ package com.tangorra.matias.savi.View;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -16,14 +17,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
+import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PopUpAlertasFamilia extends AppCompatActivity {
 
     private DatabaseReference dbGrupoVecinal;
+    private ValueEventListener alarmasFamiliar = getAlarmasFamiliarListener();
+
+    private Usuario usuario;
 
     private TextView alarmaMuestra;
     private AdaptadorAlertas adapAlarmas;
@@ -32,6 +38,13 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
     private ListView listAlarmas;
 
     private Context popAlarmasFamilia;
+    private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
+    private ValueEventListener familiaListener = getFamiliaListener();
+
+
+    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private ArrayList<Usuario> listFamiliares = new ArrayList<Usuario>();
+    private ValueEventListener usuarioListenerFamiliar = getUsuarioListenerFamiliar();
 
 
     @Override
@@ -50,15 +63,26 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        popAlarmasFamilia =this;
+        popAlarmasFamilia = this;
 
-        //consulta a base de datos
-        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getNombre()).child("alertas");
+        alertas.clear();
+        cargarFamilia();
 
-        dbGrupoVecinal.addValueEventListener(new ValueEventListener() {
+
+    }
+
+    private void cargarFamilia() {
+        if (SesionManager.getUsuario().getIdFamilia() != null) {
+            dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiaListener);
+        }
+    }
+
+
+    @NonNull
+    private ValueEventListener getAlarmasFamiliarListener() {
+        return new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                alertas.clear();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                     Alerta alerta = imageSnapshot.getValue(Alerta.class);
                     alertas.add(alerta);
@@ -67,18 +91,70 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
                 listAlarmas = findViewById(R.id.listHistorialAlarmas);
 
                 listAlarmas.setAdapter(adapAlarmas);
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        };
+    }
 
 
+    @NonNull
+    private ValueEventListener getFamiliaListener() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> idsFamilia = new ArrayList<String>();
+                for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
+                    String idUsuario = imageSnapshot.getValue(String.class);
+                    idsFamilia.add(idUsuario);
+                }
+                cargarDatosFamilia(idsFamilia);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+
+    private void cargarDatosFamilia(List<String> idsFamilia){
+        listFamiliares = new ArrayList<Usuario>();
+        for (String idFamiliar: idsFamilia) {
+            dbUsuarios.orderByChild("id").equalTo(idFamiliar).limitToFirst(1).addValueEventListener(usuarioListenerFamiliar);
+        }
 
     }
+
+
+    @NonNull
+    private ValueEventListener getUsuarioListenerFamiliar() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
+                    Usuario usuarioFamiliar = imageSnapshot.getValue(Usuario.class);
+                    listFamiliares.add(usuarioFamiliar);
+
+                    if (usuarioFamiliar != null && usuarioFamiliar.getIdGrupo() != null){
+                        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(usuarioFamiliar.getIdGrupo()).child("alertas");
+                        dbGrupoVecinal.addValueEventListener(alarmasFamiliar);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+
 
 }

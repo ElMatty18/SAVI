@@ -232,21 +232,6 @@ public class GrupoVecinalActivity extends AppCompatActivity implements OnMapRead
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         miUbicacion();
-
-
-
-        /*
-        UiSettings uiSettings = mMap.getUiSettings();
-        uiSettings.setZoomControlsEnabled(true);
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-63.049092, -60.955994);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Matty").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        float zoomLevel = 16;
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
-        */
     }
 
     private void agregarMarcador(double lat, double lng) {
@@ -286,15 +271,6 @@ public class GrupoVecinalActivity extends AppCompatActivity implements OnMapRead
         circle =mMap.addCircle(circleOptions);
     }
 
-
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
 
     LocationListener locationListener = new LocationListener() {
         @Override

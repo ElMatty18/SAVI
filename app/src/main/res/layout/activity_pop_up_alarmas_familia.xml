@@ -16,7 +16,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alarmas Familia"
+            android:text="Alertas Familia"
             android:gravity="center_horizontal"
             android:textColor="@color/colorNegro"
             android:textStyle="italic"

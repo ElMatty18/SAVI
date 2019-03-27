@@ -1,5 +1,6 @@
 package com.tangorra.matias.savi.View;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,25 +23,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tangorra.matias.savi.Activitys.MainActivity;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
+import com.tangorra.matias.savi.Adaptadores.AdaptadorNotificacion;
 import com.tangorra.matias.savi.Entidades.Alerta;
+import com.tangorra.matias.savi.Entidades.Notificacion;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
 
 public class PopUpNotificaciones extends AppCompatActivity {
 
-    private DatabaseReference dbGrupoVecinal;
+    private DatabaseReference dbNotificaciones;
 
-    private TextView alarmaMuestra;
-    private AdaptadorAlertas adapAlarmas;
-    final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
+    private AdaptadorNotificacion adaptadorNotificacion;
 
-    private ListView listAlarmas;
+    final ArrayList<Notificacion> notificaciones =new ArrayList<Notificacion>();
+
+    private ListView listNotifaciones;
 
     private Context popNotificaciones;
-
-    private Button dispararNotificacion;
 
 
     @Override
@@ -62,14 +64,19 @@ public class PopUpNotificaciones extends AppCompatActivity {
         popNotificaciones = this;
 
 
-        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(SesionManager.getGrupo().getNombre());
+        dbNotificaciones = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion);
 
-        dbGrupoVecinal.addChildEventListener(new ChildEventListener() {
+        dbNotificaciones.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Alerta alerta = dataSnapshot.getValue(Alerta.class);
-                showNotification(alerta.getAlarma(), alerta.getCasa());
-                System.out.println("Previous Post ID: " + prevChildKey);
+                for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
+                    Notificacion notification = dataSnapshot.getValue(Notificacion.class);
+                    if (condicionNotificacion(notification)){
+                        addNotification(notification);
+                    }
+                }
+
+                crearVistaNotificaciones();
             }
 
             @Override
@@ -77,8 +84,6 @@ public class PopUpNotificaciones extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Alerta alerta = dataSnapshot.getValue(Alerta.class);
-                showNotification("FINALIZO "+ alerta.getAlarma(), alerta.getCasa());
             }
 
 
@@ -89,42 +94,29 @@ public class PopUpNotificaciones extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        dispararNotificacion=findViewById(R.id.btn_dispararNotificacion);
-        dispararNotificacion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNotification("SAVI", "Notificacion");
-            }
-        });
+
 
     }
 
+    private void crearVistaNotificaciones() {
+        Notificacion nueva = new Notificacion();
+        nueva.setTitle("laalala");
+        nueva.setContenido("tipin");
+        notificaciones.add(nueva);
 
+        adaptadorNotificacion = new AdaptadorNotificacion(popNotificaciones, notificaciones);
+        listNotifaciones = findViewById(R.id.listNotificaciones);
 
-    void showNotification(String title, String content) {
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default",
-                    "YOUR_CHANNEL_NAME",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DISCRIPTION");
-            mNotificationManager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default")
-                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
-                .setContentTitle(title) // title for notification
-                .setContentText(content)// message for notification
-                .setAutoCancel(true); // clear notification after click
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(0, mBuilder.build());
+        listNotifaciones.setAdapter(adaptadorNotificacion);
     }
 
+    private void addNotification(Notificacion notificacion) {
+        notificaciones.add(notificacion);
+    }
 
-
-
+    private boolean condicionNotificacion(Notificacion notificacion) {
+        return true;
+    }
 
 
 

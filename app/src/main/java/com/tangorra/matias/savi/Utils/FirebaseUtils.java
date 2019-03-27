@@ -35,6 +35,7 @@ public class FirebaseUtils extends AppCompatActivity  {
     public static String dbGrupo = "Grupo";
     public static String dbUsuario = "Usuario";
     public static String dbFamilia = "Familia";
+    public static String dbNotificacion = "Notificacion";
 
     /*
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);

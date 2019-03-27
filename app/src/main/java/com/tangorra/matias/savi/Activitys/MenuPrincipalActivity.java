@@ -372,7 +372,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     private void abrirScan() {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt("SAVI ScanQR - Grupo");
+        integrator.setPrompt(StringUtils.openScanGroup);
         integrator.setCameraId(0);
         integrator.setBeepEnabled(false);
         integrator.setBarcodeImageEnabled(false);
@@ -409,7 +409,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if (result != null){
             if (result.getContents() == null){
-                Toast.makeText(this, "Se cancelo Scan", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, StringUtils.cancelScan, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
 
@@ -434,11 +434,10 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                     abrirTelefono();
 
                 } else {
-                    Toast.makeText(this, "Permiso denegado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, StringUtils.denegatePermission, Toast.LENGTH_LONG).show();
                 }
                 return;
             }
-
         }
     }
 

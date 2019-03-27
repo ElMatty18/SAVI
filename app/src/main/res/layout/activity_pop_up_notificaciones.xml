@@ -7,8 +7,6 @@
     android:background="@color/colorC"
     tools:context=".View.PopUpAlertasGrupo">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +16,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Notificaciones Grupo"
+            android:text="Notificaciones"
             android:gravity="center_horizontal"
             android:textColor="@color/colorNegro"
             android:textStyle="italic"
@@ -31,21 +29,13 @@
             android:background="@color/colorNegro"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_dispararNotificacion"
-            android:text="alerta"/>
-
         <ListView
-            android:id="@+id/listHistorialAlarmas"
+            android:id="@+id/listNotificaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             />
 
-
     </LinearLayout>
-
 
 </android.support.constraint.ConstraintLayout>

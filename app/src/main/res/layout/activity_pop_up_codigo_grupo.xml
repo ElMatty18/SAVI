@@ -88,7 +88,7 @@
                 android:id="@+id/textViewExplicacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Muestre este codigo a los usuarios que desea inviar a que sean parte del grupo."
+                android:text="Muestre este codigo a los usuarios que desea invitar a que sean parte del grupo."
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorNegro"
                 android:textStyle="bold"
