@@ -7,19 +7,6 @@
 
         <item android:title="Grupo Vecinal">
             <menu>
-                <!--
-                //if no tiene grupo
-                    //crear grupo
-                        //GrupoVecinal
-                    //unirse a grupo
-                        //AgregarGrupo
-                //if tiene grupo
-                    //detalles y opcion de borrarse
-                    //ver codigp grupo
-                        //GrupoVecinalView
-                    //if es el creador
-                     //opciones para borrar integrantes
-                 -->
                 <item
                     android:id="@+id/crear_grupo"
                     android:icon="@android:drawable/ic_menu_compass"
@@ -38,6 +25,16 @@
         </item>
 
     </group>
+
+
+    <item android:title="Notifiacion">
+        <menu>
+            <item
+                android:id="@+id/addNotificacion"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="Crear notificacion" />
+        </menu>
+    </item>
 
     <item android:title="Ajustes">
         <menu>

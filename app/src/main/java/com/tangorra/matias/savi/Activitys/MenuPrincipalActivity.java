@@ -345,23 +345,24 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             finish();
         }
         else if (id == R.id.datosPersonales) {
-            //Datos Personales
             Intent menu = new Intent(MenuPrincipalActivity.this, PerfilActivity.class);
             startActivity(menu);
             finish();
 
         } else if (id == R.id.familiares) {
-            //Datos Personales
             Intent menu = new Intent(MenuPrincipalActivity.this, FamiliaActivity.class);
             startActivity(menu);
             finish();
 
         } else if (id == R.id.configurarCuenta) {
-            //Datos Personales
             Intent menu = new Intent(MenuPrincipalActivity.this, ConfiguracionActivity.class);
             startActivity(menu);
             finish();
 
+        } else if (id == R.id.addNotificacion) {
+            Intent menu = new Intent(MenuPrincipalActivity.this, NotificacionActivity.class);
+            startActivity(menu);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
