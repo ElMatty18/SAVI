@@ -29,6 +29,7 @@ import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Service.AlertaService;
+import com.tangorra.matias.savi.Service.NotificacionService;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 
@@ -259,7 +260,7 @@ public class AccesoActivity extends AppCompatActivity {
         saveAccess();
 
         //lanzar listener de alertas
-        listenerAlertas();
+        listenerRun();
 
         if (usuario.datosIncompletos()){
             goToDatosUsuario(mail);
@@ -277,9 +278,12 @@ public class AccesoActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    private void listenerAlertas() {
-        Intent intent = new Intent(this, AlertaService.class);
-        startService(intent);
+    private void listenerRun() {
+        Intent alertaService = new Intent(this, AlertaService.class);
+        startService(alertaService);
+
+        Intent notificacionService = new Intent(this, NotificacionService.class);
+        startService(notificacionService);
     }
 
     private void registrarUsuario(){

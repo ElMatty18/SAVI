@@ -88,6 +88,12 @@
         <service
             android:name=".Service.AlertaService"
             />
+
+        <service
+            android:name=".Service.NotificacionService"
+            />
+
+
         <!-- fin -->
 
         <service android:name=".FirebaseService">

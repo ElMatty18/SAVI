@@ -39,14 +39,27 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Telefonos Utiles</string>
 
-    <!-- menu principal -->
-    <string name="crear_grupo">Crear Grupo</string>
-    <string name="unirse_grupo">Unirse a Grupo Vecinal</string>
-    <string name="enviar_invitacion">Enviar Invitacion</string>
-    <string name="emitir_alerta">Emitir Alerta Vecinal</string>
-    <string name="emitir_emergencia">Emitir Emergencia</string>
-    <string name="grupos_ver">Ver Grupos</string>
-    <string name="sala_chat">Sala Chat</string>
+    <!-- menu principal title -->
+    <string name="menu_grupo_vecinal">Grupo Vecinal</string>
+    <string name="menu_notificacion">Notificacion</string>
+    <string name="menu_ajustes">Ajustes</string>
+    <string name="menu_configuracion">Configuracion</string>
+    <string name="menu_terminos">Terminos</string>
+
+    <!-- menu principal items -->
+    <string name="item_crear_grupo">Crear Grupo</string>
+    <string name="item_unirse_grupo">Unirse a Grupo Vecinal</string>
+    <string name="item_ver_grupo">Ver Grupo Vecinal</string>
+    <string name="item_notificacion">Crear notificacion</string>
+    <string name="item_perfil">Perfil</string>
+    <string name="item_familiares">Familiares</string>
+    <string name="item_domicilios">Domicilios</string>
+    <string name="item_configuracion">Configuracion</string>
+    <string name="item_compromiso">Compromiso</string>
+    <string name="item_enviar_invitacion">Enviar Invitacion</string>
+    <string name="item_emitir_alerta">Emitir Alerta Vecinal</string>
+    <string name="item_emitir_emergencia">Emitir Emergencia</string>
+    <string name="item_grupos_ver">Ver Grupos</string>
 
 
     <!-- datos de usuario en registrarse -->

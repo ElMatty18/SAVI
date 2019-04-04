@@ -93,17 +93,9 @@ public class NotificacionActivity extends AppCompatActivity implements OnMapRead
 
                 if (formValido()){
                     notificacion = new Notificacion();
-                    notificacion.setTitle(titleNotificacion.getText().toString());
-                    notificacion.setContenido(contenidoNotificacion.getText().toString());
-                    notificacion.setLat(lat);
-                    notificacion.setLng(lng);
+                    populateNotificacion();
 
-                    String id = dbNotificacion.push().getKey();
-                    //SesionManager.setGrupo(new Grupo(id, String.valueOf(titleNotificacion.getText()),usuariosMax, lat,lng,rangosMax));
-
-                    dbNotificacion.child(id).setValue(notificacion);
-
-
+                    dbNotificacion.child(notificacion.getId()).setValue(notificacion);
                     Intent navegar = new Intent(NotificacionActivity.this, MenuPrincipalActivity.class);
                     startActivity(navegar);
                     finish();
@@ -120,6 +112,16 @@ public class NotificacionActivity extends AppCompatActivity implements OnMapRead
                 finish();
             }
         });
+    }
+
+    private void populateNotificacion() {
+        String id = dbNotificacion.push().getKey();
+        notificacion.setId(id);
+        notificacion.setTitle(titleNotificacion.getText().toString());
+        notificacion.setContenido(contenidoNotificacion.getText().toString());
+        notificacion.setLat(lat);
+        notificacion.setLng(lng);
+        notificacion.setRango(rangosMax);
     }
 
     private boolean formValido() {

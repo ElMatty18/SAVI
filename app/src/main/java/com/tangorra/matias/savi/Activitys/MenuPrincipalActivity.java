@@ -61,8 +61,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private TextView nombreUsuarioMenuPrincipal;
 
-    private Button datosPersonales;
-    private Button grupoVecinal;
     public static int INVALID_POSITION = -1;
 
     private LinearLayout contenidoMenu;
@@ -83,13 +81,36 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        datosPersonales = findViewById(R.id.datosPersonales);
         contenidoMenu = findViewById(R.id.contenido_menu_principal);
 
         addEventosNotificaciones();
 
         imgUsuario = findViewById(R.id.imgUsuarioMenuPrincipal);
 
+        cargarImagenPerfil();
+
+        botonesFlotanes();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        caracteristicasSAVI();
+
+        addCabecera(navigationView);
+
+       /* if (SesionManager.getUsuario().getIdGrupo() != null){
+            MenuItem item = findViewById(R.id.mostarGrupo);
+            item.setVisible(false);
+        }*/
+    }
+
+    private void cargarImagenPerfil() {
         storageUsuarios = FirebaseStorage.getInstance().getReference();
 
         storageUsuarios.child("Fotos").child(SesionManager.getUsuario().getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -102,8 +123,15 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                         .into(imgUsuario);
             }
         });
+    }
 
+    private void caracteristicasSAVI() {
+        final VerticalAdaptar verticalAdaptar = new VerticalAdaptar(this);
+        RecyclerView rv = (RecyclerView) findViewById(R.id.list_muestra);
+        initVerRecyclerView(rv, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), verticalAdaptar);
+    }
 
+    private void botonesFlotanes() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.crearAlertaVecinal);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,21 +148,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                 abrirTelefono();
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        final MenuPrincipalActivity.VerticalAdaptar verticalAdaptar = new MenuPrincipalActivity.VerticalAdaptar(this);
-        RecyclerView rv = (RecyclerView) findViewById(R.id.list_muestra);
-        initVerRecyclerView(rv, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), verticalAdaptar);
-
-        addCabecera(navigationView);
     }
 
     private void addEventosNotificaciones() {
@@ -257,7 +270,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                 //noinspection MagicNumber
                 mColors[i] = Color.argb(255, mRandom.nextInt(256), mRandom.nextInt(256), mRandom.nextInt(256));
                 mPosition[i] = i;
-
             }
 
         }
@@ -308,6 +320,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal, menu);
+
+
         return true;
     }
 
@@ -320,6 +334,15 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+      /*  if (SesionManager.getUsuario().getIdGrupo() != null) {
+            MenuItem itemOption = menu.findItem(R.id.mostarGrupo);
+            itemOption.setVisible(true);
+        }*/
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

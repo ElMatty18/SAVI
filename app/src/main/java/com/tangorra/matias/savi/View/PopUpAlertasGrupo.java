@@ -25,7 +25,6 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
 
     private DatabaseReference dbGrupoVecinal;
 
-    private TextView alarmaMuestra;
     private AdaptadorAlertas adapAlarmas;
     final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
 
