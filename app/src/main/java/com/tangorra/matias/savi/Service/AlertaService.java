@@ -66,6 +66,7 @@ public class AlertaService extends IntentService {
                 if (condicionNotificacionAlerta(alerta)){
                     showNotification(alerta.getAlarma(), alerta.getCasa());
                     marcarVisto(alerta, SesionManager.getUsuario().getId());
+                    dispararAction(alerta);
                 }
             }
 
@@ -80,6 +81,9 @@ public class AlertaService extends IntentService {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
+    }
+
+    private void dispararAction(Alerta alerta) {
     }
 
     private void marcarVisto(Alerta alerta, String id) {

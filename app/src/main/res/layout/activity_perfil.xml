@@ -5,7 +5,6 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/gradiente_informacion"
     android:gravity="center_vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <LinearLayout
@@ -17,7 +16,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Perfil"
+            android:text="@string/pefil_title"
             android:gravity="center_horizontal"
             android:textSize="18sp"
             android:textColor="@color/colorBlanco"
@@ -59,236 +58,90 @@
             <EditText android:id="@+id/txtNombreUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:hint="Nombre"
+                android:hint="@string/nombre"
                 android:inputType="text" />
 
             <EditText android:id="@+id/txtApellidoUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:hint="Apellido"
+                android:hint="@string/apellido"
                 android:inputType="text" />
 
             <EditText android:id="@+id/txtDniUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:hint="Nro. Documento"
+                android:hint="@string/documento"
                 android:inputType="number"
                 android:ems="8"/>
 
-            <EditText
-                android:id="@+id/dateFechaNacimientoUsuario"
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:ems="8"
-                android:hint="Fecha Nacimiento"
-                android:inputType="datetime" />
+                android:hint="@string/nacimiento"
+                android:id="@+id/tvDate"
+                android:textSize="20dp"/>
 
             <EditText android:id="@+id/txtCelularUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:hint="Telefono Celular"
+                android:hint="@string/celular"
                 android:ems="8"
                 android:inputType="phone" />
 
             <EditText android:id="@+id/txtTelefonoUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:hint="Telefono Fijo"
+                android:hint="@string/fijo"
                 android:ems="8"
                 android:inputType="phone" />
 
         </LinearLayout>
-
-       <!-- <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp">
-
-            <ImageButton
-                android:id="@+id/btnSubirFotoCasa"
-                android:text="Subir Foto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:src="@android:drawable/ic_menu_camera" />
-
-        </LinearLayout>-->
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:background="@color/colorBlanco"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/titleVocacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Profesion"
-                android:gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/estudio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-                <ImageButton
-                    android:id="@+id/trabaja"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_off" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/titleVehiculo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Vehiculos"
-                android:gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/vehiculo1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-                <ImageButton
-                    android:id="@+id/vehiculo2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_off" />
-
-                <ImageButton
-                    android:id="@+id/vehiculo3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/titleMascota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mascotas"
-                android:gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/mascota1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-                <ImageButton
-                    android:id="@+id/mascota2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_off" />
-
-                <ImageButton
-                    android:id="@+id/mascota3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/titleViajes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Vacaciones"
-                android:gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/vacacionesCortas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_my_calendar" />
-
-                <ImageButton
-                    android:id="@+id/vacacionesLargas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_off" />
-
-            </LinearLayout>
-
-        </LinearLayout>-->
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
-                    <LinearLayout
-                        android:id="@+id/perfilFoto"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Foto"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorGris"
-                            />
-                        <ImageView
-                            android:layout_marginTop="10dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/icon_camara"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+                <LinearLayout
+                    android:id="@+id/perfilFoto"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Foto"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorGris"
+                        />
+                    <ImageView
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_camara"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -305,7 +158,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Domicilio"
+                        android:text="@string/domicilio"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorGris"
@@ -325,21 +178,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent">
-                    <!--<TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Familia"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_familia"/>-->
-
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/perfilDomicilioAlternativo"
                     android:gravity="center"
@@ -350,7 +190,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Trabajo"
+                        android:text="@string/trabajo"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         />
@@ -360,8 +200,6 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/icon_map_secundario"/>
-
-
                 </LinearLayout>
             </LinearLayout>
 

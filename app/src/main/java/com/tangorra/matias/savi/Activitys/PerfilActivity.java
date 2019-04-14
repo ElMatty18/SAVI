@@ -1,14 +1,18 @@
 package com.tangorra.matias.savi.Activitys;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.tangorra.matias.savi.Adaptadores.AdaptadorPersonas;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
@@ -25,10 +28,12 @@ import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.View.PopUpDomicilio;
 import com.tangorra.matias.savi.View.PopUpDomicilioAlternativo;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class PerfilActivity extends AppCompatActivity {
 
-    private ListView listViewPersonas;
-    private AdaptadorPersonas adaptadorPersonas;
+
     private Button volver;
 
     private EditText nombreUsuario;
@@ -37,7 +42,7 @@ public class PerfilActivity extends AppCompatActivity {
     private EditText nacimientoUsuario;
     private EditText celularUsuario;
     private EditText fijoUsuario;
-    Button guardar;
+    private Button guardar;
 
     private String nombreImagen;
 
@@ -51,15 +56,17 @@ public class PerfilActivity extends AppCompatActivity {
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
     private StorageReference storageUsuarios;
 
+    private TextView mDisplayDate;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private Date fechaNacimiento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
         volver= findViewById(R.id.btnVolverMenuPerfil);
-
         guardar = findViewById(R.id.btnSavePerfil);
-
         nombreUsuario = findViewById(R.id.txtNombreUsuario);
         apellidoUsuario = findViewById(R.id.txtApellidoUsuario);
         dniUsuario = findViewById(R.id.txtDniUsuario);
@@ -67,6 +74,9 @@ public class PerfilActivity extends AppCompatActivity {
         celularUsuario = findViewById(R.id.txtCelularUsuario);
         fijoUsuario = findViewById(R.id.txtTelefonoUsuario);
         fotoCasa = findViewById(R.id.perfilFoto);
+        mDisplayDate = findViewById(R.id.tvDate);
+
+        fechaPicker();
 
         lyMapaDomicilio = findViewById(R.id.perfilDomicilio);
         lyMapaDomicilio.setOnClickListener(new View.OnClickListener() {
@@ -128,12 +138,45 @@ public class PerfilActivity extends AppCompatActivity {
         });
     }
 
+    private void fechaPicker() {
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        PerfilActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year, month, day
+                        );
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month ++;
+                String date = dayOfMonth + "/" + month + "/" + year;
+                mDisplayDate.setText(date);
+                fechaNacimiento= new Date(year, month,dayOfMonth);
+            }
+        };
+    }
+
     private void GuardarUsuario(Usuario usuario) {
         usuario.setNombre(nombreUsuario.getText().toString().trim());
         usuario.setApellido(apellidoUsuario.getText().toString().trim());
         usuario.setDni(dniUsuario.getText().toString().trim());
         usuario.setFijo(fijoUsuario.getText().toString().trim());
         usuario.setCelular(celularUsuario.getText().toString().trim());
+        usuario.setFechaNacimiento(fechaNacimiento);
+
         dbUsuarios.child(usuario.getId()).setValue(usuario);
         dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario).child(usuario.getId());
         dbUsuarios.child("perfil").child("domicilio").setValue(usuario.getPerfil().getDomicilio());
@@ -162,6 +205,10 @@ public class PerfilActivity extends AppCompatActivity {
             celularUsuario.setError( "Campo requerido!" );
             valido=false;
         }
+        if( mDisplayDate.getText().toString().length() == 0 ){
+            mDisplayDate.setError( "Campo requerido!" );
+            valido=false;
+        }
         return valido;
     }
 
@@ -171,6 +218,13 @@ public class PerfilActivity extends AppCompatActivity {
         dniUsuario.setText(SesionManager.getUsuario().getDni());
         fijoUsuario.setText(SesionManager.getUsuario().getFijo());
         celularUsuario.setText(SesionManager.getUsuario().getCelular());
+
+        int year = SesionManager.getUsuario().getFechaNacimiento().getYear();
+        int month = SesionManager.getUsuario().getFechaNacimiento().getMonth();
+        int dayOfMonth = SesionManager.getUsuario().getFechaNacimiento().getDay();
+
+        String date = dayOfMonth + "/" + month + "/" + year;
+        mDisplayDate.setText(date);
     }
 
     @Override

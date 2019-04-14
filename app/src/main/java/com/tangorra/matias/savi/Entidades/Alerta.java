@@ -10,13 +10,10 @@ public class Alerta implements Serializable {
     private String casa;
     private String alarma;
 
-
     private Date creacion;
     private String creadoBy;
 
-
     private List<String> vistoPor;
-
 
     public Alerta(String id, String casa, String alarma, Date creacion, String creadoBy) {
         this.id = id;

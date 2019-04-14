@@ -436,7 +436,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                 Toast.makeText(this, StringUtils.cancelScan, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

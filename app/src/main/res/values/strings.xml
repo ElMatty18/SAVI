@@ -63,6 +63,7 @@
 
 
     <!-- datos de usuario en registrarse -->
+
     <string name="agregar_domicilio">Agregar Domicilio</string>
     <string name="info_personal">Registro</string>
     <string name="info_nombre">Nombre</string>
@@ -75,6 +76,21 @@
     <string name="info_email">Email</string>
     <string name="info_contrasena">Contraseña</string>
     <string name="info_confirme_contrasena">Confirme Contraseña</string>
+
+
+
+    <!-- Perfil -->
+    <string name="pefil_title">Perfil</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="documento">Nro. Documento</string>
+    <string name="celular">Telefono Celular</string>
+    <string name="fijo">Telefono Fijo</string>
+    <string name="domicilio">Domicilio</string>
+    <string name="trabajo">Trabajo</string>
+    <string name="date_selected">Fecha</string>
+    <string name="nacimiento">Fecha Nacimiento</string>
+
 
     <!-- informacion personal + datos domicilio -->
 
