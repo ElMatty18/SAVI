@@ -221,7 +221,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         int year = SesionManager.getUsuario().getFechaNacimiento().getYear();
         int month = SesionManager.getUsuario().getFechaNacimiento().getMonth();
-        int dayOfMonth = SesionManager.getUsuario().getFechaNacimiento().getDay();
+        int dayOfMonth = SesionManager.getUsuario().getFechaNacimiento().getDate();
 
         String date = dayOfMonth + "/" + month + "/" + year;
         mDisplayDate.setText(date);
