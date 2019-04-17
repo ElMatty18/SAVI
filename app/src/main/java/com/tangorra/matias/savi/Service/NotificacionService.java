@@ -27,6 +27,7 @@ import com.tangorra.matias.savi.Entidades.Notificacion;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
+import com.tangorra.matias.savi.Utils.MapsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,6 @@ public class NotificacionService extends IntentService {
         dbNotificacion.addChildEventListener(listenerNotificaciones);
 
     }
-
 
     @NonNull
     private ChildEventListener getListenerNotificaciones() {
@@ -126,14 +126,37 @@ public class NotificacionService extends IntentService {
         if ((notificacion.getCreadoBy() != null) && (notificacion.getCreadoBy().equals(SesionManager.getUsuario().getId()))){
             return false;
         }
-        if (!vistoUsuario(notificacion.getVistoPor(),SesionManager.getUsuario().getId()) && validaRangoNotificacion(notificacion)){
+        if (!vistoUsuario(notificacion.getVistoPor(),SesionManager.getUsuario().getId()) && validaRangoNotificacion(notificacion) && validaRangoNotificacionAlterno(notificacion)){
             return true;
         }
         return false;
     }
 
     private boolean validaRangoNotificacion(Notificacion notificacion) {
-        return true;
+        try {
+            Double distacia = MapsUtils.distanciaCoord(notificacion.getLat(),notificacion.getLng(), SesionManager.getUsuario().getPerfil().getDomicilio().getLat(),SesionManager.getUsuario().getPerfil().getDomicilio().getLng());
+            if (distacia < notificacion.getRango()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e){
+            return  false;
+        }
+
+    }
+
+    private boolean validaRangoNotificacionAlterno(Notificacion notificacion) {
+        try {
+            Double distacia = MapsUtils.distanciaCoord(notificacion.getLat(),notificacion.getLng(), SesionManager.getUsuario().getPerfil().getDomicilioAlterno().getLat(),SesionManager.getUsuario().getPerfil().getDomicilioAlterno().getLng());
+            if (distacia < notificacion.getRango()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e){
+            return  false;
+        }
     }
 
     private void marcarVisto(Notificacion notificacion, String id) {
