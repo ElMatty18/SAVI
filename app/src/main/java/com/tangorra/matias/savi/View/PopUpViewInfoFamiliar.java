@@ -87,7 +87,19 @@ public class PopUpViewInfoFamiliar extends AppCompatActivity  implements OnMapRe
         dni.setFocusable(false);
 
         fecha_nacimiento = findViewById(R.id.dateFechaNacimientoUsuario);
-        fecha_nacimiento.setText((usuario.getFechaNacimiento() != null)? usuario.getFechaNacimiento().toString(): "");
+        if (usuario != null &&  usuario.getFechaNacimiento() != null){
+            int year = usuario.getFechaNacimiento().getYear();
+            int month = usuario.getFechaNacimiento().getMonth();
+            int dayOfMonth = usuario.getFechaNacimiento().getDate();
+
+            String date = dayOfMonth + "/" + month + "/" + year;
+
+            fecha_nacimiento.setText(date);
+
+        } else {
+            fecha_nacimiento.setText("");
+        }
+
         fecha_nacimiento.setFocusable(false);
 
         celular = findViewById(R.id.txtCelularUsuario);

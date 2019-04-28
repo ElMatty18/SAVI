@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,12 +15,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
+import com.tangorra.matias.savi.Adaptadores.AdaptadorCombinado;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PopUpAlertasGrupo extends AppCompatActivity {
 
@@ -31,6 +35,11 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
     private ListView listAlarmas;
 
     private Context popAlarmas;
+
+    private ExpandableListView expandableListView;
+    private AdaptadorCombinado adaptadorCombinado;
+    private ArrayList<String> categorias;
+    private Map<Alerta, ArrayList<Alerta>> mapChild;
 
 
     @Override
@@ -61,11 +70,17 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                     Alerta alerta = imageSnapshot.getValue(Alerta.class);
                     alertas.add(alerta);
+                    ArrayList<Alerta> AlertasDetalle = new ArrayList<Alerta>();
+                    AlertasDetalle.add(alerta);
+                    mapChild.put(alerta, AlertasDetalle);
                 }
-                adapAlarmas = new AdaptadorAlertas(popAlarmas, alertas);
-                listAlarmas = findViewById(R.id.listHistorialAlarmas);
+                //adapAlarmas = new AdaptadorAlertas(popAlarmas, alertas);
+                /*listAlarmas = findViewById(R.id.listHistorialAlarmas);
 
-                listAlarmas.setAdapter(adapAlarmas);
+                listAlarmas.setAdapter(adapAlarmas);*/
+
+                adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
+                expandableListView.setAdapter(adaptadorCombinado);
 
             }
 
@@ -76,6 +91,14 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
         });
 
 
+        expandableListView = findViewById(R.id.listHistorialAlarmasExpandible);
+        categorias = new ArrayList<>();
+        mapChild = new HashMap<>();
+
+
+
     }
+
+
 
 }

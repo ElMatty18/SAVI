@@ -17,5 +17,12 @@
     <dimen name="text_login">20dp</dimen>
 
 
+    <dimen name="text_margin_item">5dp</dimen>
+
+
+    <dimen name="activity_horizontal_margin_big">40dp</dimen>
+
+
+
 
 </resources>

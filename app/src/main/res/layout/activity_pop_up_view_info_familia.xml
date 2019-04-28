@@ -38,21 +38,11 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             >
 
-            <!--<ImageView
-                android:id="@+id/imgUsuarioMenuPrincipal"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/icon_casa"
-                />
--->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:background="@color/colorBlanco"
                 >
 
                 <LinearLayout
@@ -63,15 +53,19 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Nombre: "
+                        android:text="@string/familiar_nombre"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        />
 
                     <TextView android:id="@+id/txtNombreUsuario"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/text_margin_item"
+                        android:textStyle="bold"
+                        />
 
                 </LinearLayout>
 
@@ -83,7 +77,7 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Apellido: "
+                        android:text="@string/familiar_apellido"
                         android:inputType="text"
                         android:textSize="18sp"/>
 
@@ -91,7 +85,10 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/text_margin_item"
+                        android:textStyle="bold"
+                        />
 
                 </LinearLayout>
 
@@ -103,7 +100,7 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Dni: "
+                        android:text="@string/familiar_dni"
                         android:inputType="text"
                         android:textSize="18sp"/>
 
@@ -111,7 +108,10 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/text_margin_item"
+                        android:textStyle="bold"
+                        />
 
                 </LinearLayout>
 
@@ -123,15 +123,19 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Fecha Nacimiento: "
+                        android:text="@string/familiar_fecha_nacimiento"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        />
 
                     <TextView android:id="@+id/dateFechaNacimientoUsuario"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/text_margin_item"
+                        android:textStyle="bold"
+                        />
 
                 </LinearLayout>
 
@@ -144,7 +148,7 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Telefono Celular: "
+                        android:text="@string/familiar_celular"
                         android:inputType="text"
                         android:textSize="18sp"/>
 
@@ -152,7 +156,10 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/text_margin_item"
+                        android:textStyle="bold"
+                        />
 
                 </LinearLayout>
 
@@ -164,7 +171,7 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Telefono Fijo: "
+                        android:text="@string/familiar_fijo"
                         android:inputType="text"
                         android:textSize="18sp"/>
 
@@ -172,11 +179,22 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:inputType="text"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/text_margin_item"
+                        android:textStyle="bold"
+                        />
 
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/familiar_domicilio"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorNegro"
+                />
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -186,25 +204,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 tools:context=".Activitys.MapsActivity"
-                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_margin="@dimen/text_margin_item"
                 />
-
-
-
-
-
-
-
-
-
 
         </LinearLayout>
 
-
-
-
-
     </LinearLayout>
-
 
 </android.support.constraint.ConstraintLayout>

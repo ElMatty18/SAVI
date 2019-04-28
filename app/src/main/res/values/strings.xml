@@ -96,7 +96,6 @@
 
     <!-- menu principal -->
 
-
     <!-- descripcion de elementos-->
     <string name="main_imagen">imagen principal</string>
     <string name="title_activity_maps">Map</string>
@@ -107,11 +106,21 @@
     <string name="alerta_grupo">Grupo</string>
     <string name="alerta_tipo">Tipo de Alarma</string>
     <string name="alerta_contacto_p">Contacto principal</string>
-
     <string name="alerta_usuario">Contacto principal</string>
-
     <string name="alerta_disparada_titulo">SAVI - Alarma</string>
     <string name="alerta_todos">Todos</string>
+
+
+    <!-- Alerta View PopUp -->
+    <string name="alerta_view_tipo">Tipo</string>
+    <string name="alerta_view_dirigida">Dirigida</string>
+    <string name="alerta_view_creada">Creada</string>
+
+
+    <!-- Alerta View PopUp Detail -->
+    <string name="alerta_view_detalles">Detalles</string>
+
+
 
 
     <!-- buscar grupo vecinal -->
@@ -120,8 +129,18 @@
 
     <!-- buscar Familiares -->
     <string name="codigo_familiar">Codigo Familiar</string>
-
     <string name="buscar_grupo">Buscar Grupo</string>
+
+    <!-- Detalle Familiar -->
+    <string name="familiar_nombre">Nombre</string>
+    <string name="familiar_apellido">Apellido</string>
+    <string name="familiar_dni">Dni</string>
+    <string name="familiar_fecha_nacimiento">Fecha Nacimiento</string>
+    <string name="familiar_celular">Celular</string>
+    <string name="familiar_fijo">Fijo</string>
+    <string name="familiar_domicilio">Domicilio</string>
+
+
 
 
 </resources>
