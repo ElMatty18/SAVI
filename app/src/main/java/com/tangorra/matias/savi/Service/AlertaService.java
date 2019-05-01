@@ -19,9 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tangorra.matias.savi.Activitys.MainActivity;
 import com.tangorra.matias.savi.Entidades.Alerta;
+import com.tangorra.matias.savi.Entidades.RespuestaVisto;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
+import com.tangorra.matias.savi.Utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,7 @@ public class AlertaService extends IntentService {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     Alerta alerta = dataSnapshot.getValue(Alerta.class);
                     if (condicionNotificacionAlerta(alerta)){
-                        showNotification(alerta.getAlarma(), alerta.getCasa());
+                        showNotification(alerta.getAlarma(), StringUtils.getTextoFormateado(alerta.getDirigida()));
                         marcarVisto(alerta, SesionManager.getUsuario().getId());
                     }
 
@@ -64,7 +66,7 @@ public class AlertaService extends IntentService {
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
                 Alerta alerta = dataSnapshot.getValue(Alerta.class);
                 if (condicionNotificacionAlerta(alerta)){
-                    showNotification(alerta.getAlarma(), alerta.getCasa());
+                    showNotification(alerta.getAlarma(), StringUtils.getTextoFormateado(alerta.getDirigida()));
                     marcarVisto(alerta, SesionManager.getUsuario().getId());
                     dispararAction(alerta);
                 }
@@ -88,21 +90,24 @@ public class AlertaService extends IntentService {
 
     private void marcarVisto(Alerta alerta, String id) {
         if (alerta.getVistoPor() == null){
-            alerta.setVistoPor(new ArrayList<String>());
+            alerta.setVistoPor(new ArrayList<RespuestaVisto>());
         }
-        alerta.getVistoPor().add(id);
+
+        RespuestaVisto respuestaVisto = new RespuestaVisto(id, SesionManager.getUsuario().getNombre(), SesionManager.getUsuario().getApellido());
+        alerta.getVistoPor().add(respuestaVisto);
+
         if (alerta.getId() != null){
             dbGrupoVecinal.child("alertas").child(alerta.getId()).setValue(alerta);
         }
 
     }
 
-    private boolean vistoUsuario(List<String> vistoPor, String id) {
+    private boolean vistoUsuario(List<RespuestaVisto> vistoPor, String id) {
         if (vistoPor == null){
             return false;
         }
-        for (String idUsuario: vistoPor) {
-            if (idUsuario.equals(id)){
+        for (RespuestaVisto itemRespuesta: vistoPor) {
+            if (itemRespuesta.getIdUsuario().equals(id)){
                 return true;
             }
         }
@@ -136,7 +141,7 @@ public class AlertaService extends IntentService {
             return false;
         }
         if (!vistoUsuario(alerta.getVistoPor(), SesionManager.getUsuario().getId())
-                && (alerta.getId() != null) && (alerta.getCasa() != null)){
+                && (alerta.getId() != null) && (alerta.getDirigida() != null)){
             return true;
         }
         return false;

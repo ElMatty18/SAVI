@@ -7,17 +7,22 @@ import java.util.List;
 public class Alerta implements Serializable {
 
     private String id;
-    private String casa;
+
+    private String dirigida;
     private String alarma;
 
     private Date creacion;
     private String creadoBy;
 
-    private List<String> vistoPor;
+    private String respuesta;
+    private String respuestaAutomatica;
+
+    private List<RespuestaVisto> vistoPor;
+    private List<RespuestaAlerta> respuestas;
 
     public Alerta(String id, String casa, String alarma, Date creacion, String creadoBy) {
         this.id = id;
-        this.casa = casa;
+        this.dirigida = casa;
         this.alarma = alarma;
         this.creacion = creacion;
         this.creadoBy = creadoBy;
@@ -34,12 +39,12 @@ public class Alerta implements Serializable {
         this.id = id;
     }
 
-    public String getCasa() {
-        return casa;
+    public String getDirigida() {
+        return dirigida;
     }
 
-    public void setCasa(String casa) {
-        this.casa = casa;
+    public void setDirigida(String dirigida) {
+        this.dirigida = dirigida;
     }
 
     public String getAlarma() {
@@ -58,11 +63,11 @@ public class Alerta implements Serializable {
         this.creacion = creacion;
     }
 
-    public List<String> getVistoPor() {
+    public List<RespuestaVisto> getVistoPor() {
         return vistoPor;
     }
 
-    public void setVistoPor(List<String> vistoPor) {
+    public void setVistoPor(List<RespuestaVisto> vistoPor) {
         this.vistoPor = vistoPor;
     }
 
@@ -74,12 +79,35 @@ public class Alerta implements Serializable {
         this.creadoBy = creadoBy;
     }
 
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
+    }
+
+    public String getRespuestaAutomatica() {
+        return respuestaAutomatica;
+    }
+
+    public void setRespuestaAutomatica(String respuestaAutomatica) {
+        this.respuestaAutomatica = respuestaAutomatica;
+    }
+
+    public List<RespuestaAlerta> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<RespuestaAlerta> respuestas) {
+        this.respuestas = respuestas;
+    }
 
     @Override
     public String toString() {
         return "Alerta{" +
                 "id='" + id + '\'' +
-                ", casa='" + casa + '\'' +
+                ", dirigida='" + dirigida + '\'' +
                 ", alarma='" + alarma + '\'' +
                 '}';
     }

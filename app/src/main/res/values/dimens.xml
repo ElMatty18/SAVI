@@ -9,6 +9,7 @@
     <dimen name="activity_margenes">10dp</dimen>
 
     <dimen name="margin_item">3dp</dimen>
+    <dimen name="margin_item_ext">10dp</dimen>
 
 
     <dimen name="text_horizontal_margin">10dp</dimen>

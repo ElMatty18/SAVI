@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +31,7 @@ import com.tangorra.matias.savi.Activitys.FamiliaActivity;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.Domicilio;
 import com.tangorra.matias.savi.Entidades.Grupo;
+import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
@@ -39,6 +43,7 @@ import com.tangorra.matias.savi.View.PopUpFamiliarAlertas;
 import com.tangorra.matias.savi.View.PopUpViewInfoFamiliar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +65,6 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
     private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
     private ValueEventListener familiarBorrarListener = getBorrarFamiliarListener();
-
 
     private Usuario usuarioSelecc = new Usuario();
     private Grupo grupoSelecc = new Grupo();
@@ -274,7 +278,7 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
             ImageView imagenAlerta = convertView.findViewById(R.id.imagenAlarmaExp);
 
             tipoAlerta.setText(item.getAlarma());
-            usuario.setText(item.getCasa());
+            usuario.setText(StringUtils.getTextoFormateado(item.getDirigida()));
             fecha.setText(DateUtils.sdf2.format(item.getCreacion()));
 
             if (tipoAlerta.getText().equals(StringUtils.ALARMA_SONANDO)){
@@ -304,8 +308,47 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
         Alerta item = (Alerta) getChild(groupPosition,childPosition);
         convertView = LayoutInflater.from(context).inflate(R.layout.item_alarma_expandible_child, null);
 
-        TextView child = convertView.findViewById(R.id.alertaIdDetailalertaIdDetail);
-        child.setText(item.getId());
+        TextView alertaID = convertView.findViewById(R.id.alertaIdDetailalertaIdDetail);
+        alertaID.setText(item.getId());
+
+        TextView alertaCreador = convertView.findViewById(R.id.alertaDetailUsuarioCreador);
+        alertaCreador.setText(StringUtils.getTextoFormateado(item.getCreadoBy()));
+
+        TextView alertaCreacion = convertView.findViewById(R.id.alertaDetailFechaCreacion);
+        alertaCreacion.setText(DateUtils.sdf2.format(item.getCreacion()));
+
+        TextView alertaDirigida = convertView.findViewById(R.id.alertaDetailFor);
+        alertaDirigida.setText(StringUtils.getTextoFormateado(item.getDirigida()));
+
+        TextView alertaRespuesta = convertView.findViewById(R.id.alertaDetailRespuesta);
+        alertaRespuesta.setText(item.getRespuesta());
+
+        ImageView imagenEstadoAlerta = convertView.findViewById(R.id.imagenEstadoAlertaA);
+        imagenEstadoAlerta.setImageResource(R.drawable.menu_cancel);
+
+        ImageView imagenEstadoAlertaA = convertView.findViewById(R.id.imagenEstadoAlertaB);
+        imagenEstadoAlertaA.setImageResource(R.drawable.menu_cancel);
+
+        ImageView imagenEstadoAlertaC = convertView.findViewById(R.id.imagenEstadoAlertaC);
+        imagenEstadoAlertaC.setImageResource(R.drawable.menu_cancel);
+
+        ImageView imagenEstadoAlertaD = convertView.findViewById(R.id.imagenEstadoAlertaD);
+        imagenEstadoAlertaD.setImageResource(R.drawable.menu_cancel);
+
+
+        ListView listViewRespuestas =  convertView.findViewById(R.id.listViewRespuestas);
+
+        ArrayList<RespuestaAlerta> respuestasAlertas = new ArrayList<>();
+        respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
+        respuestasAlertas.add(new RespuestaAlerta("yyy","yyyy","yyyyy",new Date(),"xxx","xxx","xxx"));
+        respuestasAlertas.add(new RespuestaAlerta("zzz","zzz","zzz",new Date(),"xxx","xxx","xxx"));
+        respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
+        respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
+
+        AdaptadorAlertasRespuestas adaptadorAlertasRespuestas = new AdaptadorAlertasRespuestas(context,respuestasAlertas );
+        listViewRespuestas.setAdapter(adaptadorAlertasRespuestas);
+
+
         return convertView;
     }
 
@@ -313,4 +356,7 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
+
 }

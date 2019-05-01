@@ -1,34 +1,6 @@
 package com.tangorra.matias.savi.Utils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.tangorra.matias.savi.Activitys.AccesoActivity;
-import com.tangorra.matias.savi.Activitys.MainActivity;
-import com.tangorra.matias.savi.Entidades.Grupo;
-import com.tangorra.matias.savi.Entidades.Persona;
-import com.tangorra.matias.savi.Entidades.SesionManager;
-import com.tangorra.matias.savi.Entidades.Usuario;
-import com.tangorra.matias.savi.R;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
 
 public class FirebaseUtils extends AppCompatActivity  {
 

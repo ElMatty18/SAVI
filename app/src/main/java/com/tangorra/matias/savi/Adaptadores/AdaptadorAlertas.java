@@ -49,7 +49,7 @@ public class AdaptadorAlertas extends BaseAdapter {
         ImageView imagenAlerta = convertView.findViewById(R.id.imagenAlarma);
 
         tipoAlerta.setText(item.getAlarma());
-        usuario.setText(item.getCasa());
+        usuario.setText(StringUtils.getTextoFormateado(item.getDirigida()));
         fecha.setText(DateUtils.sdf2.format(item.getCreacion()));
 
         if (tipoAlerta.getText().equals(StringUtils.ALARMA_SONANDO)){

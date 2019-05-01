@@ -118,9 +118,16 @@
 
 
     <!-- Alerta View PopUp Detail -->
-    <string name="alerta_view_detalles">Detalles</string>
+    <string name="alerta_view_id">ID</string>
+    <string name="alerta_view_user_creador">Usuario Creador</string>
+    <string name="alerta_view_fecha_creacion">Fecha Creacion</string>
+    <string name="alerta_view_dirigida_to">Dirigida</string>
+    <string name="alerta_view_estado_dirigido">Estado</string>
+    <string name="alerta_view_fecha_respuesta">Fecha Respuesta</string>
+    <string name="alerta_view_for">Visto por</string>
+    <string name="alerta_view_for_respuesta">Confirma</string>
 
-
+    <string name="alerta_view_respuestas">Usuarios Grupo</string>
 
 
     <!-- buscar grupo vecinal -->

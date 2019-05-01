@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,10 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.tangorra.matias.savi.Adaptadores.AdaptadorPersonas;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorUsuarios;
-import com.tangorra.matias.savi.Entidades.Grupo;
-import com.tangorra.matias.savi.Entidades.Persona;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
@@ -32,8 +28,6 @@ import com.tangorra.matias.savi.View.PopUpViewQRPersona;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class FamiliaActivity extends AppCompatActivity {
 

@@ -125,7 +125,6 @@ public class AlertaActivity extends AppCompatActivity {
         RecyclerView alarmas = (RecyclerView) findViewById(R.id.list_alarma);
         initRecyclerViewAlarma(alarmas, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), alarmaAdaptar);
 
-        //cargar los usuarios!
         cargarTitlesCasas();
         cargarImagenCasas(this);
 
@@ -209,7 +208,7 @@ public class AlertaActivity extends AppCompatActivity {
 
     private void persistir(String lugar, String descripcion){
        String id = dbGrupoVecinal.push().getKey();
-       Alerta alerta = new Alerta(id, lugar, descripcion, new Date(), SesionManager.getUsuario().getId());
+       Alerta alerta = new Alerta(id, lugar, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
        dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
     }
 
