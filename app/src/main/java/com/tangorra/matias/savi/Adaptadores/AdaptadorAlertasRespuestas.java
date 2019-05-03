@@ -47,11 +47,17 @@ public class AdaptadorAlertasRespuestas extends BaseAdapter {
         TextView usuarioRespuesta = convertView.findViewById(R.id.viewRespestaAlerta);
         usuarioRespuesta.setText(StringUtils.getTextoFormateado(item.getGlosa()));
 
-        ImageView imagenAlertaRespuesta = convertView.findViewById(R.id.imagenRespuestaAlertaA);
-        imagenAlertaRespuesta.setImageResource(R.drawable.menu_cancel);
+        ImageView imagenAlertaRespuestaA = convertView.findViewById(R.id.imagenRespuestaAlertaA);
+        imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_cancel);
+
+        ImageView imagenAlertaRespuestaB = convertView.findViewById(R.id.imagenAlertaRespuestaB);
+        imagenAlertaRespuestaB.setImageResource(R.drawable.respuesta_peligro);
 
         ImageView imagenAlertaRespuestaC = convertView.findViewById(R.id.imagenAlertaRespuestaC);
-        imagenAlertaRespuestaC.setImageResource(R.drawable.menu_cancel);
+        imagenAlertaRespuestaC.setImageResource(R.drawable.respuesta_policia);
+
+        ImageView imagenAlertaRespuestaD = convertView.findViewById(R.id.imagenAlertaRespuestaD);
+        imagenAlertaRespuestaD.setImageResource(R.drawable.respuesta_lejos);
 
         return convertView;
     }

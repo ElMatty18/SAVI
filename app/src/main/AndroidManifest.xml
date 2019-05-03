@@ -28,8 +28,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
@@ -50,15 +48,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitys.AccesoActivity"  android:clearTaskOnLaunch="true"/>
-
+        <activity
+            android:name=".Activitys.AccesoActivity"
+            android:clearTaskOnLaunch="true" />
         <activity
             android:name=".Activitys.MenuPrincipalActivity"
-            android:label="@string/title_activity_menu_principal"
-            android:theme="@style/AppTheme.NoActionBar"
             android:clearTaskOnLaunch="true"
-            />
-
+            android:label="@string/title_activity_menu_principal"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activitys.GrupoVecinalActivity" />
         <activity
             android:name=".Activitys.MapsActivity"
@@ -76,21 +73,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
         <!-- service -->
 
-        <service
-            android:name=".Service.AlertaService"
-            />
-
-        <service
-            android:name=".Service.NotificacionService"
-            />
-
+        <service android:name=".Service.AlertaService" />
+        <service android:name=".Service.NotificacionService" />
 
         <!-- fin -->
 
@@ -105,37 +95,54 @@
             </intent-filter>
         </service>
 
-
-        <!--<receiver android:name=".BroadCastReciber.EstadoDispositivo" >
+        <!--
+        <receiver android:name=".BroadCastReciber.EstadoDispositivo" >
             <intent-filter>
                 <action android:name="Intent.ACTION_POWER_CONNECTED" >
                 </action>
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
 
         <activity android:name=".Activitys.PerfilActivity" />
         <activity android:name=".Activitys.FamiliaActivity" />
         <activity android:name=".Activitys.ConfiguracionActivity" />
         <activity android:name=".Activitys.GrupoVecinalViewActivity" />
         <activity android:name=".Activitys.NotificacionActivity" />
-
-
-        <activity android:name=".View.PopUpAlertasGrupo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpNotificaciones" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpAlertasFamilia" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-
-        <activity android:name=".View.PopUpDomicilio" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpDomicilioAlternativo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpDomiciliosMenu" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-
-        <activity android:name=".View.PopUpViewQRGrupo" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpViewQRPersona" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpViewPersona" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-
-        <activity android:name=".View.PopUpViewInfoFamiliar" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-        <activity android:name=".View.PopUpFamiliarAlertas" android:theme="@style/AppTheme.PopUpSavi.solid"></activity>
-
-
+        <activity
+            android:name=".View.PopUpAlertasGrupo"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpNotificaciones"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpAlertasFamilia"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpDomicilio"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpDomicilioAlternativo"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpDomiciliosMenu"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpViewQRGrupo"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpViewQRPersona"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpViewPersona"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpViewInfoFamiliar"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity
+            android:name=".View.PopUpFamiliarAlertas"
+            android:theme="@style/AppTheme.PopUpSavi.solid" />
+        <activity android:name=".Activitys.RespuestaAlertaActivity"></activity>
     </application>
 
 </manifest>

@@ -122,47 +122,34 @@
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/alertaDetailRespuesta"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imagenEstadoAlertaA"
-                android:layout_margin="@dimen/margin_item"
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imagenEstadoAlertaB"
-                android:layout_margin="@dimen/margin_item"
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imagenEstadoAlertaC"
-                android:layout_margin="@dimen/margin_item"
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imagenEstadoAlertaD"
-                android:layout_margin="@dimen/margin_item"
-                />
-
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/margin_item_ext"
+            android:orientation="horizontal"
             >
 
-            <SeekBar
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="@string/alerta_view_estado_alerta"
+                />
 
+            <SeekBar
+                android:id="@+id/seekBar_nivel_alerta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="15dp"
+                android:minWidth="15dp"
+                android:maxHeight="15dp"
+                android:maxWidth="15dp"
+                android:layout_marginLeft="@dimen/text_margin_item"
+                android:progressDrawable="@drawable/custom_track"
+                android:thumb="@drawable/custom_thumb"
+                />
         </LinearLayout>
 
 
@@ -170,6 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/colorNegro"
+            android:layout_marginTop="@dimen/margin_item_ext"
             />
 
         <LinearLayout

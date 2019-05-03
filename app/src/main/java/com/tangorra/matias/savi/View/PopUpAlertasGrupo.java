@@ -38,7 +38,6 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
 
     private ExpandableListView expandableListView;
     private AdaptadorCombinado adaptadorCombinado;
-    private ArrayList<String> categorias;
     private Map<Alerta, ArrayList<Alerta>> mapChild;
 
 
@@ -54,7 +53,7 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
         int width = dm.widthPixels;
         int heigth = dm.heightPixels;
 
-        getWindow().setLayout((int )(width*.9),(int )(heigth*.7) );
+        getWindow().setLayout((int )(width*.9),(int )(heigth*.8) );
 
         getSupportActionBar().hide();
 
@@ -74,11 +73,6 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
                     AlertasDetalle.add(alerta);
                     mapChild.put(alerta, AlertasDetalle);
                 }
-                //adapAlarmas = new AdaptadorAlertas(popAlarmas, alertas);
-                /*listAlarmas = findViewById(R.id.listHistorialAlarmas);
-
-                listAlarmas.setAdapter(adapAlarmas);*/
-
                 adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
                 expandableListView.setAdapter(adaptadorCombinado);
 
@@ -92,7 +86,6 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
 
 
         expandableListView = findViewById(R.id.listHistorialAlarmasExpandible);
-        categorias = new ArrayList<>();
         mapChild = new HashMap<>();
 
 

@@ -78,7 +78,6 @@
     <string name="info_confirme_contrasena">Confirme Contraseña</string>
 
 
-
     <!-- Perfil -->
     <string name="pefil_title">Perfil</string>
     <string name="nombre">Nombre</string>
@@ -123,6 +122,7 @@
     <string name="alerta_view_fecha_creacion">Fecha Creacion</string>
     <string name="alerta_view_dirigida_to">Dirigida</string>
     <string name="alerta_view_estado_dirigido">Estado</string>
+    <string name="alerta_view_estado_alerta">Nivel de Alerta</string>
     <string name="alerta_view_fecha_respuesta">Fecha Respuesta</string>
     <string name="alerta_view_for">Visto por</string>
     <string name="alerta_view_for_respuesta">Confirma</string>
@@ -146,8 +146,6 @@
     <string name="familiar_celular">Celular</string>
     <string name="familiar_fijo">Fijo</string>
     <string name="familiar_domicilio">Domicilio</string>
-
-
 
 
 </resources>

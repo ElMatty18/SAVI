@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,6 +16,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -323,17 +325,15 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
         TextView alertaRespuesta = convertView.findViewById(R.id.alertaDetailRespuesta);
         alertaRespuesta.setText(item.getRespuesta());
 
-        ImageView imagenEstadoAlerta = convertView.findViewById(R.id.imagenEstadoAlertaA);
-        imagenEstadoAlerta.setImageResource(R.drawable.menu_cancel);
+        SeekBar nivelAlerta = convertView.findViewById(R.id.seekBar_nivel_alerta);
+        nivelAlerta.setProgress(30);
 
-        ImageView imagenEstadoAlertaA = convertView.findViewById(R.id.imagenEstadoAlertaB);
-        imagenEstadoAlertaA.setImageResource(R.drawable.menu_cancel);
-
-        ImageView imagenEstadoAlertaC = convertView.findViewById(R.id.imagenEstadoAlertaC);
-        imagenEstadoAlertaC.setImageResource(R.drawable.menu_cancel);
-
-        ImageView imagenEstadoAlertaD = convertView.findViewById(R.id.imagenEstadoAlertaD);
-        imagenEstadoAlertaD.setImageResource(R.drawable.menu_cancel);
+        nivelAlerta.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
 
         ListView listViewRespuestas =  convertView.findViewById(R.id.listViewRespuestas);
