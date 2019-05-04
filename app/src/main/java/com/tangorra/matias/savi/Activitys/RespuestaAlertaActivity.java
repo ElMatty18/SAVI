@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -35,6 +36,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.hitomi.cmlibrary.CircleMenu;
@@ -43,10 +46,16 @@ import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Utils.FirebaseUtils;
+import com.tangorra.matias.savi.Utils.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private Alerta alerta = new Alerta();
+    public static Alerta alerta = new Alerta();
+
     private TextView respuestaAlertaTipo;
 
     private ImageView respuestaAlertaTipoImagen;
@@ -56,7 +65,8 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
     private TextView respuestaAlertaUsuarioCreador;
     private TextView respuestaAlertaFechaCreacion;
     private TextView respuestaAlertaFor;
-    private TextView respuestaAlertaRespuesta;
+    private TextView respuestaAlertaForTitle;
+    private TextView respuestaEstadoAlerta;
 
     private SeekBar seekBar_nivel_alerta_respuesta;
 
@@ -72,6 +82,7 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
     private StorageReference storageUsuarios = FirebaseStorage.getInstance().getReference();
 
+    private DatabaseReference dbGrupoVecinal;
 
 
     @Override
@@ -89,6 +100,9 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
         getSupportActionBar().hide();
 
+        Intent i = getIntent();
+        alerta = (Alerta)i.getSerializableExtra(StringUtils.parametroAlerta);
+
         asociarElementos();
         populatarElemento(alerta);
 
@@ -96,14 +110,12 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
     private void populatarElemento(Alerta source) {
         respuestaAlertaTipo.setText(source.getAlarma());
-
-        //respuestaAlertaTipoImagen
-        //respuestaAlertaDirigidaImagen
-
         respuestaAlertaID.setText(source.getId());
         respuestaAlertaUsuarioCreador.setText(source.getCreadoBy());
         respuestaAlertaFechaCreacion.setText("fecha");
         respuestaAlertaFor.setText(source.getDirigida());
+        respuestaAlertaForTitle.setText(source.getDirigida());
+        respuestaEstadoAlerta.setText(source.getEstado());
 
     }
 
@@ -118,15 +130,32 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
         respuestaAlertaUsuarioCreador = findViewById(R.id.respuestaAlertaUsuarioCreador);
         respuestaAlertaFechaCreacion = findViewById(R.id.respuestaAlertaFechaCreacion);
         respuestaAlertaFor = findViewById(R.id.respuestaAlertaFor);
-        respuestaAlertaRespuesta = findViewById(R.id.respuestaAlertaRespuesta);
         seekBar_nivel_alerta_respuesta = findViewById(R.id.seekBar_nivel_alerta_respuesta);
+
+        respuestaAlertaForTitle = findViewById(R.id.respuestaAlertaForTitle);
+
+        respuestaEstadoAlerta = findViewById(R.id.respuestaEstadoAlerta);
+
 
         //respuestaAlertaMapDomicilio = findViewById(R.id.respuestaAlertaMapDomicilio);
 
         ubicacionAlerta();
 
         respuestaAlertabtnConfirmar = findViewById(R.id.respuestaAlertabtnConfirmar);
+        respuestaAlertabtnConfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                responderAlerta("confirmada");
+            }
+        });
+
         respuestaAlertaCancelar = findViewById(R.id.respuestaAlertaCancelar);
+        respuestaAlertaCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                responderAlerta("cancelada");
+            }
+        });
     }
 
     private void cargarImagen(){
@@ -239,6 +268,28 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
         Intent menu = new Intent(RespuestaAlertaActivity.this, MenuPrincipalActivity.class);
         startActivity(menu);
         finish();
+    }
+
+
+    private void responderAlerta(String respuesta){
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).child("estado").setValue(respuesta);
+
+        RespuestaAlerta respuestaAlerta = new RespuestaAlerta();
+        respuestaAlerta.setIdUsuario(SesionManager.getUsuario().getId());
+        respuestaAlerta.setNombreUsuario(SesionManager.getUsuario().getNombre());
+        respuestaAlerta.setApellidoUsuario(SesionManager.getUsuario().getApellido());
+        respuestaAlerta.setCreacion(new Date());
+        respuestaAlerta.setIdAlarma(alerta.getId());
+        respuestaAlerta.setRespuesta(respuesta);
+
+        if (alerta.getRespuestas() == null){
+            alerta.setRespuestas(new ArrayList<RespuestaAlerta>());
+        }
+
+        alerta.getRespuestas().add(respuestaAlerta);
+
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).setValue(alerta);
+
     }
 
 

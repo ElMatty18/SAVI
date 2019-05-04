@@ -47,6 +47,13 @@ public  class StringUtils {
     public static String denegatePermission = "Permiso denegado";
 
 
+    public static String alertaActiva = "activa";
+
+    public static String parametroAlerta = "parametroAlerta";
+
+
+
+
     public static String getTextoFormateado(String texto){
         String formateado="";
         if (texto != null && !texto .isEmpty()){

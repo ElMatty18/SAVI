@@ -1,8 +1,9 @@
 package com.tangorra.matias.savi.Entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RespuestaVisto {
+public class RespuestaVisto implements Serializable {
 
     private String idUsuario;
     private String nombre;

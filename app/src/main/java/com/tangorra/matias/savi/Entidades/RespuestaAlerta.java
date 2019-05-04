@@ -1,8 +1,9 @@
 package com.tangorra.matias.savi.Entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RespuestaAlerta {
+public class RespuestaAlerta implements Serializable {
 
     private String idUsuario;
     private String nombreUsuario;

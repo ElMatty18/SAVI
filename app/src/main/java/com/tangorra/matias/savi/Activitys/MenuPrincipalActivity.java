@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -34,13 +35,21 @@ import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.tangorra.matias.savi.Entidades.Alerta;
+import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 import com.tangorra.matias.savi.View.PopUpAlertasFamilia;
 import com.tangorra.matias.savi.View.PopUpAlertasGrupo;
@@ -73,11 +82,13 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private StorageReference storageUsuarios;
 
+    private DatabaseReference dbGrupoVecinal;
+    private ChildEventListener listenerAlertas = getListenerAlertas();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
-        final Activity activity = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,6 +114,14 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         caracteristicasSAVI();
 
         addCabecera(navigationView);
+
+
+        if (SesionManager.getUsuario() != null && SesionManager.getUsuario().getIdGrupo() != null){
+            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
+            escucharAlertas();
+        }
+
+
 
        /* if (SesionManager.getUsuario().getIdGrupo() != null){
             MenuItem item = findViewById(R.id.mostarGrupo);
@@ -181,7 +200,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         View header = navigationView.getHeaderView(0);
         nombreUsuarioLogueado = header.findViewById(R.id.nombreUsuarioLogeado);
         mailUsuarioLogueado = header.findViewById(R.id.mailUsuarioLogeado);
-        Usuario u = SesionManager.getUsuario();
         nombreUsuarioLogueado.setText(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()));
         mailUsuarioLogueado.setText(SesionManager.getUsuario().getMail());
 
@@ -295,7 +313,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     public static class RowVerNewsViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView apraisorProfilePic;
         TextView cItem1;
         TextView cItem2;
 
@@ -338,10 +355,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-      /*  if (SesionManager.getUsuario().getIdGrupo() != null) {
-            MenuItem itemOption = menu.findItem(R.id.mostarGrupo);
-            itemOption.setVisible(true);
-        }*/
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -386,12 +399,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             Intent menu = new Intent(MenuPrincipalActivity.this, NotificacionActivity.class);
             startActivity(menu);
             finish();
-        } else if (id == R.id.pruebaRespuesta) {
-            Intent menu = new Intent(MenuPrincipalActivity.this, RespuestaAlertaActivity.class);
-            startActivity(menu);
-            finish();
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -469,5 +477,70 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         }
     }
 
+
+    @NonNull
+    private ChildEventListener getListenerAlertas() {
+        return new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Alerta alerta = dataSnapshot.getValue(Alerta.class);
+                if (condicionRespuestaAlerta(alerta)){
+                    lanzarResponderAlerta(alerta);
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                Alerta alerta = dataSnapshot.getValue(Alerta.class);
+                if (condicionRespuestaAlerta(alerta)){
+                    lanzarResponderAlerta(alerta);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+    }
+
+
+
+    private void escucharAlertas(){
+        dbGrupoVecinal.child("alertas").addChildEventListener(listenerAlertas);
+    }
+
+    private boolean condicionRespuestaAlerta(Alerta alerta){
+        if ((alerta.getEstado() != null) && (alerta.getEstado().equals(StringUtils.alertaActiva) && !respondioAlerta(alerta, SesionManager.getUsuario().getId()))){
+            return true;
+        }
+        return false;
+    }
+
+    private void lanzarResponderAlerta(Alerta alerta){
+        Intent intent = new Intent(MenuPrincipalActivity.this, RespuestaAlertaActivity.class);
+        intent.putExtra(StringUtils.parametroAlerta, alerta);
+        startActivity(intent);
+        finish();
+    }
+
+    private boolean respondioAlerta(Alerta alerta, String idUsuario){
+        if (alerta.getRespuestas() == null){
+            return false;
+        }
+        for (RespuestaAlerta item : alerta.getRespuestas()){
+            if (item != null && item.getIdUsuario() != null && item.getIdUsuario().equals(idUsuario)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
