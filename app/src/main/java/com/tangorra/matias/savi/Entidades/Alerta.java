@@ -17,6 +17,8 @@ public class Alerta implements Serializable {
     private String respuesta;
     private String respuestaAutomatica;
 
+    private String estado;
+
     private List<RespuestaVisto> vistoPor;
     private List<RespuestaAlerta> respuestas;
 
@@ -31,6 +33,13 @@ public class Alerta implements Serializable {
     public Alerta() {
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
     public String getId() {
         return id;
     }

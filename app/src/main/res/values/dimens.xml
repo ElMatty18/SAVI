@@ -23,6 +23,7 @@
 
     <dimen name="activity_horizontal_margin_big">40dp</dimen>
 
+    <dimen name="margin_top">50dp</dimen>
 
 
 

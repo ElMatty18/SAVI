@@ -20,6 +20,9 @@
     <string name="btt_codigo_persona">Ver Codigo Personal</string>
     <string name="btt_salir_familia">Salir Grupo Familiar</string>
 
+    <string name="btt_alerta_confirmar">Confirmar Alerta</string>
+    <string name="btt_alerta_cancelar">Cancelar Alerta</string>
+
 
     <!-- login -->
     <string name="prompt_email">Usuario</string>
@@ -146,6 +149,13 @@
     <string name="familiar_celular">Celular</string>
     <string name="familiar_fijo">Fijo</string>
     <string name="familiar_domicilio">Domicilio</string>
+
+
+
+    <!-- Detalle Familiar -->
+    <string name="respuesta_alerta_title">Respuesta Alerta</string>
+    <string name="respuesta_alerta_detalle">Detalle Alerta</string>
+    <string name="respuesta_alerta_ubicacion">Ubicacion Central de Alerta</string>
 
 
 </resources>

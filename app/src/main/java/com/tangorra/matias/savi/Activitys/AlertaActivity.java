@@ -11,6 +11,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +78,17 @@ public class AlertaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_alerta);
-        Toolbar tbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(tbar);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int width = dm.widthPixels;
+        int heigth = dm.heightPixels;
+
+        getWindow().setLayout((int )(width*.9),(int )(heigth*.8) );
+
+        getSupportActionBar().hide();
+
 
         this.contex = this;
 
@@ -206,9 +216,12 @@ public class AlertaActivity extends AppCompatActivity {
     }
 
 
-    private void persistir(String lugar, String descripcion){
+    private void persistir(String usuarioDirigida, String descripcion){
        String id = dbGrupoVecinal.push().getKey();
-       Alerta alerta = new Alerta(id, lugar, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
+       Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
+
+       alerta.setEstado("activa");
+
        dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
     }
 

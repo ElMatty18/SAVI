@@ -386,7 +386,12 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             Intent menu = new Intent(MenuPrincipalActivity.this, NotificacionActivity.class);
             startActivity(menu);
             finish();
+        } else if (id == R.id.pruebaRespuesta) {
+            Intent menu = new Intent(MenuPrincipalActivity.this, RespuestaAlertaActivity.class);
+            startActivity(menu);
+            finish();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

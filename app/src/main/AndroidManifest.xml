@@ -60,7 +60,9 @@
         <activity
             android:name=".Activitys.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".Activitys.AlertaActivity" />
+
+        <activity android:name=".Activitys.AlertaActivity"
+            android:theme="@style/AppTheme.PopUpSavi.solid.noBackOutside"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -142,7 +144,9 @@
         <activity
             android:name=".View.PopUpFamiliarAlertas"
             android:theme="@style/AppTheme.PopUpSavi.solid" />
-        <activity android:name=".Activitys.RespuestaAlertaActivity"></activity>
+
+        <activity android:name=".Activitys.RespuestaAlertaActivity"
+            android:theme="@style/AppTheme.PopUpSavi.solid.noBackOutside" />
     </application>
 
 </manifest>

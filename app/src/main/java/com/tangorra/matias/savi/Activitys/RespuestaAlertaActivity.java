@@ -1,14 +1,264 @@
 package com.tangorra.matias.savi.Activitys;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.hitomi.cmlibrary.CircleMenu;
+import com.hitomi.cmlibrary.OnMenuSelectedListener;
+import com.tangorra.matias.savi.Entidades.Alerta;
+import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
+import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
 
-public class RespuestaAlertaActivity extends AppCompatActivity {
+public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private Alerta alerta = new Alerta();
+    private TextView respuestaAlertaTipo;
+
+    private ImageView respuestaAlertaTipoImagen;
+    private ImageView respuestaAlertaDirigidaImagen;
+
+    private TextView respuestaAlertaID;
+    private TextView respuestaAlertaUsuarioCreador;
+    private TextView respuestaAlertaFechaCreacion;
+    private TextView respuestaAlertaFor;
+    private TextView respuestaAlertaRespuesta;
+
+    private SeekBar seekBar_nivel_alerta_respuesta;
+
+    private GoogleMap mMap;
+    private Marker marcador;
+    private double lat = 0.0;
+    private double lng = 0.0;
+
+    private Button respuestaAlertabtnConfirmar;
+    private Button respuestaAlertaCancelar;
+
+    private LocationListener locationListener = getLocationListener();
+
+    private StorageReference storageUsuarios = FirebaseStorage.getInstance().getReference();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_respuesta_alerta);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int width = dm.widthPixels;
+        int heigth = dm.heightPixels;
+
+        getWindow().setLayout((int )(width*.9),(int )(heigth*.8) );
+
+        getSupportActionBar().hide();
+
+        asociarElementos();
+        populatarElemento(alerta);
+
     }
+
+    private void populatarElemento(Alerta source) {
+        respuestaAlertaTipo.setText(source.getAlarma());
+
+        //respuestaAlertaTipoImagen
+        //respuestaAlertaDirigidaImagen
+
+        respuestaAlertaID.setText(source.getId());
+        respuestaAlertaUsuarioCreador.setText(source.getCreadoBy());
+        respuestaAlertaFechaCreacion.setText("fecha");
+        respuestaAlertaFor.setText(source.getDirigida());
+
+    }
+
+    private void asociarElementos() {
+        respuestaAlertaTipo = findViewById(R.id.respuestaAlertaTipo);
+
+        respuestaAlertaTipoImagen = findViewById(R.id.respuestaAlertaTipoImagen);
+        cargarImagen();
+
+        respuestaAlertaDirigidaImagen = findViewById(R.id.respuestaAlertaDirigidaImagen);
+        respuestaAlertaID = findViewById(R.id.respuestaAlertaID);
+        respuestaAlertaUsuarioCreador = findViewById(R.id.respuestaAlertaUsuarioCreador);
+        respuestaAlertaFechaCreacion = findViewById(R.id.respuestaAlertaFechaCreacion);
+        respuestaAlertaFor = findViewById(R.id.respuestaAlertaFor);
+        respuestaAlertaRespuesta = findViewById(R.id.respuestaAlertaRespuesta);
+        seekBar_nivel_alerta_respuesta = findViewById(R.id.seekBar_nivel_alerta_respuesta);
+
+        //respuestaAlertaMapDomicilio = findViewById(R.id.respuestaAlertaMapDomicilio);
+
+        ubicacionAlerta();
+
+        respuestaAlertabtnConfirmar = findViewById(R.id.respuestaAlertabtnConfirmar);
+        respuestaAlertaCancelar = findViewById(R.id.respuestaAlertaCancelar);
+    }
+
+    private void cargarImagen(){
+        storageUsuarios.child("Fotos").child(SesionManager.getUsuario().getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(RespuestaAlertaActivity.this)
+                        .load(uri)
+                        .fitCenter()
+                        .centerCrop()
+                        .into(respuestaAlertaDirigidaImagen);
+            }
+        });
+    }
+
+
+    private void ubicacionAlerta() {
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+        if (status == ConnectionResult.SUCCESS) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.respuestaAlertaMapDomicilio);
+            mapFragment.getMapAsync(this);
+        } else {
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, (Activity) getApplicationContext(), 10);
+            dialog.show();
+        }
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        if (getBaseContext() != null){
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+
+                }
+            });
+        }
+        miUbicacion();
+    }
+
+    private void agregarMarcador(double lat, double lng) {
+        LatLng coordenadas = new LatLng(lat, lng);
+        CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
+        if (marcador != null) {
+            marcador.remove();
+        }
+        marcador = mMap.addMarker(new MarkerOptions().position(coordenadas)
+                        .title("Mi ubicacion")
+                //.icon(bitmapDescriptorFromVector(this, R.mipmap.ic_launcher))
+        );
+        mMap.animateCamera(miUbicacion);
+    }
+
+    private void miUbicacion() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER );
+        actualizarUbicacion(location);
+
+        if (SesionManager.getUsuario().getPerfil() != null && SesionManager.getUsuario().getPerfil().getDomicilio() != null ){
+            lat = SesionManager.getUsuario().getPerfil().getDomicilio().getLat();
+            lng = SesionManager.getUsuario().getPerfil().getDomicilio().getLng();
+            if (lat != 0 && lng != 0){
+                agregarMarcador(lat, lng);
+            }
+        }
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15000,0,locationListener);
+    }
+
+    private void actualizarUbicacion(Location location) {
+
+    }
+
+
+    @NonNull
+    private LocationListener getLocationListener() {
+        return new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                actualizarUbicacion(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+    }
+
+    @Override
+    public  void onBackPressed(){
+        Intent menu = new Intent(RespuestaAlertaActivity.this, MenuPrincipalActivity.class);
+        startActivity(menu);
+        finish();
+    }
+
+
 }
+
+
+//String arrayName[] = {"Confirmar", "Cancelar"};
+
+/*CircleMenu circleMenu = (CircleMenu) findViewById(R.id.seleccRespuesta);
+        circleMenu.setMainMenu(Color.parseColor("#FFFF99"), R.drawable.icon_menu, R.drawable.respuesta_elegir)
+                .addSubMenu(Color.parseColor("#99FF99"), R.drawable.respuesta_ok)
+                .addSubMenu(Color.parseColor("#FFB19A"), R.drawable.respuesta_cancel)
+                .addSubMenu(Color.parseColor("#9999FF"), R.drawable.respuesta_policia)
+                .addSubMenu(Color.parseColor("#9ACDFF"), R.drawable.respuesta_bombero)
+                .addSubMenu(Color.parseColor("#FFBF9A"), R.drawable.respuesta_no_molestar)
+                .addSubMenu(Color.parseColor("#FF9A9A"), R.drawable.respuesta_viaje_bis)
+                .addSubMenu(Color.parseColor("#CD9AFF"), R.drawable.respuesta_lejos)
+                .setOnMenuSelectedListener(new OnMenuSelectedListener() {
+                    @Override
+                    public void onMenuSelected(int i) {
+                        Toast.makeText(RespuestaAlertaActivity.this, "seleccionaste" + arrayName[i],Toast.LENGTH_SHORT).show();
+                    }
+                });*/

@@ -19,8 +19,16 @@
                     android:id="@+id/mostarGrupo"
                     android:icon="@android:drawable/ic_menu_search"
                     android:title="@string/item_ver_grupo"
-
                     />
+
+
+                <item
+                    android:id="@+id/pruebaRespuesta"
+                    android:icon="@android:drawable/ic_menu_search"
+                    android:title="RESPUESTA"
+                    />
+
+
             </menu>
         </item>
     </group>
