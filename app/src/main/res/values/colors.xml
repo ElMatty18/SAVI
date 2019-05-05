@@ -23,5 +23,13 @@
     <color name="colorF">#cfd8dc</color>
 
 
+    <color name="colorVacaciones">#F77D6F</color>
+    <color name="colorCasaSola">#F7EB6F</color>
+    <color name="colorVisitasCasa">#BFF76F</color>
+    <color name="colorNoMolestar">#6FD8F7</color>
+    <color name="colorIgnorarTodo">#9E6FF7</color>
+
+
+
 
 </resources>

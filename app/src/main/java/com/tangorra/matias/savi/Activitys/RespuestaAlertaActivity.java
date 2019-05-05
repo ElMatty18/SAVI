@@ -95,9 +95,7 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
         int width = dm.widthPixels;
         int heigth = dm.heightPixels;
-
         getWindow().setLayout((int )(width*.9),(int )(heigth*.8) );
-
         getSupportActionBar().hide();
 
         Intent i = getIntent();

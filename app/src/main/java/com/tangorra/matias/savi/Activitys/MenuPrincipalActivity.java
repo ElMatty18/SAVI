@@ -393,7 +393,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.configurarCuenta) {
             Intent menu = new Intent(MenuPrincipalActivity.this, ConfiguracionActivity.class);
             startActivity(menu);
-            finish();
 
         } else if (id == R.id.addNotificacion) {
             Intent menu = new Intent(MenuPrincipalActivity.this, NotificacionActivity.class);

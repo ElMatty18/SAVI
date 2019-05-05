@@ -108,7 +108,10 @@
 
         <activity android:name=".Activitys.PerfilActivity" />
         <activity android:name=".Activitys.FamiliaActivity" />
-        <activity android:name=".Activitys.ConfiguracionActivity" />
+
+        <activity android:name=".Activitys.ConfiguracionActivity"
+            android:theme="@style/AppTheme.PopUpSavi.solid"/>
+
         <activity android:name=".Activitys.GrupoVecinalViewActivity" />
         <activity android:name=".Activitys.NotificacionActivity" />
         <activity

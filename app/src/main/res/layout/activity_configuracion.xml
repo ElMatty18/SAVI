@@ -2,9 +2,12 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/gradiente_informacion"
-    android:gravity="center_vertical">
+    android:background="@drawable/gradiente_configuracion"
+    android:gravity="center_vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activitys.ConfiguracionActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_gravity="center_horizontal">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,120 +54,244 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:background="@drawable/gradiente_perfil2">
+                android:background="@color/colorBlanco">
 
                 <Switch
                     android:id="@+id/seleccVaciones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Vacaciones"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    android:text="@string/configuracion_vacaciones"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    android:background="@color/colorVacaciones"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/seleccVacionesFechas">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/configuracion_vacaciones_title_fechas"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorNegro"
+                        android:textSize="20dp"
+                        android:textStyle="italic"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Inicio"
+                            android:id="@+id/configuracion_inicio_vacaciones"
+                            android:textSize="30dp"/>
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="@dimen/margin_item"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/flecha_derecha"
+                            />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Fin"
+                            android:id="@+id/configuracion_fin_vacaciones"
+                            android:textSize="30dp"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnConfiguracionConfirmarVacaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_confirmar_vacaciones"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/colorVacaciones"
+                        />
+
+                </LinearLayout>
 
                 <Switch
                     android:id="@+id/seleccCasaSola"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Casa sola"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    android:text="@string/configuracion_casaSola"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    android:background="@color/colorCasaSola"/>
 
-                <Switch
-                    android:id="@+id/seleccVisitas"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Visitas en casa"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    android:orientation="vertical"
+                    android:id="@+id/seleccCasaSolaFecha">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/configuracion_casaSola_selecc"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorNegro"
+                        android:textSize="20dp"
+                        android:textStyle="italic"
+                        />
+
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Inicio"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/configuracion_casa_sola"
+                        android:textSize="30dp"/>
+
+                    <Button
+                        android:id="@+id/btnConfiguracionConfirmarAusencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_confirmar_ausencia"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/colorCasaSola"
+                        />
+
+
+                </LinearLayout>
 
                 <Switch
-                    android:id="@+id/seleccIgnorar"
+                    android:id="@+id/seleccVisitasCasa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ignorar todo"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                    android:text="@string/configuracion_visitas"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    android:background="@color/colorVisitasCasa"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/seleccVisitasHogar">
+
+
+
+                    <Button
+                        android:id="@+id/btnConfiguracionConfirmarVisitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_confirmar_visitas"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/colorVisitasCasa"
+                        />
+
+                </LinearLayout>
 
                 <Switch
                     android:id="@+id/seleccNoMolestar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No molestar"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
-
-            </LinearLayout>
-
-            <!--si elije vaciones-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:background="@drawable/gradiente_perfil"
-
-                >
-
-                <!--inicio... fin-->
+                    android:text="@string/configuracion_noMolestar"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    android:background="@color/colorNoMolestar"/>
 
                 <LinearLayout
-                    android:id="@+id/lay_fechas_vacaciones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:layout_margin="@dimen/activity_horizontal_margin">
+                    android:id="@+id/seleccNoMolestarHora">
 
-                    <DatePicker
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/select_vacaciones">
-                    </DatePicker>
+                        android:text="@string/configuracion_noMolestar_selecc"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorNegro"
+                        android:textSize="20dp"
+                        android:textStyle="italic"
+                        />
+
+                    <Button
+                        android:id="@+id/btnConfiguracionConfirmarNoMolestar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_confirmar_noMolestar"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/colorNoMolestar"
+                        />
 
                 </LinearLayout>
 
+                <Switch
+                    android:id="@+id/seleccIgnorarTodo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/configuracion_ignorarTodo"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    android:background="@color/colorIgnorarTodo"/>
+
                 <LinearLayout
-                    android:id="@+id/lay_hora_no_molestar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:layout_margin="@dimen/activity_horizontal_margin">
+                    android:id="@+id/seleccIgnorar">
 
-                    <TimePicker
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/select_noMolestar">
-                    </TimePicker>
+                        android:text="@string/configuracion_noMolestar_selecc"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorNegro"
+                        android:textSize="20dp"
+                        android:textStyle="italic"
+                        />
+
+                    <Button
+                        android:id="@+id/btnConfiguracionConfirmarIgnorar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_confirmar_ignorar"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/colorIgnorarTodo"
+                        />
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:layout_margin="@dimen/activity_horizontal_margin">
-
-                <Button
-                    android:id="@+id/btnAceptarConfiguracion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btt_aceptar"/>
-
-                <Button
-                    android:id="@+id/btnVolverMenuConfiguracion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btt_back"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 

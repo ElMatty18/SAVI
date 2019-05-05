@@ -51,6 +51,12 @@ public  class StringUtils {
 
     public static String parametroAlerta = "parametroAlerta";
 
+    public static String config_vacaciones = "vacaciones";
+    public static String config_casaSola = "casaSola";
+    public static String config_visitasCasa = "visitasCasa";
+    public static String config_noMolestar = "noMolestar";
+    public static String config_ignorarTodo = "ignorarTodo";
+
 
 
 

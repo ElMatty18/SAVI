@@ -23,6 +23,13 @@
     <string name="btt_alerta_confirmar">Confirmar Alerta</string>
     <string name="btt_alerta_cancelar">Cancelar Alerta</string>
 
+    <string name="btt_alerta_confirmar_vacaciones">Confirmar vacaciones</string>
+    <string name="btt_alerta_confirmar_ausencia">Confirmar ausencia</string>
+    <string name="btt_alerta_confirmar_visitas">Confirmar visitas</string>
+    <string name="btt_alerta_confirmar_noMolestar">Confirmar no molestar</string>
+    <string name="btt_alerta_confirmar_ignorar">Confirmar Ignorar</string>
+
+
 
     <!-- login -->
     <string name="prompt_email">Usuario</string>
@@ -156,6 +163,20 @@
     <string name="respuesta_alerta_title">Respuesta Alerta</string>
     <string name="respuesta_alerta_detalle">Detalle Alerta</string>
     <string name="respuesta_alerta_ubicacion">Ubicacion Central de Alerta</string>
+
+
+    <!-- Configuracion -->
+    <string name="configuracion_vacaciones">Vacaciones</string>
+    <string name="configuracion_casaSola">Ausente</string>
+    <string name="configuracion_visitas">Visitas en Casa</string>
+    <string name="configuracion_noMolestar">No Molestar</string>
+    <string name="configuracion_ignorarTodo">Ignorar Todo</string>
+
+
+    <string name="configuracion_vacaciones_title_fechas">Elija fechas de vacaciones</string>
+    <string name="configuracion_casaSola_selecc">Elija fecha cuando estara ausente</string>
+    <string name="configuracion_noMolestar_selecc">Elija para activar alertas</string>
+
 
 
 </resources>
