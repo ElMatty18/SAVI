@@ -83,24 +83,26 @@
                         />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center_horizontal">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="center_vertical">
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:hint="Inicio"
                             android:id="@+id/configuracion_inicio_vacaciones"
-                            android:textSize="30dp"/>
+                            android:textSize="30dp"
+                            android:gravity="center_horizontal"/>
 
                         <ImageView
-                            android:layout_width="30dp"
+                            android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_margin="@dimen/margin_item"
                             android:layout_gravity="center_horizontal"
                             app:srcCompat="@drawable/flecha_derecha"
+                            android:rotation="90"
                             />
 
                         <TextView
@@ -108,7 +110,27 @@
                             android:layout_height="wrap_content"
                             android:hint="Fin"
                             android:id="@+id/configuracion_fin_vacaciones"
-                            android:textSize="30dp"/>
+                            android:textSize="30dp"
+                            android:gravity="center_horizontal"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="@dimen/activity_margenes"
+                            android:background="@color/colorVacaciones">
+
+                            <EditText android:id="@+id/txtConfiguracionMensajeVacaciones"
+                                android:layout_height="100dp"
+                                android:layout_width="fill_parent"
+                                android:inputType="text|textMultiLine"
+                                android:hint="Descripcion"
+                                android:gravity="top"
+                                android:textStyle="bold"
+                                android:textSize="20dp"
+                                />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -162,6 +184,25 @@
                         android:id="@+id/configuracion_casa_sola"
                         android:textSize="30dp"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/activity_margenes"
+                        android:background="@color/colorCasaSola">
+
+                        <EditText android:id="@+id/txtConfiguracionMensajeAusencia"
+                            android:layout_height="100dp"
+                            android:layout_width="fill_parent"
+                            android:inputType="text|textMultiLine"
+                            android:hint="Descripcion"
+                            android:gravity="top"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            />
+
+                    </LinearLayout>
+
                     <Button
                         android:id="@+id/btnConfiguracionConfirmarAusencia"
                         android:layout_width="match_parent"
@@ -193,7 +234,24 @@
                     android:orientation="vertical"
                     android:id="@+id/seleccVisitasHogar">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/activity_margenes"
+                        android:background="@color/colorVisitasCasa">
 
+                        <EditText android:id="@+id/txtConfiguracionMensajeVisitas"
+                            android:layout_height="100dp"
+                            android:layout_width="fill_parent"
+                            android:inputType="text|textMultiLine"
+                            android:hint="Descripcion"
+                            android:gravity="top"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            />
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btnConfiguracionConfirmarVisitas"
@@ -235,6 +293,31 @@
                         android:textStyle="italic"
                         />
 
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/activity_margenes"
+                        android:background="@color/colorNoMolestar">
+
+                        <TimePicker
+                            android:id="@+id/seleccNoMolestarHoraFin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <EditText android:id="@+id/txtConfiguracionMensajeNoMolestar"
+                            android:layout_height="100dp"
+                            android:layout_width="fill_parent"
+                            android:inputType="text|textMultiLine"
+                            android:hint="Descripcion"
+                            android:gravity="top"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            />
+
+                    </LinearLayout>
+
                     <Button
                         android:id="@+id/btnConfiguracionConfirmarNoMolestar"
                         android:layout_width="match_parent"
@@ -274,6 +357,25 @@
                         android:textSize="20dp"
                         android:textStyle="italic"
                         />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="@dimen/activity_margenes"
+                        android:background="@color/colorIgnorarTodo">
+
+                        <EditText android:id="@+id/txtConfiguracionMensajeIgnorarTodo"
+                            android:layout_height="100dp"
+                            android:layout_width="fill_parent"
+                            android:inputType="text|textMultiLine"
+                            android:hint="Descripcion"
+                            android:gravity="top"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            />
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btnConfiguracionConfirmarIgnorar"

@@ -24,6 +24,8 @@ public class Usuario implements Serializable {
     private String idGrupo;
     private Grupo grupo;
 
+    private Configuracion configuracion;
+
     public Grupo getGrupo() {
         return grupo;
     }
@@ -170,4 +172,11 @@ public class Usuario implements Serializable {
         this.idFamilia = idFamilia;
     }
 
+    public Configuracion getConfiguracion() {
+        return configuracion;
+    }
+
+    public void setConfiguracion(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
 }
