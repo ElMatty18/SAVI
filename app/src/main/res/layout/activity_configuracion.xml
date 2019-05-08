@@ -140,6 +140,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btt_alerta_confirmar_vacaciones"/>
 
+                    <Button
+                        android:id="@+id/btnDesactivarVacaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_desactivar_vacaciones"/>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -209,6 +215,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btt_alerta_confirmar_ausencia"/>
 
+                    <Button
+                        android:id="@+id/btnDesactivarAusencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_desactivar_ausencia"/>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -258,6 +270,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/btt_alerta_confirmar_visitas"/>
+
+                    <Button
+                        android:id="@+id/btnDesactivarVisitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_desactivar_visitas"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -324,6 +342,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btt_alerta_confirmar_noMolestar"/>
 
+
+                    <Button
+                        android:id="@+id/btnDesactivarNoMolestar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_desactivar_noMolestar"/>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -382,6 +407,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/btt_alerta_confirmar_ignorar"/>
+
+                    <Button
+                        android:id="@+id/btnDesactivarIgnorarTodo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btt_alerta_desactivar_ignorar"/>
 
                     <View
                         android:layout_width="match_parent"

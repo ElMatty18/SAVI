@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF"
+    tools:context=".View.PopUpAlertasGrupo">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/informacion_title"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorNegro"
+            android:textStyle="italic"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorNegro"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:id="@+id/state_list"
+            android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_tesis"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_origen_1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:layout_margin="@dimen/margin_item_ext"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_origen_2"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_origen_3"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:layout_margin="@dimen/margin_item_ext"
+                    />
+
+                <ImageView
+                    android:id="@+id/im_icono"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/main_imagen"
+                    android:background="@drawable/logo_unicen"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_autor"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:layout_margin="@dimen/margin_item"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_directores"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:layout_margin="@dimen/margin_item"
+                    />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_fecha"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorNegro"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_margin="@dimen/margin_item"
+                    />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

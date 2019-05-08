@@ -287,7 +287,6 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
         alerta.getRespuestas().add(respuestaAlerta);
 
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).setValue(alerta);
-
     }
 
 

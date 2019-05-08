@@ -1,8 +1,10 @@
 package com.tangorra.matias.savi.Activitys;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +27,6 @@ import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -63,6 +65,12 @@ public class ConfiguracionActivity extends AppCompatActivity {
     private Button confirmarVisitasCasa;
     private Button confirmarNoMolestar;
     private Button confirmarIgnorarTodo;
+
+    private Button cancelarVacaciones;
+    private Button cancelarCasaSola;
+    private Button cancelarVisitasCasa;
+    private Button cancelarNoMolestar;
+    private Button cancelarIgnorarTodo;
 
     private TextView mensajeVacaciones;
     private TextView mensajeAusente;
@@ -168,6 +176,10 @@ public class ConfiguracionActivity extends AppCompatActivity {
         fechaPicker();
 
         seleccNoMolestarHoraFin  = (TimePicker) findViewById(R.id.seleccNoMolestarHoraFin);
+
+
+
+
      /*   int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
         showTime(hour, min);*/
@@ -289,9 +301,27 @@ public class ConfiguracionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validaNoMolestar()){
                     //validarObligatorios
+
+                    int hour, minute;
+                    String am_pm;
+                    if (Build.VERSION.SDK_INT >= 23 ){
+                        hour = seleccNoMolestarHoraFin.getHour();
+                        minute = seleccNoMolestarHoraFin.getMinute();
+                    }
+                    else{
+                        hour = seleccNoMolestarHoraFin.getCurrentHour();
+                        minute = seleccNoMolestarHoraFin.getCurrentMinute();
+                    }
+
+                    Date noMolestarDate = new Date();
+
+                    noMolestarDate.setHours(hour);
+                    noMolestarDate.setMinutes(minute);
+
                     Configuracion configuracion = new Configuracion();
                     configuracion.activarConfiguracion(StringUtils.config_noMolestar, mensajeNoMolestar.getText().toString());
                     configuracion.setNoMolestar(new Date());
+                    configuracion.setNoMolestar(noMolestarDate);
                     SesionManager.getUsuario().setConfiguracion(configuracion);
 
                     persistirUsuario(SesionManager.getUsuario());
@@ -314,6 +344,47 @@ public class ConfiguracionActivity extends AppCompatActivity {
 
                     persistirUsuario(SesionManager.getUsuario());
                 }
+            }
+        });
+
+
+        cancelarVacaciones= findViewById(R.id.btnDesactivarVacaciones);
+        cancelarVacaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desactivarConfiguracion(SesionManager.getUsuario());
+            }
+        });
+
+        cancelarCasaSola= findViewById(R.id.btnDesactivarAusencia);
+        cancelarCasaSola.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desactivarConfiguracion(SesionManager.getUsuario());
+            }
+        });
+
+        cancelarVisitasCasa= findViewById(R.id.btnDesactivarVisitas);
+        cancelarCasaSola.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desactivarConfiguracion(SesionManager.getUsuario());
+            }
+        });
+
+        cancelarNoMolestar= findViewById(R.id.btnDesactivarNoMolestar);
+        cancelarNoMolestar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desactivarConfiguracion(SesionManager.getUsuario());
+            }
+        });
+
+        cancelarIgnorarTodo= findViewById(R.id.btnDesactivarIgnorarTodo);
+        cancelarIgnorarTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desactivarConfiguracion(SesionManager.getUsuario());
             }
         });
 
@@ -552,6 +623,14 @@ public class ConfiguracionActivity extends AppCompatActivity {
         seleccNoMolestarHora.setVisibility(LinearLayout.GONE);
         seleccVisitasHogar.setVisibility(LinearLayout.GONE);
         seleccIgnorar.setVisibility(LinearLayout.GONE);
+    }
+
+
+    private void desactivarConfiguracion(Usuario u){
+        u.setConfiguracion(new Configuracion());
+        persistirUsuario(u);
+        finish();
+
     }
 
 

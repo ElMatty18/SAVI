@@ -30,6 +30,13 @@
     <string name="btt_alerta_confirmar_ignorar">Confirmar Ignorar</string>
 
 
+    <string name="btt_alerta_desactivar_vacaciones">Desactivar vacaciones</string>
+    <string name="btt_alerta_desactivar_ausencia">Desactivar ausencia</string>
+    <string name="btt_alerta_desactivar_visitas">Desactivar visitas</string>
+    <string name="btt_alerta_desactivar_noMolestar">Desactivar no molestar</string>
+    <string name="btt_alerta_desactivar_ignorar">Desactivar Ignorar</string>
+
+
 
     <!-- login -->
     <string name="prompt_email">Usuario</string>
@@ -54,7 +61,7 @@
     <string name="menu_notificacion">Notificacion</string>
     <string name="menu_ajustes">Ajustes</string>
     <string name="menu_configuracion">Configuracion</string>
-    <string name="menu_terminos">Terminos</string>
+    <string name="menu_terminos">Sobre SAVI</string>
 
     <!-- menu principal items -->
     <string name="item_crear_grupo">Crear Grupo</string>
@@ -66,6 +73,7 @@
     <string name="item_domicilios">Domicilios</string>
     <string name="item_configuracion">Configuracion</string>
     <string name="item_compromiso">Compromiso</string>
+    <string name="item_info">Informacion</string>
     <string name="item_enviar_invitacion">Enviar Invitacion</string>
     <string name="item_emitir_alerta">Emitir Alerta Vecinal</string>
     <string name="item_emitir_emergencia">Emitir Emergencia</string>
@@ -178,5 +186,20 @@
     <string name="configuracion_noMolestar_selecc">Elija para activar alertas</string>
 
 
+    <!-- Informacion -->
+    <string name="informacion_title">Informacion</string>
+
+    <string name="informacion_tesis">Tesis de Grado - Ingeniería de Sistemas</string>
+
+
+    <string name="informacion_origen_1">El objetivo de SAVI es la protección de familias y hogares de los usuarios en base a la comunicación e interacción entre vecinos.</string>
+    <string name="informacion_origen_2">No busca crear brechas entre la sociedad, sino que alienta la comunicación en una red privada y de confianza.</string>
+    <string name="informacion_origen_3">Una herramientas de libre acceso para responder antes eventos cotidianos utilizando canales seguros.</string>
+
+    <string name="informacion_autor">Autor: Jesús Matías Ezequiel Tangorra</string>
+
+    <string name="informacion_directores">Directores: Dr. Luis Berdun, Dr. Alvaro Soria</string>
+
+    <string name="informacion_fecha">Mayo, 2019</string>
 
 </resources>

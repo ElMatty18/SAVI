@@ -150,6 +150,11 @@
 
         <activity android:name=".Activitys.RespuestaAlertaActivity"
             android:theme="@style/AppTheme.PopUpSavi.solid.noBackOutside" />
+
+        <activity
+            android:name=".View.PopUpInformacion"
+            android:theme="@style/AppTheme.PopUpSavi" />
+
     </application>
 
 </manifest>

@@ -37,7 +37,7 @@ public  class StringUtils {
     public static String DESCRIP_ACTITUD_SOSPECHOSA = "Se da aviso sonoro a todos los usuarios";
     public static String DESCRIP_DANO_VEHICULO = "Si existe una alerta de Daño al vehiculo, informara al usuario respectivo. En caso de que el usuario no ese en su domicilio se informara dicha situacion y se les informa a sus familiares";
     public static String DESCRIP_PRINCIPIO_FUEGO = "Se creara una alama sonora para el usuario destinatario de dicha alerta, y una notificacion silenciosa a los demas usuarios";
-    public static String DESCRIP_AGRESION = "Se creara una alerta sonora para el usuario destinatario";
+    public static String DESCRIP_AGRESION = "Se creara una alerta sonora para todos los usuarios";
     public static String DESCRIP_MAL_ESTACIONADO = "Se crea una alarta silenciosa para todos los usuarios";
 
 
@@ -51,11 +51,11 @@ public  class StringUtils {
 
     public static String parametroAlerta = "parametroAlerta";
 
-    public static String config_vacaciones = "vacaciones";
-    public static String config_casaSola = "casaSola";
-    public static String config_visitasCasa = "visitasCasa";
-    public static String config_noMolestar = "noMolestar";
-    public static String config_ignorarTodo = "ignorarTodo";
+    public static String config_vacaciones = "Vacaciones";
+    public static String config_casaSola = "Casa Sola";
+    public static String config_visitasCasa = "Visitas Casa";
+    public static String config_noMolestar = "No Molestar";
+    public static String config_ignorarTodo = "Ignorar Todo";
 
 
 

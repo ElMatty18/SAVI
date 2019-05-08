@@ -184,13 +184,14 @@ public class AlertaActivity extends AppCompatActivity {
                 }
                 Vibrator vibrar = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                 vibrar.vibrate(1000);
-                Intent alerta = new Intent(AlertaActivity.this, MenuPrincipalActivity.class);
-                startActivity(alerta);
-                Toast alertar =
+              /*  Intent alerta = new Intent(AlertaActivity.this, MenuPrincipalActivity.class);
+                startActivity(alerta);*/
+               /* Toast alertar =
                         Toast.makeText(getApplicationContext(),
                                 StringUtils.alert, Toast.LENGTH_SHORT);
 
-                alertar.show();
+                alertar.show();*/
+               finish();
             }
         });
 
@@ -321,16 +322,19 @@ public class AlertaActivity extends AppCompatActivity {
             if (usuariosNames.length > position){
                 ((RowNewsViewHolder) holder).cItem1.setText(usuariosNames[position]);
 
-                storageUsuarios.child("Fotos").child(SesionManager.getGrupo().getIntegrantes().get(position).getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(AlertaActivity.this)
-                                .load(uri)
-                                .fitCenter()
-                                .centerCrop()
-                                .into(((RowNewsViewHolder) holder).pp2);
-                    }
-                });
+                if (SesionManager.getGrupo().getIntegrantes() != null && SesionManager.getGrupo().getIntegrantes().get(position) != null && SesionManager.getGrupo().getIntegrantes().get(position).getId() != null){
+                    storageUsuarios.child("Fotos").child(SesionManager.getGrupo().getIntegrantes().get(position).getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(AlertaActivity.this)
+                                    .load(uri)
+                                    .fitCenter()
+                                    .centerCrop()
+                                    .into(((RowNewsViewHolder) holder).pp2);
+                        }
+                    });
+                }
+
             }
         }
 

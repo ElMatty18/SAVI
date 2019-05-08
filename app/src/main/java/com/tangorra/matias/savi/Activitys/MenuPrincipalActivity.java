@@ -45,6 +45,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.tangorra.matias.savi.Entidades.Alerta;
+import com.tangorra.matias.savi.Entidades.Configuracion;
 import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
@@ -54,8 +55,11 @@ import com.tangorra.matias.savi.Utils.StringUtils;
 import com.tangorra.matias.savi.View.PopUpAlertasFamilia;
 import com.tangorra.matias.savi.View.PopUpAlertasGrupo;
 import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
+import com.tangorra.matias.savi.View.PopUpInformacion;
 import com.tangorra.matias.savi.View.PopUpNotificaciones;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -398,6 +402,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             Intent menu = new Intent(MenuPrincipalActivity.this, NotificacionActivity.class);
             startActivity(menu);
             finish();
+        } else if (id == R.id.informacion) {
+            Intent menu = new Intent(MenuPrincipalActivity.this, PopUpInformacion.class);
+            startActivity(menu);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -482,19 +489,12 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         return new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Alerta alerta = dataSnapshot.getValue(Alerta.class);
-                if (condicionRespuestaAlerta(alerta)){
-                    lanzarResponderAlerta(alerta);
-                }
-
+                eventoAlerta(dataSnapshot);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                Alerta alerta = dataSnapshot.getValue(Alerta.class);
-                if (condicionRespuestaAlerta(alerta)){
-                    lanzarResponderAlerta(alerta);
-                }
+                //eventoAlerta(dataSnapshot);
             }
 
             @Override
@@ -510,6 +510,42 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         };
     }
 
+    private void eventoAlerta(DataSnapshot dataSnapshot) {
+        Alerta alerta = dataSnapshot.getValue(Alerta.class);
+        notificacionAlerta(alerta);
+        if (condicionRespuestaAlerta(alerta)) {
+            if (tieneConfiguacionActiva(SesionManager.getUsuario())){
+                lanzarRespuestaConfigurada(SesionManager.getUsuario().getConfiguracion(),alerta);
+            } else {
+                lanzarResponderAlerta(alerta);
+            }
+        }
+    }
+
+    private void notificacionAlerta(Alerta alerta) {
+        String tipoAlerta = alerta.getAlarma();
+        if (tipoAlerta.equals(StringUtils.ALARMA_SONANDO)){
+            //Se dara un aviso sonoro al usuario al que esta dirijida dicha alarma
+        } else if (tipoAlerta.equals(StringUtils.SOSPECHA_ROBO)){
+            //La alarma sera ruidosa para todos los usuarios excepto para el que fue destinada
+        } else if (tipoAlerta.equals(StringUtils.ACTITUD_SOSPECHOSA)){
+            //Se da aviso sonoro a todos los usuarios
+        } else if (tipoAlerta.equals(StringUtils.DANO_VEHICULO)){
+            //Si existe una alerta de Daño al vehiculo, informara al usuario respectivo
+        } else if (tipoAlerta.equals(StringUtils.PRINCIPIO_FUEGO)){
+            //Se creara una alama sonora para el usuario destinatario de dicha alerta, y una notificacion silenciosa a los demas usuarios
+        } else if (tipoAlerta.equals(StringUtils.AGRESION)){
+            //Se creara una alerta sonora para todos los usuarios
+        } else if (tipoAlerta.equals(StringUtils.MAL_ESTACIONADO)){
+            //Se crea una alarta silenciosa para todos los usuarios
+        }
+
+    }
+
+    private void lanzarRespuestaConfigurada(Configuracion configuracion, Alerta alerta) {
+        String respuesta = configuracion.getConfiguracionSeleccionada() +" "+ configuracion.getMensaje();
+        responderAlerta(alerta, respuesta);
+    }
 
 
     private void escucharAlertas(){
@@ -542,4 +578,33 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         return false;
     }
 
+
+    private boolean tieneConfiguacionActiva(Usuario u){
+        if (u.getConfiguracion() != null){
+            if (u.getConfiguracion().isConfiguracionActiva()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void responderAlerta(Alerta alerta, String respuesta){
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).child("estado").setValue(respuesta);
+
+        RespuestaAlerta respuestaAlerta = new RespuestaAlerta();
+        respuestaAlerta.setIdUsuario(SesionManager.getUsuario().getId());
+        respuestaAlerta.setNombreUsuario(SesionManager.getUsuario().getNombre());
+        respuestaAlerta.setApellidoUsuario(SesionManager.getUsuario().getApellido());
+        respuestaAlerta.setCreacion(new Date());
+        respuestaAlerta.setIdAlarma(alerta.getId());
+        respuestaAlerta.setRespuesta(respuesta);
+
+        if (alerta.getRespuestas() == null){
+            alerta.setRespuestas(new ArrayList<RespuestaAlerta>());
+        }
+
+        alerta.getRespuestas().add(respuestaAlerta);
+
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).setValue(alerta);
+    }
 }
