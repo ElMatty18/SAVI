@@ -9,6 +9,8 @@ public class Alerta implements Serializable {
     private String id;
 
     private String dirigida;
+    private String dirigidaId;
+
     private String alarma;
 
     private Date creacion;
@@ -110,6 +112,14 @@ public class Alerta implements Serializable {
 
     public void setRespuestas(List<RespuestaAlerta> respuestas) {
         this.respuestas = respuestas;
+    }
+
+    public String getDirigidaId() {
+        return dirigidaId;
+    }
+
+    public void setDirigidaId(String dirigidaId) {
+        this.dirigidaId = dirigidaId;
     }
 
     @Override

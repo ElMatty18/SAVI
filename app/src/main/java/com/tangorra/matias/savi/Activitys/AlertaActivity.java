@@ -72,6 +72,7 @@ public class AlertaActivity extends AppCompatActivity {
     private ImageView[] usuariosImages;
     private String[] usuariosNames;
 
+    private String idDirigida;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -178,19 +179,13 @@ public class AlertaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!allUsers) {
-                    persistir(casaSeleccion, alarmaSeleccion);
+                    persistir(casaSeleccion, alarmaSeleccion, idDirigida);
                 }else {
                     persistir(StringUtils.ALL_USERS, alarmaSeleccion);
                 }
-                Vibrator vibrar = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                vibrar.vibrate(1000);
-              /*  Intent alerta = new Intent(AlertaActivity.this, MenuPrincipalActivity.class);
-                startActivity(alerta);*/
-               /* Toast alertar =
-                        Toast.makeText(getApplicationContext(),
-                                StringUtils.alert, Toast.LENGTH_SHORT);
+                /*Vibrator vibrar = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                vibrar.vibrate(1000);*/
 
-                alertar.show();*/
                finish();
             }
         });
@@ -226,6 +221,16 @@ public class AlertaActivity extends AppCompatActivity {
        dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
     }
 
+    private void persistir(String usuarioDirigida, String descripcion, String idDirigida){
+        String id = dbGrupoVecinal.push().getKey();
+        Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
+
+        alerta.setEstado("activa");
+        alerta.setDirigidaId(idDirigida);
+
+        dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+    }
+
     @Override
     public  void onBackPressed(){
         Intent menu = new Intent(AlertaActivity.this, MenuPrincipalActivity.class);
@@ -254,6 +259,8 @@ public class AlertaActivity extends AppCompatActivity {
                     adapter.mPosition[adapterPosition] = (value % 10) + (value / 10 + 1) * 10;
                     //cambiar seleccion de las casa
                     casaSeleccion=adapter.getValorCasa(adapterPosition);
+                    idDirigida = listIntegrantes.get(adapterPosition).getId();
+
                     adapter.notifyItemChanged(adapterPosition);
                 }
             }

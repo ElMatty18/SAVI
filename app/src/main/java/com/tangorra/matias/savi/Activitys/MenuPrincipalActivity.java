@@ -2,15 +2,21 @@ package com.tangorra.matias.savi.Activitys;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -86,8 +92,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private StorageReference storageUsuarios;
 
-    private DatabaseReference dbGrupoVecinal;
-    private ChildEventListener listenerAlertas = getListenerAlertas();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +125,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         addCabecera(navigationView);
 
 
-        if (SesionManager.getUsuario() != null && SesionManager.getUsuario().getIdGrupo() != null){
-            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
-            escucharAlertas();
-        }
 
 
 
@@ -484,127 +485,14 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
 
-    @NonNull
-    private ChildEventListener getListenerAlertas() {
-        return new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                eventoAlerta(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                //eventoAlerta(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-    }
-
-    private void eventoAlerta(DataSnapshot dataSnapshot) {
-        Alerta alerta = dataSnapshot.getValue(Alerta.class);
-        notificacionAlerta(alerta);
-        if (condicionRespuestaAlerta(alerta)) {
-            if (tieneConfiguacionActiva(SesionManager.getUsuario())){
-                lanzarRespuestaConfigurada(SesionManager.getUsuario().getConfiguracion(),alerta);
-            } else {
-                lanzarResponderAlerta(alerta);
-            }
-        }
-    }
-
-    private void notificacionAlerta(Alerta alerta) {
-        String tipoAlerta = alerta.getAlarma();
-        if (tipoAlerta.equals(StringUtils.ALARMA_SONANDO)){
-            //Se dara un aviso sonoro al usuario al que esta dirijida dicha alarma
-        } else if (tipoAlerta.equals(StringUtils.SOSPECHA_ROBO)){
-            //La alarma sera ruidosa para todos los usuarios excepto para el que fue destinada
-        } else if (tipoAlerta.equals(StringUtils.ACTITUD_SOSPECHOSA)){
-            //Se da aviso sonoro a todos los usuarios
-        } else if (tipoAlerta.equals(StringUtils.DANO_VEHICULO)){
-            //Si existe una alerta de Daño al vehiculo, informara al usuario respectivo
-        } else if (tipoAlerta.equals(StringUtils.PRINCIPIO_FUEGO)){
-            //Se creara una alama sonora para el usuario destinatario de dicha alerta, y una notificacion silenciosa a los demas usuarios
-        } else if (tipoAlerta.equals(StringUtils.AGRESION)){
-            //Se creara una alerta sonora para todos los usuarios
-        } else if (tipoAlerta.equals(StringUtils.MAL_ESTACIONADO)){
-            //Se crea una alarta silenciosa para todos los usuarios
-        }
-
-    }
-
-    private void lanzarRespuestaConfigurada(Configuracion configuracion, Alerta alerta) {
-        String respuesta = configuracion.getConfiguracionSeleccionada() +" "+ configuracion.getMensaje();
-        responderAlerta(alerta, respuesta);
-    }
 
 
-    private void escucharAlertas(){
-        dbGrupoVecinal.child("alertas").addChildEventListener(listenerAlertas);
-    }
-
-    private boolean condicionRespuestaAlerta(Alerta alerta){
-        if ((alerta.getEstado() != null) && (alerta.getEstado().equals(StringUtils.alertaActiva) && !respondioAlerta(alerta, SesionManager.getUsuario().getId()))){
-            return true;
-        }
-        return false;
-    }
-
-    private void lanzarResponderAlerta(Alerta alerta){
-        Intent intent = new Intent(MenuPrincipalActivity.this, RespuestaAlertaActivity.class);
-        intent.putExtra(StringUtils.parametroAlerta, alerta);
-        startActivity(intent);
-        finish();
-    }
-
-    private boolean respondioAlerta(Alerta alerta, String idUsuario){
-        if (alerta.getRespuestas() == null){
-            return false;
-        }
-        for (RespuestaAlerta item : alerta.getRespuestas()){
-            if (item != null && item.getIdUsuario() != null && item.getIdUsuario().equals(idUsuario)){
-                return true;
-            }
-        }
-        return false;
-    }
 
 
-    private boolean tieneConfiguacionActiva(Usuario u){
-        if (u.getConfiguracion() != null){
-            if (u.getConfiguracion().isConfiguracionActiva()){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    private void responderAlerta(Alerta alerta, String respuesta){
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).child("estado").setValue(respuesta);
 
-        RespuestaAlerta respuestaAlerta = new RespuestaAlerta();
-        respuestaAlerta.setIdUsuario(SesionManager.getUsuario().getId());
-        respuestaAlerta.setNombreUsuario(SesionManager.getUsuario().getNombre());
-        respuestaAlerta.setApellidoUsuario(SesionManager.getUsuario().getApellido());
-        respuestaAlerta.setCreacion(new Date());
-        respuestaAlerta.setIdAlarma(alerta.getId());
-        respuestaAlerta.setRespuesta(respuesta);
 
-        if (alerta.getRespuestas() == null){
-            alerta.setRespuestas(new ArrayList<RespuestaAlerta>());
-        }
 
-        alerta.getRespuestas().add(respuestaAlerta);
 
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).setValue(alerta);
-    }
+
 }
