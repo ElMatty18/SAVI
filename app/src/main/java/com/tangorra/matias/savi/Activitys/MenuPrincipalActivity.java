@@ -1,22 +1,15 @@
 package com.tangorra.matias.savi.Activitys;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +23,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,18 +33,16 @@ import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.tangorra.matias.savi.Entidades.Alerta;
-import com.tangorra.matias.savi.Entidades.Configuracion;
-import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
+import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
@@ -63,12 +53,6 @@ import com.tangorra.matias.savi.View.PopUpAlertasGrupo;
 import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.View.PopUpInformacion;
 import com.tangorra.matias.savi.View.PopUpNotificaciones;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuPrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,8 +66,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     public static int INVALID_POSITION = -1;
 
-    private LinearLayout contenidoMenu;
-
     private LinearLayout lyAlarmasGrupo;
     private LinearLayout lyAlarmasFamilia;
     private LinearLayout lyNotificaciones;
@@ -92,6 +74,12 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private StorageReference storageUsuarios;
 
+    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
+    private ValueEventListener grupoListener = getGrupoListener();
+
+    private Grupo grupo = new Grupo();
+
 
 
     @Override
@@ -99,9 +87,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        contenidoMenu = findViewById(R.id.contenido_menu_principal);
 
         addEventosNotificaciones();
 
@@ -111,52 +98,47 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
         botonesFlotanes();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         caracteristicasSAVI();
-
         addCabecera(navigationView);
-
-
-
-
-
-       /* if (SesionManager.getUsuario().getIdGrupo() != null){
-            MenuItem item = findViewById(R.id.mostarGrupo);
-            item.setVisible(false);
-        }*/
     }
 
-    private void cargarImagenPerfil() {
-        storageUsuarios = FirebaseStorage.getInstance().getReference();
 
-        storageUsuarios.child("Fotos").child(SesionManager.getUsuario().getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(MenuPrincipalActivity.this)
-                        .load(uri)
-                        .fitCenter()
-                        .centerCrop()
-                        .into(imgUsuario);
-            }
-        });
+    private void cargarImagenPerfil() {
+
+        if (SesionManager.getUsuario() != null && SesionManager.getUsuario().getId() != null){
+            storageUsuarios = FirebaseStorage.getInstance().getReference();
+
+            storageUsuarios.child("Fotos").child(SesionManager.getUsuario().getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(MenuPrincipalActivity.this)
+                            .load(uri)
+                            .fitCenter()
+                            .centerCrop()
+                            .into(imgUsuario);
+                }
+            });
+        }
+
     }
 
     private void caracteristicasSAVI() {
         final VerticalAdaptar verticalAdaptar = new VerticalAdaptar(this);
-        RecyclerView rv = (RecyclerView) findViewById(R.id.list_muestra);
+        RecyclerView rv = findViewById(R.id.list_muestra);
         initVerRecyclerView(rv, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), verticalAdaptar);
     }
 
     private void botonesFlotanes() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.crearAlertaVecinal);
+        FloatingActionButton fab = findViewById(R.id.crearAlertaVecinal);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,7 +147,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             }
         });
 
-        FloatingActionButton autoridades = (FloatingActionButton) findViewById(R.id.alertaAutoridades);
+        FloatingActionButton autoridades = findViewById(R.id.alertaAutoridades);
         autoridades.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -223,15 +205,11 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     private void initVerRecyclerView(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, final MenuPrincipalActivity.VerticalAdaptar adapter) {
-        // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
 
         recyclerView.setLayoutManager(layoutManager);
-        // we expect only fixed sized item for now
         recyclerView.setHasFixedSize(true);
-        // sample adapter with random data
         recyclerView.setAdapter(adapter);
-        // enable center post scrolling
         recyclerView.addOnScrollListener(new CenterScrollListener());
 
         layoutManager.addOnItemSelectionListener(new CarouselLayoutManager.OnCenterItemSelectionListener() {
@@ -250,10 +228,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     private static final class VerticalAdaptar extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @SuppressWarnings("UnsecureRandomNumberGeneration")
-        private final Random mRandom = new Random();
-        private final int[] mColors;
         private final int[] mPosition;
-        private final int[] image;
         private int mItemsCount = 10;
         LayoutInflater inflater;
 
@@ -286,22 +261,18 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         VerticalAdaptar(Context context) {
 
             this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mColors = new int[10];
             mPosition = new int[10];
-            image = new int[10];
             for (int i = 0; 10 > i; ++i) {
-                //noinspection MagicNumber
-                mColors[i] = Color.argb(255, mRandom.nextInt(256), mRandom.nextInt(256), mRandom.nextInt(256));
                 mPosition[i] = i;
             }
 
         }
 
+        @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = inflater.inflate(R.layout.item_card, null);
-            RecyclerView.ViewHolder holder = new MenuPrincipalActivity.RowVerNewsViewHolder(view);
-            return holder;
+            return new MenuPrincipalActivity.RowVerNewsViewHolder(view);
 
         }
 
@@ -323,15 +294,15 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
         public RowVerNewsViewHolder(View itemView) {
             super(itemView);
-            cItem1 = (TextView) itemView.findViewById(R.id.skillTitle);
-            cItem2 = (TextView) itemView.findViewById(R.id.skillDetails);
+            cItem1 = itemView.findViewById(R.id.skillTitle);
+            cItem2 = itemView.findViewById(R.id.skillDetails);
         }
     }
 
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -344,23 +315,17 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         getMenuInflater().inflate(R.menu.menu_principal, menu);
 
 
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -381,9 +346,14 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             finish();
 
         } else if (id == R.id.mostarGrupo) {
-            Intent menu = new Intent(MenuPrincipalActivity.this, GrupoVecinalViewActivity.class);
-            startActivity(menu);
-            finish();
+            if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null) {
+                Intent menu = new Intent(MenuPrincipalActivity.this, GrupoVecinalViewActivity.class);
+                startActivity(menu);
+                finish();
+            } else {
+                Toast.makeText(this, StringUtils.notSetGroup, Toast.LENGTH_LONG).show();
+            }
+
         }
         else if (id == R.id.datosPersonales) {
             Intent menu = new Intent(MenuPrincipalActivity.this, PerfilActivity.class);
@@ -408,7 +378,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             startActivity(menu);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -425,7 +395,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    public boolean checkPhonePermission() {
+    public void checkPhonePermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -442,9 +412,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                         new String[]{Manifest.permission.CALL_PHONE},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
-            return false;
         } else {
-            return true;
+
         }
     }
 
@@ -456,43 +425,65 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                 Toast.makeText(this, StringUtils.cancelScan, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                agregarGrupo(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
+    private void agregarGrupo(String contents) {
+        SesionManager.getUsuario().setIdGrupo(contents);
+        persistirUsuario(SesionManager.getUsuario());
+        recuperarDatosGrupoUsuario(SesionManager.getUsuario().getIdGrupo());
+    }
+
+    private void persistirUsuario(Usuario u) {
+        dbUsuarios.child(u.getId()).setValue(u);
+    }
+
+    private void recuperarDatosGrupoUsuario(String idGrupo) {
+        dbGrupo.orderByChild("id").equalTo(idGrupo).limitToFirst(1).addValueEventListener(grupoListener);
+    }
+
+
+    @NonNull
+    private ValueEventListener getGrupoListener() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
+                    grupo = imageSnapshot.getValue(Grupo.class);
+                }
+                SesionManager.setGrupo(grupo);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    @NonNull
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
-
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
+                        break;
                     }
                     abrirTelefono();
-
                 } else {
                     Toast.makeText(this, StringUtils.denegatePermission, Toast.LENGTH_LONG).show();
                 }
-                return;
+                break;
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }

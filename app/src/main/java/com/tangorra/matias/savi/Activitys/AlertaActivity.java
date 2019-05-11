@@ -62,7 +62,7 @@ public class AlertaActivity extends AppCompatActivity {
     private String casaSeleccion;
     private String alarmaSeleccion;
 
-    private DatabaseReference dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
+    private DatabaseReference dbGrupoVecinal;
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener integrantesListener = getIntegrantesListener();
 
@@ -90,10 +90,12 @@ public class AlertaActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-
         this.contex = this;
 
-        recuperarIntegrantesGrupo();
+        if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
+            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
+            recuperarIntegrantesGrupo();
+        }
 
         addBotones();
 
@@ -183,9 +185,6 @@ public class AlertaActivity extends AppCompatActivity {
                 }else {
                     persistir(StringUtils.ALL_USERS, alarmaSeleccion);
                 }
-                /*Vibrator vibrar = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                vibrar.vibrate(1000);*/
-
                finish();
             }
         });
@@ -213,22 +212,23 @@ public class AlertaActivity extends AppCompatActivity {
 
 
     private void persistir(String usuarioDirigida, String descripcion){
-       String id = dbGrupoVecinal.push().getKey();
-       Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
-
-       alerta.setEstado("activa");
-
-       dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+        if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
+            String id = dbGrupoVecinal.push().getKey();
+            Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
+            alerta.setEstado("activa");
+            dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+        }
     }
 
     private void persistir(String usuarioDirigida, String descripcion, String idDirigida){
-        String id = dbGrupoVecinal.push().getKey();
-        Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
 
-        alerta.setEstado("activa");
-        alerta.setDirigidaId(idDirigida);
-
-        dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+        if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
+            String id = dbGrupoVecinal.push().getKey();
+            Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
+            alerta.setEstado("activa");
+            alerta.setDirigidaId(idDirigida);
+            dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+        }
     }
 
     @Override

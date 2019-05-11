@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ import com.tangorra.matias.savi.Service.NotificacionService;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 
+import java.util.ArrayList;
+
 public class AccesoActivity extends AppCompatActivity {
 
     private Boolean internet=true;
@@ -47,6 +50,7 @@ public class AccesoActivity extends AppCompatActivity {
 
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener usuarioListener = getUsuarioListener();
+    private ValueEventListener integrantesListener = getIntegrantesListener();
 
     private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
     private ValueEventListener grupoListener = getGrupoListener();
@@ -54,11 +58,17 @@ public class AccesoActivity extends AppCompatActivity {
     private Usuario usuario = new Usuario();
     private Grupo grupo = new Grupo();
 
+    private ArrayList<Usuario> listIntegrantes = new ArrayList<Usuario>();
+
     private Context context;
 
     private SharedPreferences sharedPreferences;
 
     private LinearLayout removeLastAccess;
+
+    private String regExMail = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$\n";
+    private String regExPass = "^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{5,10}$";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,7 +254,11 @@ public class AccesoActivity extends AppCompatActivity {
                     grupo = imageSnapshot.getValue(Grupo.class);
                 }
                 SesionManager.setGrupo(grupo);
-                ingresar(usuario.getMail());
+                if (grupo.getId() != null){
+                    recuperarIntegrantesGrupo();
+                } else {
+                    ingresar(usuario.getMail());
+                }
             }
 
             @Override
@@ -321,10 +335,16 @@ public class AccesoActivity extends AppCompatActivity {
         boolean valido=true;
         if( txtEmail.getText().toString().length() == 0 ){
             txtEmail.setError( StringUtils.fieldRequired );
+            if (!regExMail.matches(txtEmail.getText().toString())){
+                txtEmail.setError( StringUtils.fieldInvalid );
+            }
             valido=false;
         }
         if( txtClave.getText().toString().length() == 0 ){
             txtClave.setError( StringUtils.fieldRequired );
+            if (!regExPass.matches(txtClave.getText().toString())){
+                txtEmail.setError( StringUtils.fieldInvalid );
+            }
             valido=false;
         }
         return valido;
@@ -340,5 +360,32 @@ public class AccesoActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         dbUsuarios.removeEventListener(usuarioListener);
+    }
+
+    private void recuperarIntegrantesGrupo(){
+        if (SesionManager.getGrupo().getId() != null){
+            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getGrupo().getId()).addValueEventListener(integrantesListener);
+        }
+    }
+
+
+    @NonNull
+    private ValueEventListener getIntegrantesListener() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
+                    Usuario usuario = imageSnapshot.getValue(Usuario.class);
+                    listIntegrantes.add(usuario);
+                }
+                SesionManager.getGrupo().setIntegrantes(listIntegrantes);
+                ingresar(usuario.getMail());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
     }
 }

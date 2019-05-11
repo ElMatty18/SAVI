@@ -41,7 +41,7 @@ public class AlertaService extends IntentService {
 
     private static final String TAG = "AlertaService";
 
-    private DatabaseReference dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
+    private DatabaseReference dbGrupoVecinal;
     private ChildEventListener listenerAlertas = getListenerAlertas();
 
     public AlertaService() {

@@ -222,13 +222,13 @@
                         android:id="@+id/btnSavePerfil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btt_save"/>
+                        android:text="@string/btt_aceptar"/>
 
                     <Button
                         android:id="@+id/btnVolverMenuPerfil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btt_aceptar"/>
+                        android:text="@string/btt_back"/>
 
                 </LinearLayout>
 

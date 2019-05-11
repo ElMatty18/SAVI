@@ -60,29 +60,33 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
         popAlarmas=this;
 
         //consulta a base de datos
-        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas");
+        if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
+            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas");
 
-        dbGrupoVecinal.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                alertas.clear();
-                for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
-                    Alerta alerta = imageSnapshot.getValue(Alerta.class);
-                    alertas.add(alerta);
-                    ArrayList<Alerta> AlertasDetalle = new ArrayList<Alerta>();
-                    AlertasDetalle.add(alerta);
-                    mapChild.put(alerta, AlertasDetalle);
+            dbGrupoVecinal.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    alertas.clear();
+                    for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
+                        Alerta alerta = imageSnapshot.getValue(Alerta.class);
+                        alertas.add(alerta);
+                        ArrayList<Alerta> AlertasDetalle = new ArrayList<Alerta>();
+                        AlertasDetalle.add(alerta);
+                        mapChild.put(alerta, AlertasDetalle);
+                    }
+                    adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
+                    expandableListView.setAdapter(adaptadorCombinado);
+
                 }
-                adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
-                expandableListView.setAdapter(adaptadorCombinado);
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+
 
 
         expandableListView = findViewById(R.id.listHistorialAlarmasExpandible);

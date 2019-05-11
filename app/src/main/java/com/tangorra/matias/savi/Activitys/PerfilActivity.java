@@ -219,12 +219,14 @@ public class PerfilActivity extends AppCompatActivity {
         fijoUsuario.setText(SesionManager.getUsuario().getFijo());
         celularUsuario.setText(SesionManager.getUsuario().getCelular());
 
-        int year = SesionManager.getUsuario().getFechaNacimiento().getYear();
-        int month = SesionManager.getUsuario().getFechaNacimiento().getMonth();
-        int dayOfMonth = SesionManager.getUsuario().getFechaNacimiento().getDate();
+        if (SesionManager.getUsuario().getFechaNacimiento() != null){
+            int year = SesionManager.getUsuario().getFechaNacimiento().getYear();
+            int month = SesionManager.getUsuario().getFechaNacimiento().getMonth();
+            int dayOfMonth = SesionManager.getUsuario().getFechaNacimiento().getDate();
 
-        String date = dayOfMonth + "/" + month + "/" + year;
-        mDisplayDate.setText(date);
+            String date = dayOfMonth + "/" + month + "/" + year;
+            mDisplayDate.setText(date);
+        }
     }
 
     @Override

@@ -56,12 +56,13 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
     private ArrayList<Alerta> listAlertas;
     private Map<Alerta, ArrayList<Alerta>> mapChild;
 
-    private StorageReference storageUsuarios;
-
     private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
     private ValueEventListener grupoListener = getGrupoListener();
 
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private ValueEventListener integrantesListener = getIntegrantesListener();
+
+
     private ValueEventListener domicilioListener = getDomicilioListener();
     private ValueEventListener domicilioAlternoListener = getDomicilioAlternoListener();
 
@@ -70,6 +71,10 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
     private Usuario usuarioSelecc = new Usuario();
     private Grupo grupoSelecc = new Grupo();
+
+    private ArrayList<Usuario> listIntegrantes = new ArrayList<Usuario>();
+    ArrayList<RespuestaAlerta> respuestasAlertas = new ArrayList<>();
+
 
     public AdaptadorCombinado(Context contex, ArrayList<Alerta> alertas, Map<Alerta, ArrayList<Alerta>> mapChild) {
         this.context = contex;
@@ -338,12 +343,21 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
         ListView listViewRespuestas =  convertView.findViewById(R.id.listViewRespuestas);
 
-        ArrayList<RespuestaAlerta> respuestasAlertas = new ArrayList<>();
-        respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
+        respuestasAlertas.clear();
+        for (Usuario itemUsuario : SesionManager.getGrupo().getIntegrantes() ) {
+            respuestasAlertas.add(new RespuestaAlerta("xxx",itemUsuario.getNombre(),itemUsuario.getApellido(),new Date(),"xxx","xxx","xxx"));
+
+        }
+
+        /*respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
         respuestasAlertas.add(new RespuestaAlerta("yyy","yyyy","yyyyy",new Date(),"xxx","xxx","xxx"));
         respuestasAlertas.add(new RespuestaAlerta("zzz","zzz","zzz",new Date(),"xxx","xxx","xxx"));
         respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
         respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
+*/
+        //recuperar usuarios grupo
+        //recuperarIntegrantesGrupo();
+        //recuperar respuestas
 
         AdaptadorAlertasRespuestas adaptadorAlertasRespuestas = new AdaptadorAlertasRespuestas(context,respuestasAlertas );
         listViewRespuestas.setAdapter(adaptadorAlertasRespuestas);
@@ -357,6 +371,36 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
         return true;
     }
 
+    private void recuperarIntegrantesGrupo(){
+        if (SesionManager.getUsuario().getIdGrupo() != null){
+            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getUsuario().getIdGrupo()).addValueEventListener(integrantesListener);
+        }
+    }
+
+
+    @NonNull
+    private ValueEventListener getIntegrantesListener() {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
+                    Usuario usuario = imageSnapshot.getValue(Usuario.class);
+                    listIntegrantes.add(usuario);
+                    respuestasAlertas.add(new RespuestaAlerta(usuario.getId(),usuario.getNombre(),usuario.getApellido(),new Date(),"xxx","xxx","xxx"));
+                }
+                getVistaRespuestasUsuarios();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    private void getVistaRespuestasUsuarios() {
+
+    }
 
 
 }

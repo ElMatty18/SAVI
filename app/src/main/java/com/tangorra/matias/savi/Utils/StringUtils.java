@@ -44,6 +44,8 @@ public  class StringUtils {
     public static String openScanGroup = "SAVI ScanQR - Grupo";
     public static String cancelScan = "Se cancelo Scan";
 
+    public static String notSetGroup = "No esta subscrito a ningún grupo";
+
     public static String denegatePermission = "Permiso denegado";
 
 
