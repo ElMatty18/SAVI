@@ -46,6 +46,7 @@ import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 
@@ -109,8 +110,8 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
     private void populatarElemento(Alerta source) {
         respuestaAlertaTipo.setText(source.getAlarma());
         respuestaAlertaID.setText(source.getId());
-        respuestaAlertaUsuarioCreador.setText(source.getCreadoBy());
-        respuestaAlertaFechaCreacion.setText("fecha");
+        respuestaAlertaUsuarioCreador.setText(StringUtils.getTextoFormateado(source.getCreadoBy()));
+        respuestaAlertaFechaCreacion.setText(DateUtils.sdf2.format(source.getCreacion()));
         respuestaAlertaFor.setText(source.getDirigida());
         respuestaAlertaForTitle.setText(source.getDirigida());
         respuestaEstadoAlerta.setText(source.getEstado());

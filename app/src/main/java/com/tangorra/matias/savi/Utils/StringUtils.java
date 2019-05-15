@@ -13,6 +13,7 @@ public  class StringUtils {
     public static String userRegister = "Registrando usuario";
     public static String checkData = "Verifique los datos ingresados";
     public static String welcome = "Bienvenido ";
+    public static String welcomeFirst = "Bienvenido... ";
 
     public static String alert = "ALERTA!";
 

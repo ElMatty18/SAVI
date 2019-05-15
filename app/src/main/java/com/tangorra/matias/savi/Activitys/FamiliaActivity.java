@@ -223,6 +223,9 @@ public class FamiliaActivity extends AppCompatActivity {
 
                     dbUsuarios.child(SesionManager.getUsuario().getId()).setValue(SesionManager.getUsuario());
                 }
+                dbUsuarios.removeEventListener(usuarioListener);
+                dbUsuarios.removeEventListener(familiaListener);
+
                 cargarFamilia();
             }
 
@@ -302,6 +305,7 @@ public class FamiliaActivity extends AppCompatActivity {
     private void cargarDatosFamilia(List<String> idsFamilia){
         //inicializo familiares antes de cargarlos a todos
         listFamiliares = new ArrayList<Usuario>();
+        dbUsuarios.removeEventListener(usuarioListenerFamiliar);
         for (String idFamiliar: idsFamilia) {
             dbUsuarios.orderByChild("id").equalTo(idFamiliar).limitToFirst(1).addValueEventListener(usuarioListenerFamiliar);
         }

@@ -232,7 +232,11 @@ public class AccesoActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                     usuario = imageSnapshot.getValue(Usuario.class);
-                    Toast.makeText(getApplicationContext(),StringUtils.welcome + StringUtils.getTextoFormateado(usuario.getGlosa()), Toast.LENGTH_LONG).show();
+                    if (usuario.getNombre() != null && usuario.getApellido() != null){
+                        Toast.makeText(getApplicationContext(),StringUtils.welcome + StringUtils.getTextoFormateado(usuario.getGlosa()), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),StringUtils.welcomeFirst, Toast.LENGTH_LONG).show();
+                    }
                 }
                 recuperarDatosGrupoUsuario(usuario.getIdGrupo());
             }

@@ -25,7 +25,7 @@
         android:autoText="true"
         android:editable="false"
         android:gravity="center"
-        android:text="  Sistema de Alerta \n Vecinal Inteligente"
+        android:text="@string/app_title"
         android:textStyle="bold"
         android:textColor="@color/colorBlanco"
         android:textSize="30dp"/>

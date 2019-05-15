@@ -1,34 +1,23 @@
 package com.tangorra.matias.savi.Adaptadores;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.tangorra.matias.savi.Activitys.FamiliaActivity;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.Domicilio;
@@ -40,8 +29,6 @@ import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
-import com.tangorra.matias.savi.View.PopUpAlertasGrupo;
-import com.tangorra.matias.savi.View.PopUpFamiliarAlertas;
 import com.tangorra.matias.savi.View.PopUpViewInfoFamiliar;
 
 import java.util.ArrayList;
@@ -72,8 +59,8 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
     private Usuario usuarioSelecc = new Usuario();
     private Grupo grupoSelecc = new Grupo();
 
-    private ArrayList<Usuario> listIntegrantes = new ArrayList<Usuario>();
-    ArrayList<RespuestaAlerta> respuestasAlertas = new ArrayList<>();
+    private ArrayList<Usuario> listIntegrantes = new ArrayList<>();
+    private ArrayList<RespuestaAlerta> respuestasAlertas = new ArrayList<>();
 
 
     public AdaptadorCombinado(Context contex, ArrayList<Alerta> alertas, Map<Alerta, ArrayList<Alerta>> mapChild) {
@@ -187,26 +174,6 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
         this.personas = personas;
     }
 
-
-
-    private void popUpEliminarFamiliar(Usuario usuarioSelecc) {
-        final AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this.context);
-        dialogo1.setTitle("Eliminar");
-        dialogo1.setMessage("¿ Desea eliminar a "+usuarioSelecc.getGlosa()+" del grupo familiar?");
-        dialogo1.setCancelable(false);
-        dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                aceptarBorrado();
-            }
-        });
-        dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                dialogo1.cancel();
-            }
-        });
-
-        dialogo1.show();
-    }
 
     private void aceptarBorrado() {
         dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiarBorrarListener);

@@ -32,8 +32,6 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
     private AdaptadorAlertas adapAlarmas;
     final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
 
-    private ListView listAlarmas;
-
     private Context popAlarmas;
 
     private ExpandableListView expandableListView;
@@ -70,9 +68,9 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
                     for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                         Alerta alerta = imageSnapshot.getValue(Alerta.class);
                         alertas.add(alerta);
-                        ArrayList<Alerta> AlertasDetalle = new ArrayList<Alerta>();
-                        AlertasDetalle.add(alerta);
-                        mapChild.put(alerta, AlertasDetalle);
+                        ArrayList<Alerta> alertasDetalle = new ArrayList<Alerta>();
+                        alertasDetalle.add(alerta);
+                        mapChild.put(alerta, alertasDetalle);
                     }
                     adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
                     expandableListView.setAdapter(adaptadorCombinado);
