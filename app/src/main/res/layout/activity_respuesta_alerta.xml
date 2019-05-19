@@ -328,6 +328,22 @@
                         />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/estadoAlertarAutoridades">
+
+                    <com.hitomi.cmlibrary.CircleMenu
+                        android:id="@+id/seleccRespuesta"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp">
+
+                    </com.hitomi.cmlibrary.CircleMenu>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -400,20 +416,7 @@
 
         </LinearLayout>
 
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
 
-            <com.hitomi.cmlibrary.CircleMenu
-                android:id="@+id/seleccRespuesta"
-                android:layout_width="250dp"
-                android:layout_height="250dp">
-
-            </com.hitomi.cmlibrary.CircleMenu>
-
-        </LinearLayout>-->
 
 
         <LinearLayout

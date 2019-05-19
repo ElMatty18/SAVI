@@ -1,5 +1,7 @@
 package com.tangorra.matias.savi.Entidades;
 
+import com.tangorra.matias.savi.Utils.StringUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Alerta implements Serializable {
 
     private Date creacion;
     private String creadoBy;
+    private String creadoById;
 
     private String respuesta;
     private String respuestaAutomatica;
@@ -129,5 +132,53 @@ public class Alerta implements Serializable {
                 ", dirigida='" + dirigida + '\'' +
                 ", alarma='" + alarma + '\'' +
                 '}';
+    }
+
+    public int obtenerNivelAlerta(){
+        if (this.getRespuestas() != null){
+            int cantidadRespestas = this.getRespuestas().size();
+            int cantidadOk = 0;
+            int cantidadNoOk = 0;
+            int cantidadNoAplica = 0;
+            for (RespuestaAlerta itemRespuesta : this.getRespuestas() ) {
+                if (itemRespuesta.getRespuestaAutomatica() != null){
+                    cantidadNoAplica++;
+                } else {
+                    if (itemRespuesta.getRespuesta() != null){
+                        if (itemRespuesta.getRespuesta().equals(StringUtils.respuesta_confirma)){
+                            cantidadNoOk++;
+                        } else {
+                            if (itemRespuesta.getRespuesta().equals(StringUtils.respuesta_cancela)){
+                                cantidadOk++;
+                            }
+                        }
+                    }
+                    else {
+                        cantidadNoAplica++;
+                    }
+                }
+            }
+
+            if ((cantidadOk + cantidadNoAplica)<cantidadNoOk){
+                return 100;
+            } else {
+                if (cantidadRespestas != 0){
+                    return 100 -(((cantidadOk + cantidadNoAplica - cantidadNoOk) / cantidadRespestas) * 100);
+                } else {
+                    return 0;
+                }
+            }
+        } else {
+            return 0;
+        }
+
+    }
+
+    public String getCreadoById() {
+        return creadoById;
+    }
+
+    public void setCreadoById(String creadoById) {
+        this.creadoById = creadoById;
     }
 }

@@ -47,18 +47,32 @@ public class AdaptadorAlertasRespuestas extends BaseAdapter {
         TextView usuarioRespuesta = convertView.findViewById(R.id.viewRespestaAlerta);
         usuarioRespuesta.setText(StringUtils.getTextoFormateado(item.getGlosa()));
 
-        ImageView imagenAlertaRespuestaA = convertView.findViewById(R.id.imagenRespuestaAlertaA);
-        imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_cancel);
+        ImageView imagenAlertaRespuestaA = convertView.findViewById(R.id.imagenRespuestaAlerta);
 
-        ImageView imagenAlertaRespuestaB = convertView.findViewById(R.id.imagenAlertaRespuestaB);
-        imagenAlertaRespuestaB.setImageResource(R.drawable.respuesta_peligro);
-
-        ImageView imagenAlertaRespuestaC = convertView.findViewById(R.id.imagenAlertaRespuestaC);
-        imagenAlertaRespuestaC.setImageResource(R.drawable.respuesta_policia);
-
-        ImageView imagenAlertaRespuestaD = convertView.findViewById(R.id.imagenAlertaRespuestaD);
-        imagenAlertaRespuestaD.setImageResource(R.drawable.respuesta_lejos);
-
+        if (item.getRespuestaAutomatica() != null){
+            if (item.getRespuestaAutomatica().equals(StringUtils.config_vacaciones)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_viaje);
+            }
+            if (item.getRespuestaAutomatica().equals(StringUtils.config_casaSola)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_lejos);
+            }
+            if (item.getRespuestaAutomatica().equals(StringUtils.config_visitasCasa)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_visitas);
+            }
+            if (item.getRespuestaAutomatica().equals(StringUtils.config_noMolestar)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_no_molestar);
+            }
+            if (item.getRespuestaAutomatica().equals(StringUtils.config_ignorarTodo)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_ignorar);
+            }
+        } else if (item.getRespuesta() != null){
+            if (item.getRespuesta().equals(StringUtils.respuesta_cancela)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_ok);
+            }
+            if (item.getRespuesta().equals(StringUtils.respuesta_confirma)){
+                imagenAlertaRespuestaA.setImageResource(R.drawable.respuesta_no_ok);
+            }
+        }
         return convertView;
     }
 

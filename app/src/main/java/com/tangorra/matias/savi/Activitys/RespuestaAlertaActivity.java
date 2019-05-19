@@ -14,12 +14,15 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +73,8 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
     private TextView respuestaEstadoAlerta;
 
     private SeekBar seekBar_nivel_alerta_respuesta;
+
+    private LinearLayout estadoAlertarAutoridades;
 
     private GoogleMap mMap;
     private Marker marcador;
@@ -135,8 +140,8 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
         respuestaEstadoAlerta = findViewById(R.id.respuestaEstadoAlerta);
 
-
-        //respuestaAlertaMapDomicilio = findViewById(R.id.respuestaAlertaMapDomicilio);
+        estadoAlertarAutoridades = findViewById(R.id.estadoAlertarAutoridades);
+        estadoAlertarAutoridades.setVisibility(LinearLayout.GONE);
 
         ubicacionAlerta();
 
@@ -144,7 +149,7 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
         respuestaAlertabtnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                responderAlerta("confirmada");
+                responderAlerta(StringUtils.respuesta_confirma);
             }
         });
 
@@ -152,9 +157,26 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
         respuestaAlertaCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                responderAlerta("cancelada");
+                responderAlerta(StringUtils.respuesta_cancela);
             }
         });
+
+        int nivelAlerta = alerta.obtenerNivelAlerta();
+        seekBar_nivel_alerta_respuesta.setProgress(nivelAlerta);
+        if (nivelAlerta >= 50 || alerta.getEstado().equals(StringUtils.alertaConfirmadaDirigida)){
+            crearAlertarAutoridades();
+            estadoAlertarAutoridades.setVisibility(LinearLayout.VISIBLE);
+
+        }
+
+        seekBar_nivel_alerta_respuesta.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+
     }
 
     private void cargarImagen(){
@@ -284,30 +306,71 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
         if (alerta.getRespuestas() == null){
             alerta.setRespuestas(new ArrayList<RespuestaAlerta>());
         }
-
         alerta.getRespuestas().add(respuestaAlerta);
+
+        if (alerta.getDirigidaId().equals(SesionManager.getUsuario().getId())) {
+            if (respuesta.equals(StringUtils.respuesta_cancela)){
+                alerta.setEstado(StringUtils.alertaDesactivada);
+            } else if (respuesta.equals(StringUtils.respuesta_confirma)){
+                alerta.setEstado(StringUtils.alertaConfirmadaDirigida);
+            }
+        }
 
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).setValue(alerta);
     }
 
 
-}
-
-
-//String arrayName[] = {"Confirmar", "Cancelar"};
-
-/*CircleMenu circleMenu = (CircleMenu) findViewById(R.id.seleccRespuesta);
+    private void crearAlertarAutoridades(){
+        final String arrayName[] = {"Policia", "Emergencia Medica", "Bomberos", "Violencia de genero"};
+        CircleMenu circleMenu = findViewById(R.id.seleccRespuesta);
         circleMenu.setMainMenu(Color.parseColor("#FFFF99"), R.drawable.icon_menu, R.drawable.respuesta_elegir)
-                .addSubMenu(Color.parseColor("#99FF99"), R.drawable.respuesta_ok)
-                .addSubMenu(Color.parseColor("#FFB19A"), R.drawable.respuesta_cancel)
-                .addSubMenu(Color.parseColor("#9999FF"), R.drawable.respuesta_policia)
-                .addSubMenu(Color.parseColor("#9ACDFF"), R.drawable.respuesta_bombero)
-                .addSubMenu(Color.parseColor("#FFBF9A"), R.drawable.respuesta_no_molestar)
-                .addSubMenu(Color.parseColor("#FF9A9A"), R.drawable.respuesta_viaje_bis)
-                .addSubMenu(Color.parseColor("#CD9AFF"), R.drawable.respuesta_lejos)
+                .addSubMenu(Color.parseColor("#99FF99"), R.drawable.autoridades_policia)
+                .addSubMenu(Color.parseColor("#FFB19A"), R.drawable.autoridades_medica)
+                .addSubMenu(Color.parseColor("#9999FF"), R.drawable.autoridades_bomberos)
+                .addSubMenu(Color.parseColor("#9ACDFF"), R.drawable.autoridades_violencia_genero)
                 .setOnMenuSelectedListener(new OnMenuSelectedListener() {
                     @Override
                     public void onMenuSelected(int i) {
                         Toast.makeText(RespuestaAlertaActivity.this, "seleccionaste" + arrayName[i],Toast.LENGTH_SHORT).show();
+                        abrirTelefono("911");
                     }
-                });*/
+                });
+    }
+
+    public void abrirTelefono(String tel) {
+        Intent llamar = new Intent(Intent.ACTION_DIAL);
+        llamar.setData(Uri.parse("tel:"+tel));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            checkPhonePermission();
+            return;
+        }
+        startActivity(llamar);
+    }
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    public void checkPhonePermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CALL_PHONE)) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+        } else {
+
+        }
+    }
+
+
+}
+

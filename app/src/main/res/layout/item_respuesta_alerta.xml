@@ -8,7 +8,7 @@
 
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="@dimen/margin_item"
@@ -36,30 +36,10 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:id="@+id/imagenRespuestaAlertaA"
+        android:id="@+id/imagenRespuestaAlerta"
         android:layout_margin="@dimen/margin_item"
         />
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/imagenAlertaRespuestaB"
-        android:layout_margin="@dimen/margin_item"
-        />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/imagenAlertaRespuestaC"
-        android:layout_margin="@dimen/margin_item"
-        />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/imagenAlertaRespuestaD"
-        android:layout_margin="@dimen/margin_item"
-        />
 
 </LinearLayout>
 

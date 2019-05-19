@@ -51,14 +51,30 @@ public  class StringUtils {
 
 
     public static String alertaActiva = "activa";
+    public static String alertaDesactivada = "desactiva";
+    public static String alertaConfirmadaDirigida = "atencion";
 
     public static String parametroAlerta = "parametroAlerta";
 
-    public static String config_vacaciones = "Vacaciones";
-    public static String config_casaSola = "Casa Sola";
-    public static String config_visitasCasa = "Visitas Casa";
-    public static String config_noMolestar = "No Molestar";
-    public static String config_ignorarTodo = "Ignorar Todo";
+    public static String config_vacaciones = "vacaciones";
+    public static String config_casaSola = "casa sola";
+    public static String config_visitasCasa = "visitas casa";
+    public static String config_noMolestar = "no molestar";
+    public static String config_ignorarTodo = "ignorar todo";
+
+
+    public static String respuesta_confirma = "confirma";
+    public static String respuesta_cancela = "cancela";
+
+
+
+    public static String notificacion_alerta = "alerta";
+    public static String notificacion_riesgo = "riesgo";
+    public static String notificacion_cuidado = "cuidado";
+    public static String notificacion_advertencia = "advertencia";
+    public static String notificacion_peligro = "peligro";
+    public static String notificacion_amenaza = "amenaza";
+    public static String notificacion_aviso = "aviso";
 
 
 

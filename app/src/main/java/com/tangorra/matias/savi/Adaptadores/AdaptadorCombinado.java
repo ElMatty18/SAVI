@@ -279,26 +279,26 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Alerta item = (Alerta) getChild(groupPosition,childPosition);
+        Alerta itemAlerta = (Alerta) getChild(groupPosition,childPosition);
         convertView = LayoutInflater.from(context).inflate(R.layout.item_alarma_expandible_child, null);
 
         TextView alertaID = convertView.findViewById(R.id.alertaIdDetailalertaIdDetail);
-        alertaID.setText(item.getId());
+        alertaID.setText(itemAlerta.getId());
 
         TextView alertaCreador = convertView.findViewById(R.id.alertaDetailUsuarioCreador);
-        alertaCreador.setText(StringUtils.getTextoFormateado(item.getCreadoBy()));
+        alertaCreador.setText(StringUtils.getTextoFormateado(itemAlerta.getCreadoBy()));
 
         TextView alertaCreacion = convertView.findViewById(R.id.alertaDetailFechaCreacion);
-        alertaCreacion.setText(DateUtils.sdf2.format(item.getCreacion()));
+        alertaCreacion.setText(DateUtils.sdf2.format(itemAlerta.getCreacion()));
 
         TextView alertaDirigida = convertView.findViewById(R.id.alertaDetailFor);
-        alertaDirigida.setText(StringUtils.getTextoFormateado(item.getDirigida()));
+        alertaDirigida.setText(StringUtils.getTextoFormateado(itemAlerta.getDirigida()));
 
-        TextView alertaRespuesta = convertView.findViewById(R.id.alertaDetailRespuesta);
-        alertaRespuesta.setText(item.getRespuesta());
+        TextView alertaEstado = convertView.findViewById(R.id.alertaDetailRespuestaEstado);
+        alertaEstado.setText(itemAlerta.getEstado());
 
         SeekBar nivelAlerta = convertView.findViewById(R.id.seekBar_nivel_alerta);
-        nivelAlerta.setProgress(30);
+        nivelAlerta.setProgress(itemAlerta.obtenerNivelAlerta());
 
         nivelAlerta.setOnTouchListener(new View.OnTouchListener(){
             @Override
@@ -307,29 +307,15 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
             }
         });
 
-
         ListView listViewRespuestas =  convertView.findViewById(R.id.listViewRespuestas);
-
         respuestasAlertas.clear();
-        for (Usuario itemUsuario : SesionManager.getGrupo().getIntegrantes() ) {
-            respuestasAlertas.add(new RespuestaAlerta("xxx",itemUsuario.getNombre(),itemUsuario.getApellido(),new Date(),"xxx","xxx","xxx"));
-
+        if (itemAlerta.getRespuestas() != null){
+            for (RespuestaAlerta itemRespuesta : itemAlerta.getRespuestas() ) {
+                respuestasAlertas.add(itemRespuesta);
+            }
         }
-
-        /*respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
-        respuestasAlertas.add(new RespuestaAlerta("yyy","yyyy","yyyyy",new Date(),"xxx","xxx","xxx"));
-        respuestasAlertas.add(new RespuestaAlerta("zzz","zzz","zzz",new Date(),"xxx","xxx","xxx"));
-        respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
-        respuestasAlertas.add(new RespuestaAlerta("xxx","xxx","xxx",new Date(),"xxx","xxx","xxx"));
-*/
-        //recuperar usuarios grupo
-        //recuperarIntegrantesGrupo();
-        //recuperar respuestas
-
-        AdaptadorAlertasRespuestas adaptadorAlertasRespuestas = new AdaptadorAlertasRespuestas(context,respuestasAlertas );
+        AdaptadorAlertasRespuestas adaptadorAlertasRespuestas = new AdaptadorAlertasRespuestas(context,respuestasAlertas);
         listViewRespuestas.setAdapter(adaptadorAlertasRespuestas);
-
-
         return convertView;
     }
 

@@ -91,7 +91,11 @@ public class AlertaService extends IntentService {
 
     private boolean condicionRespuestaAlerta(Alerta alerta){
         if ((alerta.getEstado() != null) && (alerta.getEstado().equals(StringUtils.alertaActiva) && !respondioAlerta(alerta, SesionManager.getUsuario().getId()))){
-            return true;
+            if (!alerta.getCreadoById().equals(SesionManager.getUsuario().getId())){
+                return true;
+            } else {
+                return false;
+            }
         }
         return false;
     }
@@ -138,18 +142,13 @@ public class AlertaService extends IntentService {
     }
 
 
-
-
     private void lanzarRespuestaConfigurada(Configuracion configuracion, Alerta alerta) {
-        String respuesta = configuracion.getConfiguracionSeleccionada() +" "+ configuracion.getMensaje();
-        responderAlerta(alerta, respuesta);
+        responderAlerta(alerta, configuracion.getConfiguracionSeleccionada(), configuracion.getMensaje());
     }
-
 
     private void escucharAlertas(){
         dbGrupoVecinal.child("alertas").addChildEventListener(listenerAlertas);
     }
-
 
     private void notificacionAlerta(Alerta alerta) {
         if (alerta == null){
@@ -160,47 +159,43 @@ public class AlertaService extends IntentService {
         if (tipoAlerta.equals(StringUtils.ALARMA_SONANDO)){
             //Se dara un aviso sonoro al usuario al que esta dirijida dicha alarma
             if (dirigida.equals(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()))){
-                Notification(alerta, "Alerta", true, true);
+                Notification(alerta, StringUtils.notificacion_alerta , true, true);
             }
-
         } else if (tipoAlerta.equals(StringUtils.SOSPECHA_ROBO)){
             //La alarma sera ruidosa para todos los usuarios excepto para el que fue destinada
             if (!dirigida.equals(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()))){
-                Notification(alerta, "Riesgo", true, false);
+                Notification(alerta, StringUtils.notificacion_riesgo, true, false);
             }
         } else if (tipoAlerta.equals(StringUtils.ACTITUD_SOSPECHOSA)){
             //Se da aviso sonoro a todos los usuarios
-            Notification(alerta, "Cuidado", true, true);
+            Notification(alerta, StringUtils.notificacion_cuidado, true, true);
         } else if (tipoAlerta.equals(StringUtils.DANO_VEHICULO)){
             //Si existe una alerta de Daño al vehiculo, informara al usuario respectivo
             if (dirigida.equals(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()))){
                 //vibrar
-                Notification(alerta, "Advertencia", false, true);
+                Notification(alerta, StringUtils.notificacion_advertencia, false, true);
             }
-
         } else if (tipoAlerta.equals(StringUtils.PRINCIPIO_FUEGO)){
             //Se creara una alama sonora para el usuario destinatario de dicha alerta, y una notificacion silenciosa a los demas usuarios
             if (dirigida.equals(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()))){
                 //sonar
-                Notification(alerta, "Peligro", true, true);
+                Notification(alerta, StringUtils.notificacion_peligro, true, true);
             }else {
                 //vibrar
-                Notification(alerta, "Peligro", false, true);
+                Notification(alerta,  StringUtils.notificacion_peligro, false, true);
             }
         } else if (tipoAlerta.equals(StringUtils.AGRESION)){
             //Se creara una alerta sonora para todos los usuarios
-            Notification(alerta, "Amenaza", true, true);
+            Notification(alerta, StringUtils.notificacion_amenaza, true, true);
 
         } else if (tipoAlerta.equals(StringUtils.MAL_ESTACIONADO)){
             //Se crea una alarta silenciosa para todos los usuarios
-            Notification(alerta, "Aviso", false, false);
+            Notification(alerta, StringUtils.notificacion_aviso, false, false);
         }
-
     }
 
 
-
-    private void responderAlerta(Alerta alerta, String respuesta){
+    private void responderAlerta(Alerta alerta, String respuesta, String mensaje){
         FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).child("estado").setValue(respuesta);
 
         RespuestaAlerta respuestaAlerta = new RespuestaAlerta();
@@ -209,7 +204,11 @@ public class AlertaService extends IntentService {
         respuestaAlerta.setApellidoUsuario(SesionManager.getUsuario().getApellido());
         respuestaAlerta.setCreacion(new Date());
         respuestaAlerta.setIdAlarma(alerta.getId());
-        respuestaAlerta.setRespuesta(respuesta);
+
+        respuestaAlerta.setRespuestaAutomatica(respuesta);
+        if (mensaje != null){
+            respuestaAlerta.setMensajeAutomatica(mensaje);
+        }
 
         if (alerta.getRespuestas() == null){
             alerta.setRespuestas(new ArrayList<RespuestaAlerta>());

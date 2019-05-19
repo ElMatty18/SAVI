@@ -10,8 +10,11 @@ public class RespuestaAlerta implements Serializable {
     private String apellidoUsuario;
     private Date creacion;
     private String idAlarma;
+
     private String respuesta;
+
     private String respuestaAutomatica;
+    private String mensajeAutomatica;
 
     public RespuestaAlerta() {
     }
@@ -82,6 +85,13 @@ public class RespuestaAlerta implements Serializable {
         this.apellidoUsuario = apellidoUsuario;
     }
 
+    public String getMensajeAutomatica() {
+        return mensajeAutomatica;
+    }
+
+    public void setMensajeAutomatica(String mensajeAutomatica) {
+        this.mensajeAutomatica = mensajeAutomatica;
+    }
 
     public String getGlosa(){
         return getNombreUsuario() + " " + getApellidoUsuario();

@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
@@ -49,8 +46,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AlertaActivity extends AppCompatActivity {
 
-    private Context contex;
-
     public static int INVALID_POSITION = -1;
 
     private Button emitirAlerta;
@@ -59,7 +54,7 @@ public class AlertaActivity extends AppCompatActivity {
     private Switch onOffSwitch;
     private Boolean allUsers = Boolean.FALSE;
 
-    private String casaSeleccion;
+    private String usuarioSeleccion;
     private String alarmaSeleccion;
 
     private DatabaseReference dbGrupoVecinal;
@@ -89,8 +84,6 @@ public class AlertaActivity extends AppCompatActivity {
         getWindow().setLayout((int )(width*.9),(int )(heigth*.8) );
 
         getSupportActionBar().hide();
-
-        this.contex = this;
 
         if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
             dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
@@ -135,14 +128,14 @@ public class AlertaActivity extends AppCompatActivity {
     private void getVistaIntegrantes(){
 
         final AlarmaAdaptar alarmaAdaptar= new AlarmaAdaptar(this);
-        RecyclerView alarmas = (RecyclerView) findViewById(R.id.list_alarma);
+        RecyclerView alarmas = findViewById(R.id.list_alarma);
         initRecyclerViewAlarma(alarmas, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), alarmaAdaptar);
 
         cargarTitlesCasas();
         cargarImagenCasas(this);
 
         final CasasAdaptar adapter = new CasasAdaptar(this);
-        RecyclerView casas = (RecyclerView) findViewById(R.id.list_horizontal);
+        RecyclerView casas = findViewById(R.id.list_horizontal);
         initRecyclerView(casas, new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false), adapter);
     }
 
@@ -181,7 +174,7 @@ public class AlertaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!allUsers) {
-                    persistir(casaSeleccion, alarmaSeleccion, idDirigida);
+                    persistir(usuarioSeleccion, alarmaSeleccion, idDirigida);
                 }else {
                     persistir(StringUtils.ALL_USERS, alarmaSeleccion);
                 }
@@ -199,7 +192,7 @@ public class AlertaActivity extends AppCompatActivity {
             }
         });
 
-        onOffSwitch = (Switch) findViewById(R.id.switch_todos);
+        onOffSwitch = findViewById(R.id.switch_todos);
         onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -215,8 +208,8 @@ public class AlertaActivity extends AppCompatActivity {
         if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
             String id = dbGrupoVecinal.push().getKey();
             Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
-            alerta.setEstado("activa");
-            dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+            alerta.setEstado(StringUtils.alertaActiva);
+            dbGrupoVecinal.child(FirebaseUtils.dbAlerta).child(id).setValue(alerta);
         }
     }
 
@@ -225,9 +218,10 @@ public class AlertaActivity extends AppCompatActivity {
         if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
             String id = dbGrupoVecinal.push().getKey();
             Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
-            alerta.setEstado("activa");
+            alerta.setEstado(StringUtils.alertaActiva);
             alerta.setDirigidaId(idDirigida);
-            dbGrupoVecinal.child("alertas").child(id).setValue(alerta);
+            alerta.setCreadoById(SesionManager.getUsuario().getId());
+            dbGrupoVecinal.child(FirebaseUtils.dbAlerta).child(id).setValue(alerta);
         }
     }
 
@@ -239,15 +233,11 @@ public class AlertaActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, final CasasAdaptar adapter) {
-        // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
 
         recyclerView.setLayoutManager(layoutManager);
-        // we expect only fixed sized item for now
         recyclerView.setHasFixedSize(true);
-        // sample adapter with random data
         recyclerView.setAdapter(adapter);
-        // enable center post scrolling
         recyclerView.addOnScrollListener(new CenterScrollListener());
 
         layoutManager.addOnItemSelectionListener(new CarouselLayoutManager.OnCenterItemSelectionListener() {
@@ -257,10 +247,8 @@ public class AlertaActivity extends AppCompatActivity {
                 if (INVALID_POSITION != adapterPosition) {
                     final int value = adapter.mPosition[adapterPosition];
                     adapter.mPosition[adapterPosition] = (value % 10) + (value / 10 + 1) * 10;
-                    //cambiar seleccion de las casa
-                    casaSeleccion=adapter.getValorCasa(adapterPosition);
+                    usuarioSeleccion =adapter.getValorCasa(adapterPosition);
                     idDirigida = listIntegrantes.get(adapterPosition).getId();
-
                     adapter.notifyItemChanged(adapterPosition);
                 }
             }
@@ -268,15 +256,11 @@ public class AlertaActivity extends AppCompatActivity {
     }
 
     private void initRecyclerViewAlarma(final RecyclerView recyclerView, final CarouselLayoutManager layoutManager, final AlarmaAdaptar adapter) {
-        // enable zoom effect. this line can be customized
         layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
 
         recyclerView.setLayoutManager(layoutManager);
-        // we expect only fixed sized item for now
         recyclerView.setHasFixedSize(true);
-        // sample adapter with random data
         recyclerView.setAdapter(adapter);
-        // enable center post scrolling
         recyclerView.addOnScrollListener(new CenterScrollListener());
 
         layoutManager.addOnItemSelectionListener(new CarouselLayoutManager.OnCenterItemSelectionListener() {
@@ -325,7 +309,6 @@ public class AlertaActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-            final ImageView imagen = null;
             if (usuariosNames.length > position){
                 ((RowNewsViewHolder) holder).cItem1.setText(usuariosNames[position]);
 
