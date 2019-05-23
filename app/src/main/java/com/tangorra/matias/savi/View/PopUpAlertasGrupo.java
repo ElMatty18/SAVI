@@ -28,8 +28,6 @@ import java.util.Map;
 public class PopUpAlertasGrupo extends AppCompatActivity {
 
     private DatabaseReference dbGrupoVecinal;
-
-    private AdaptadorAlertas adapAlarmas;
     final ArrayList<Alerta> alertas =new ArrayList<Alerta>();
 
     private Context popAlarmas;
@@ -72,9 +70,11 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
                         alertasDetalle.add(alerta);
                         mapChild.put(alerta, alertasDetalle);
                     }
-                    adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
-                    expandableListView.setAdapter(adaptadorCombinado);
 
+                    if (alertas.size()>0 && !mapChild.isEmpty()){
+                        adaptadorCombinado = new AdaptadorCombinado(popAlarmas, alertas, mapChild);
+                        expandableListView.setAdapter(adaptadorCombinado);
+                    }
                 }
 
                 @Override
@@ -83,8 +83,6 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
                 }
             });
         }
-
-
 
 
         expandableListView = findViewById(R.id.listHistorialAlarmasExpandible);

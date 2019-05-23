@@ -322,10 +322,16 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_exit) {
+            limpiarSesion();
+            finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void limpiarSesion() {
+        SesionManager.setUsuario(null);
+        SesionManager.setGrupo(null);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -377,6 +383,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
             Intent menu = new Intent(MenuPrincipalActivity.this, PopUpInformacion.class);
             startActivity(menu);
         }
+
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

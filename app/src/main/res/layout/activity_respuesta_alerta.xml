@@ -48,14 +48,11 @@
         android:orientation="vertical"
         >
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="@dimen/margin_item_ext">
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -425,8 +422,6 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_margin="@dimen/activity_horizontal_margin">
-
-
 
             <Button
                 android:id="@+id/respuestaAlertabtnConfirmar"

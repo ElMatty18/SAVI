@@ -29,12 +29,13 @@
             android:background="@color/colorNegro"
             />
 
-        <ListView
-            android:id="@+id/listHistorialAlarmas"
+        <ExpandableListView
+            android:id="@+id/listHistorialAlarmasFamiliaExpandible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             />
+
 
 
     </LinearLayout>

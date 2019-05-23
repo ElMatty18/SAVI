@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
+import com.tangorra.matias.savi.Adaptadores.AdaptadorCombinado;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
@@ -22,7 +24,9 @@ import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PopUpAlertasFamilia extends AppCompatActivity {
 
@@ -41,10 +45,14 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
     private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
     private ValueEventListener familiaListener = getFamiliaListener();
 
-
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
     private ArrayList<Usuario> listFamiliares = new ArrayList<Usuario>();
     private ValueEventListener usuarioListenerFamiliar = getUsuarioListenerFamiliar();
+
+
+    private ExpandableListView expandableListView;
+    private AdaptadorCombinado adaptadorCombinado;
+    private Map<Alerta, ArrayList<Alerta>> mapChild;
 
 
     @Override
@@ -64,6 +72,9 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
         getSupportActionBar().hide();
 
         popAlarmasFamilia = this;
+
+        expandableListView = findViewById(R.id.listHistorialAlarmasFamiliaExpandible);
+        mapChild = new HashMap<>();
 
         alertas.clear();
         cargarFamilia();
@@ -86,11 +97,15 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                     Alerta alerta = imageSnapshot.getValue(Alerta.class);
                     alertas.add(alerta);
+                    ArrayList<Alerta> alertasDetalle = new ArrayList<Alerta>();
+                    alertasDetalle.add(alerta);
+                    mapChild.put(alerta, alertasDetalle);
                 }
-                adapAlarmas = new AdaptadorAlertas(popAlarmasFamilia, alertas);
-                listAlarmas = findViewById(R.id.listHistorialAlarmas);
 
-                listAlarmas.setAdapter(adapAlarmas);
+                if (alertas.size()>0 && !mapChild.isEmpty()){
+                    adaptadorCombinado = new AdaptadorCombinado(popAlarmasFamilia, alertas, mapChild);
+                    expandableListView.setAdapter(adaptadorCombinado);
+                }
             }
 
             @Override

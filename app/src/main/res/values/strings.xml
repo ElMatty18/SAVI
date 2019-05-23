@@ -22,7 +22,7 @@
     <string name="btt_salir_familia">Salir Grupo Familiar</string>
 
     <string name="btt_alerta_confirmar">Confirmar Alerta</string>
-    <string name="btt_alerta_cancelar">Cancelar Alerta</string>
+    <string name="btt_alerta_cancelar">Falsa Alerta</string>
 
     <string name="btt_alerta_confirmar_vacaciones">Confirmar vacaciones</string>
     <string name="btt_alerta_confirmar_ausencia">Confirmar ausencia</string>
@@ -56,6 +56,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Telefonos Utiles</string>
+    <string name="action_exit_sistema">Salir</string>
 
     <!-- menu principal title -->
     <string name="menu_grupo_vecinal">Grupo Vecinal</string>

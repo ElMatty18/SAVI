@@ -54,7 +54,7 @@ public class AlertaService extends IntentService {
         Log.i(TAG, "The service is on");
 
         if (SesionManager.getUsuario() != null && SesionManager.getUsuario().getIdGrupo() != null){
-            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
+            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getUsuario().getIdGrupo());
             escucharAlertas();
         }
 
