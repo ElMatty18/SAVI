@@ -25,6 +25,9 @@
 
     <dimen name="margin_top">50dp</dimen>
 
-
+    <fraction name="half">50%</fraction>
+    <fraction name="margin">2%</fraction>
+    <fraction name="half_margin">48%</fraction>
+    <fraction name="quarter">25%</fraction>
 
 </resources>

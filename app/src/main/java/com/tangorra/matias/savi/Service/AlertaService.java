@@ -103,6 +103,7 @@ public class AlertaService extends IntentService {
     private void lanzarResponderAlerta(Alerta alerta){
         Intent intent = new Intent(this, RespuestaAlertaActivity.class);
         intent.putExtra(StringUtils.parametroAlerta, alerta);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

@@ -52,8 +52,6 @@
                 android:layout_margin="@dimen/activity_margenes"
                 android:background="@drawable/gradiente_perfil2">
 
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,7 +159,6 @@
                     android:background="@color/colorBlanco"/>
 
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:map="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/view_map_grupo"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -170,15 +167,7 @@
                     tools:context=".Activitys.MapsActivity"
                     android:layout_margin="@dimen/activity_horizontal_margin"
                     />
-
-
-
-
-
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
