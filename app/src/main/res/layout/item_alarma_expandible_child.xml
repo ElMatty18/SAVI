@@ -22,14 +22,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_id"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/alertaIdDetailalertaIdDetail"/>
@@ -44,14 +44,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_user_creador"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/alertaDetailUsuarioCreador"/>
@@ -66,14 +66,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_fecha_creacion"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/alertaDetailFechaCreacion"/>
@@ -88,14 +88,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_dirigida_to"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/alertaDetailFor"/>
@@ -110,14 +110,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_estado_dirigido"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/alertaDetailRespuestaEstado"/>
@@ -134,7 +134,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_estado_alerta"
                 />
 
@@ -173,6 +173,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorNegro"
                 android:textStyle="italic"
+                android:textSize="@dimen/text_size_item_alerta"
                 />
 
         </LinearLayout>

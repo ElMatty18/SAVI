@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/im_icono"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:contentDescription="@string/main_imagen"
         android:background="@drawable/icon_casa"
          />
@@ -28,6 +28,6 @@
         android:text="@string/app_title"
         android:textStyle="bold"
         android:textColor="@color/colorBlanco"
-        android:textSize="30dp"/>
+        android:textSize="@dimen/text_size_title_large"/>
 
 </LinearLayout>

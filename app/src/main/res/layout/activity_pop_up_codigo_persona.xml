@@ -21,6 +21,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/colorNegro"
             android:textStyle="italic"
+            android:textSize="@dimen/text_size_title"
             />
 
         <View
@@ -53,7 +54,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorNegro"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="@dimen/text_size_item_large"
                 />
 
 
@@ -62,8 +63,8 @@
 
         <ImageView
             android:id="@+id/persona_codigo_qr"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="@dimen/size_qr"
+            android:layout_height="@dimen/size_qr"
             android:contentDescription="@string/main_imagen"
             app:srcCompat="@drawable/codigo_grupo"
             />
@@ -91,6 +92,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorNegro"
                 android:textStyle="bold"
+                android:textSize="@dimen/text_size_item_large"
                 />
 
         </LinearLayout>

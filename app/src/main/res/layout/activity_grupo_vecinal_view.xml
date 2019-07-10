@@ -19,6 +19,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/colorBlanco"
             android:textStyle="italic"
+            android:textSize="@dimen/text_size_title"
             />
 
         <View
@@ -64,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Nombre del Grupo"
                         android:textStyle="bold"
-                        android:textSize="16dp"
+                        android:textSize="@dimen/text_size_item"
                         />
 
                     <LinearLayout
@@ -77,6 +78,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/view_txtNombreGrupo"
                             android:textStyle="bold"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                     </LinearLayout>
@@ -96,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Maximo Usuarios"
                         android:textStyle="bold"
-                        android:textSize="16dp"
+                        android:textSize="@dimen/text_size_item"
                         />
 
                     <LinearLayout
@@ -109,6 +111,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/view_usuario_max_selec"
                             android:textStyle="bold"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                     </LinearLayout>
@@ -128,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Rango del Grupo"
                         android:textStyle="bold"
-                        android:textSize="16dp"
+                        android:textSize="@dimen/text_size_item"
                         />
 
 
@@ -142,6 +145,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/view_usuario_max_rango"
                             android:textStyle="bold"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                     </LinearLayout>
@@ -156,7 +160,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="20sp"
                     android:textStyle="bold"
-                    android:background="@color/colorBlanco"/>
+                    android:background="@color/colorBlanco"
+                    android:textSize="@dimen/text_size_item"/>
 
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"

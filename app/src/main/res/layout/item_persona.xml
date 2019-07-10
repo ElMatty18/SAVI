@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:id="@+id/nombrePersona"
                 android:textColor="@color/colorNegro"
@@ -37,37 +37,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:id="@+id/descripcion"
                 android:textColor="@color/colorNegro"/>
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/borrarPersona"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_delete" />
-
-            <ImageButton
-                android:id="@+id/verDetallePersona"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_dialog_info" />
-
-            <ImageButton
-                android:id="@+id/verAlertasPersona"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_popup_reminder" />
-        </LinearLayout>-->
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -126,8 +99,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/menu_cancel"/>
-
                 </LinearLayout>
+
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

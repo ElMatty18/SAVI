@@ -15,11 +15,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="400dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="400dp"
             android:orientation="vertical">
 
             <TextView
@@ -29,108 +29,115 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlanco"
                 android:textStyle="bold"
-                android:textSize="21sp"
+                android:textSize="@dimen/text_size_main_menu"
                 android:id="@+id/textUsuarioMenuPrincipal"/>
 
             <ImageView
                 android:id="@+id/imgUsuarioMenuPrincipal"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:src="@drawable/icon_casa"
                 />
         </LinearLayout>
-        <android.support.v7.widget.CardView
-            android:layout_width="350dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
-                <LinearLayout
-                    android:id="@+id/mainAlarmasGrupos"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Alertas Grupo"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorGris"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_alarma"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/mainAlarmasFamilia"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Alertas Familia"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_familia"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/mainNotificaciones"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Notificaciones"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_notificacion"/>
 
 
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
     </RelativeLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <LinearLayout
+                android:id="@+id/mainAlarmasGrupos"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alertas Grupo"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorGris"
+                    android:textSize="@dimen/text_size_main_menu"
+                    />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/menu_alarma"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/mainAlarmasFamilia"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alertas Familia"
+                    android:textSize="@dimen/text_size_main_menu"
+                    android:textStyle="bold"
+                    />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/menu_familia"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/mainNotificaciones"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notificaciones"
+                    android:textSize="@dimen/text_size_main_menu"
+                    android:textStyle="bold"
+                    />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/menu_notificacion"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="100dp"
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_muestra"

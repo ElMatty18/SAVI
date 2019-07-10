@@ -30,4 +30,18 @@
     <fraction name="half_margin">48%</fraction>
     <fraction name="quarter">25%</fraction>
 
+    <dimen name="text_size_title_large">40dp</dimen>
+    <dimen name="text_size_title">24dp</dimen>
+    <dimen name="text_size_main_menu">30dp</dimen>
+    <dimen name="text_size_item">22dp</dimen>
+    <dimen name="text_size_item_large">30dp</dimen>
+
+
+    <dimen name="text_size_item_alerta">23dp</dimen>
+    <dimen name="size_qr">500dp</dimen>
+
+
+
+
+
 </resources>

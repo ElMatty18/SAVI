@@ -28,8 +28,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/crearAlertaVecinal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorAmarillo"
@@ -37,8 +37,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/alertaAutoridades"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="bottom|left"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorRojo"

@@ -5,8 +5,6 @@
     android:layout_marginLeft="@dimen/activity_horizontal_margin_big"
     >
 
-
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/viewRespestaAlerta"/>
@@ -39,8 +37,6 @@
         android:id="@+id/imagenRespuestaAlerta"
         android:layout_margin="@dimen/margin_item"
         />
-
-
 </LinearLayout>
 
 

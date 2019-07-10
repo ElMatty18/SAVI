@@ -28,14 +28,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_tipo"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/viewTipoAlarmaExp"/>
@@ -58,13 +58,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_dirigida"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/viewUsuarioDirigidaExp"/>
@@ -80,13 +80,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="@string/alerta_view_creada"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:layout_marginLeft="@dimen/text_margin_item"
                 android:id="@+id/viewFechaAlarmaExp"/>

@@ -27,14 +27,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="Titulo: "
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:id="@+id/viewNotificacionTitle"/>
 
@@ -55,11 +55,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:text="Contenido: "/>
-
-
-
         </LinearLayout>
 
 
@@ -72,13 +69,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="@dimen/text_size_item_alerta"
                 android:textStyle="bold"
                 android:id="@+id/viewNotificacionContenido"/>
-
         </LinearLayout>
-
-
 
     </LinearLayout>
 

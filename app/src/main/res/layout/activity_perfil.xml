@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:text="@string/pefil_title"
             android:gravity="center_horizontal"
-            android:textSize="18sp"
             android:textColor="@color/colorBlanco"
             android:textStyle="italic"
+            android:textSize="@dimen/text_size_title"
             />
 
         <View
@@ -59,41 +59,46 @@
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:hint="@string/nombre"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size_item"/>
 
             <EditText android:id="@+id/txtApellidoUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:hint="@string/apellido"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/text_size_item"/>
 
             <EditText android:id="@+id/txtDniUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:hint="@string/documento"
                 android:inputType="number"
-                android:ems="8"/>
+                android:ems="8"
+                android:textSize="@dimen/text_size_item"/>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nacimiento"
                 android:id="@+id/tvDate"
-                android:textSize="20dp"/>
+                android:textSize="@dimen/text_size_item"/>
 
             <EditText android:id="@+id/txtCelularUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:hint="@string/celular"
                 android:ems="8"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:textSize="@dimen/text_size_item"/>
 
             <EditText android:id="@+id/txtTelefonoUsuario"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:hint="@string/fijo"
                 android:ems="8"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:textSize="@dimen/text_size_item"/>
 
         </LinearLayout>
 
@@ -119,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Foto"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_size_item"
                         android:textStyle="bold"
                         android:textColor="@color/colorGris"
                         />
@@ -168,7 +173,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/icon_map"/>
+                        android:src="@drawable/icon_map"
+                        android:textSize="@dimen/text_size_item"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -199,7 +205,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/icon_map_secundario"/>
+                        android:src="@drawable/icon_map_secundario"
+                        android:textSize="@dimen/text_size_item"/>
                 </LinearLayout>
             </LinearLayout>
 

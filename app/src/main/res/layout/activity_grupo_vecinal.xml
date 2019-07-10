@@ -20,13 +20,14 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorBlanco"
                 android:textStyle="italic"
+                android:textSize="@dimen/text_size_title"
                 />
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                app:srcCompat="@drawable/gradiente_perfil2"
+                android:background="@drawable/gradiente_perfil2"
                 />
 
       </LinearLayout>
@@ -52,6 +53,7 @@
                 android:gravity="center_horizontal"
                 android:layout_margin="@dimen/activity_margenes"
                 app:srcCompat="@drawable/gradiente_perfil2"
+                android:textSize="@dimen/text_size_item"
                 >
 
 
@@ -68,6 +70,7 @@
                             android:layout_width="fill_parent"
                             android:inputType="text"
                             android:hint="Nombre del Grupo"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                   </LinearLayout>
@@ -84,7 +87,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Maximo Usuarios"
                             android:textStyle="bold"
-                            android:textSize="16dp"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                         <SeekBar
@@ -111,7 +114,8 @@
                       android:gravity="center_horizontal"
                       android:layout_marginTop="20sp"
                       android:textStyle="bold"
-                      android:background="@color/colorBlanco"/>
+                      android:background="@color/colorBlanco"
+                      android:textSize="@dimen/text_size_item"/>
 
                   <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                       xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -136,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Rango del Grupo"
                             android:textStyle="bold"
-                            android:textSize="16dp"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                         <SeekBar

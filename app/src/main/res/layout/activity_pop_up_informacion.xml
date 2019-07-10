@@ -8,8 +8,6 @@
     tools:context=".View.PopUpAlertasGrupo">
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +20,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/colorNegro"
             android:textStyle="italic"
+            android:textSize="@dimen/text_size_title"
             />
 
         <View
@@ -50,8 +49,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="18dp"
-
+                    android:textSize="@dimen/text_size_item"
                     />
 
 
@@ -62,7 +60,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/text_size_item"
                     android:layout_margin="@dimen/margin_item_ext"
 
                     />
@@ -74,7 +72,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/text_size_item"
                     android:layout_margin="@dimen/margin_item_ext"
                     />
 
@@ -85,7 +83,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/text_size_item"
                     android:layout_margin="@dimen/margin_item_ext"
                     />
 
@@ -106,7 +104,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/text_size_item"
                     android:layout_margin="@dimen/margin_item"
                     />
 
@@ -117,7 +115,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="@dimen/text_size_item"
                     android:layout_margin="@dimen/margin_item"
                     />
 
@@ -129,7 +127,7 @@
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorNegro"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/text_size_item"
                     android:layout_margin="@dimen/margin_item"
                     />
 

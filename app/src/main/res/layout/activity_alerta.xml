@@ -20,6 +20,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/colorBlanco"
             android:textStyle="italic"
+            android:textSize="@dimen/text_size_title"
             />
 
         <View
@@ -39,7 +40,6 @@
         android:layout_marginStart="20dp"
         android:id="@+id/state_list"
         android:layout_gravity="center_horizontal">
-
 
 
         <LinearLayout
@@ -65,7 +65,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/list_horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="200dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true" />
                 </RelativeLayout>
@@ -108,7 +108,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/list_alarma"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="200dp"
                         android:layout_centerInParent="true"/>
 
                 </RelativeLayout>

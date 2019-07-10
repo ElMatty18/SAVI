@@ -18,6 +18,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorBlanco"
                 android:textStyle="italic"
+                android:textSize="@dimen/text_size_title"
                 />
 
             <View
@@ -49,6 +50,7 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_margin="@dimen/activity_margenes"
+                android:textSize="@dimen/text_size_item"
                 android:background="@drawable/gradiente_perfil2">
 
                   <LinearLayout
@@ -80,7 +82,7 @@
                             android:inputType="text|textMultiLine"
                             android:hint="Descripcion"
                             android:gravity="top"
-
+                            android:textSize="@dimen/text_size_item"
                             />
 
                   </LinearLayout>
@@ -94,7 +96,8 @@
                       android:gravity="center_horizontal"
                       android:layout_marginTop="20sp"
                       android:textStyle="bold"
-                      android:background="@color/colorBlanco"/>
+                      android:background="@color/colorBlanco"
+                      android:textSize="@dimen/text_size_item"/>
 
                   <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                       xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -119,7 +122,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Rango Notificacion"
                             android:textStyle="bold"
-                            android:textSize="16dp"
+                            android:textSize="@dimen/text_size_item"
                             />
 
                         <SeekBar
