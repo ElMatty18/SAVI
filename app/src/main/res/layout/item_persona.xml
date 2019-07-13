@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorBlanco">
+    android:background="@color/colorGrisClaroClaro">
 
     <ImageView
         android:layout_width="120dp"
@@ -51,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
+                android:background="@color/colorGrisClaro"
                 android:weightSum="3">
                 <LinearLayout
                     android:id="@+id/familiarAlarmas"

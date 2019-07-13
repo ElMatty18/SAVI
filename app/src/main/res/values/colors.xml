@@ -14,6 +14,7 @@
 
     <color name="colorGris">#848484</color>
     <color name="colorGrisClaro">#d2d1d1</color>
+    <color name="colorGrisClaroClaro">#e2e2e2</color>
 
     <color name="colorA">#9fa8da</color>
     <color name="colorB">#90caf9</color>

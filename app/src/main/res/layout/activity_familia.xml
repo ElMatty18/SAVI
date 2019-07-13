@@ -53,8 +53,8 @@
              <ListView
                  android:id="@+id/listViewFamilia"
                  android:layout_width="match_parent"
-                 android:layout_height="400dp"
-                 android:minHeight="400dp"/>
+                 android:layout_height="700dp"
+                 android:minHeight="700dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
