@@ -187,11 +187,13 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         View header = navigationView.getHeaderView(0);
         nombreUsuarioLogueado = header.findViewById(R.id.nombreUsuarioLogeado);
         mailUsuarioLogueado = header.findViewById(R.id.mailUsuarioLogeado);
-        nombreUsuarioLogueado.setText(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()));
-        mailUsuarioLogueado.setText(SesionManager.getUsuario().getMail());
+        if (SesionManager.getUsuario()!= null){
+            nombreUsuarioLogueado.setText(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()));
+            mailUsuarioLogueado.setText(SesionManager.getUsuario().getMail());
 
-        nombreUsuarioMenuPrincipal = findViewById(R.id.textUsuarioMenuPrincipal);
-        nombreUsuarioMenuPrincipal.setText(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()));
+            nombreUsuarioMenuPrincipal = findViewById(R.id.textUsuarioMenuPrincipal);
+            nombreUsuarioMenuPrincipal.setText(StringUtils.getTextoFormateado(SesionManager.getUsuario().getGlosa()));
+        }
     }
 
     public void abrirTelefono() {
@@ -325,6 +327,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         if (id == R.id.action_exit) {
             limpiarSesion();
             finish();
+
         }
         return super.onOptionsItemSelected(item);
     }
