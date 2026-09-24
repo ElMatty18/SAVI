@@ -38,7 +38,6 @@ import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Service.ServiciosSesion;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
-import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.View.PopUpInformacion;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -57,6 +56,7 @@ import com.tangorra.matias.savi.ui.familia.FamiliaActivity;
 import com.tangorra.matias.savi.ui.inicio.InicioViewModel;
 import com.tangorra.matias.savi.ui.notificaciones.NotificacionesActivity;
 import com.tangorra.matias.savi.ui.notificaciones.NuevaNotificacionActivity;
+import com.tangorra.matias.savi.ui.perfil.DomiciliosActivity;
 import com.tangorra.matias.savi.ui.perfil.PerfilActivity;
 
 import java.util.ArrayList;
@@ -286,7 +286,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         if (id == R.id.unirseGrupo) {
             abrirScan();
         } else if (id == R.id.agregarDomicilio) {
-            startActivity(new Intent(this, PopUpDomiciliosMenu.class));
+            startActivity(new Intent(this, DomiciliosActivity.class));
         } else if (id == R.id.crear_grupo) {
             startActivity(new Intent(this, CrearGrupoActivity.class));
         } else if (id == R.id.mostarGrupo) {

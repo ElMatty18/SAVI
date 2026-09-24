@@ -33,7 +33,6 @@ import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 import com.tangorra.matias.savi.Utils.Validaciones;
-import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.ui.comun.Avatares;
 
 import java.io.IOException;
@@ -146,7 +145,7 @@ public class PerfilActivity extends AppCompatActivity {
         findViewById(R.id.btn_foto).setOnClickListener(elegirFoto);
         txtNacimiento.setOnClickListener(v -> elegirFecha());
         ((TextInputLayout) findViewById(R.id.campo_nacimiento)).setEndIconOnClickListener(v -> elegirFecha());
-        findViewById(R.id.btn_domicilios).setOnClickListener(v -> startActivity(new Intent(this, PopUpDomiciliosMenu.class)));
+        findViewById(R.id.btn_domicilios).setOnClickListener(v -> startActivity(new Intent(this, DomiciliosActivity.class)));
         findViewById(R.id.btn_guardar).setOnClickListener(v -> guardar());
 
         View boton = findViewById(R.id.btn_guardar);

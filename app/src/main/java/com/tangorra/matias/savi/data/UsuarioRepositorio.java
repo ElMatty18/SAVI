@@ -55,4 +55,9 @@ public final class UsuarioRepositorio {
                     return urlFoto(uid);
                 });
     }
+
+    /** Guarda o quita (domicilio null) la casa principal o el domicilio alternativo. */
+    public static Task<Void> guardarDomicilio(String uid, boolean principal, com.tangorra.matias.savi.Entidades.Domicilio domicilio) {
+        return usuarios().child(uid).child("perfil").child(principal ? "domicilio" : "domicilioAlterno").setValue(domicilio);
+    }
 }

@@ -168,4 +168,15 @@
     <string name="notificaciones_alcance">Alcance</string>
     <string name="notificaciones_publicar">Publicar aviso</string>
     <string name="notificaciones_error">No se pudo publicar el aviso</string>
+    <string name="domicilios_titulo">Mis domicilios</string>
+    <string name="domicilios_explicacion">Con tus domicilios recibís los avisos cercanos, y tu familia puede ubicar tu casa ante una alerta.</string>
+    <string name="domicilios_principal">Casa</string>
+    <string name="domicilios_alternativo">Otro domicilio</string>
+    <string name="domicilios_alternativo_ayuda">Trabajo, casa de fin de semana…</string>
+    <string name="domicilios_sin_cargar">Sin cargar</string>
+    <string name="domicilios_cargado">Ubicación cargada</string>
+    <string name="domicilios_elegir">Elegir</string>
+    <string name="domicilios_cambiar">Cambiar</string>
+    <string name="domicilios_quitar">Quitar domicilio</string>
+    <string name="domicilios_error">No se pudo guardar el domicilio</string>
 </resources>
