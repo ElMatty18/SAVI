@@ -152,4 +152,20 @@
     </plurals>
     <string name="inicio_unido">Te uniste a %1$s</string>
     <string name="inicio_error_unirse">No se pudo unir al grupo</string>
+    <string name="notificaciones_titulo">Avisos del barrio</string>
+    <string name="notificaciones_vacio">No hay avisos cerca de tus domicilios</string>
+    <string name="notificaciones_nueva">Nuevo aviso</string>
+    <string name="notificaciones_tuya">Publicado por vos</string>
+    <string name="notificaciones_cerca">Cerca de tu zona</string>
+    <string name="notificaciones_a_metros">A %1$d m de tu casa</string>
+    <string name="notificaciones_a_km">A %1$.1f km de tu casa</string>
+    <string name="notificaciones_explicacion">Un aviso informativo para los vecinos cercanos: cortes de luz, reuniones, obras. Para emergencias usá "Emitir alerta".</string>
+    <string name="notificaciones_campo_titulo">Título</string>
+    <string name="notificaciones_campo_mensaje">Mensaje</string>
+    <string name="notificaciones_donde">¿Dónde?</string>
+    <string name="notificaciones_elegir_lugar">Elegir el lugar</string>
+    <string name="notificaciones_lugar_elegido">Lugar elegido · tocá para cambiarlo</string>
+    <string name="notificaciones_alcance">Alcance</string>
+    <string name="notificaciones_publicar">Publicar aviso</string>
+    <string name="notificaciones_error">No se pudo publicar el aviso</string>
 </resources>

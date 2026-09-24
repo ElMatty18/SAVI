@@ -65,6 +65,15 @@
             android:exported="false"
             android:theme="@style/Theme.Savi" />
         <activity
+            android:name=".ui.notificaciones.NotificacionesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi" />
+        <activity
+            android:name=".ui.notificaciones.NuevaNotificacionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.perfil.PerfilActivity"
             android:exported="false"
             android:theme="@style/Theme.Savi"
@@ -107,10 +116,6 @@
 
         <activity android:name=".Activitys.ConfiguracionActivity"
             android:theme="@style/AppTheme.PopUpSavi.solid"/>
-        <activity android:name=".Activitys.NotificacionActivity" />
-        <activity
-            android:name=".View.PopUpNotificaciones"
-            android:theme="@style/AppTheme.PopUpSavi.solid" />
         <activity
             android:name=".View.PopUpDomicilio"
             android:theme="@style/AppTheme.PopUpSavi.solid" />

@@ -27,4 +27,20 @@ public final class NotificacionRepositorio {
                     }
                 });
     }
+
+    public static com.google.android.gms.tasks.Task<Void> crear(com.tangorra.matias.savi.Entidades.Usuario autor,
+                                                               String titulo, String contenido,
+                                                               double lat, double lng, int rangoMetros) {
+        com.google.firebase.database.DatabaseReference ref = FirebaseUtils.db().getReference(FirebaseUtils.dbNotificacion).push();
+        Notificacion n = new Notificacion();
+        n.setId(ref.getKey());
+        n.setCreadoBy(autor.getId());
+        n.setTitle(titulo);
+        n.setContenido(contenido);
+        n.setLat(lat);
+        n.setLng(lng);
+        n.setRango(rangoMetros);
+        n.setCreacion(new java.util.Date());
+        return ref.setValue(n);
+    }
 }

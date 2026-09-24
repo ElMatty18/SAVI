@@ -96,7 +96,7 @@ async function main() {
     Familia: {[FAMILIA]: {[uid(ana.mail)]: uid(ana.mail), [uid(beto.mail)]: uid(beto.mail)}},
     Notificacion: {
       "notif-1": {id: "notif-1", title: "Corte de luz", contenido: "Manana de 9 a 13 por obras en la cuadra",
-        creadoBy: uid(caro.mail), rango: 5, ...cerca(0.001, 0)},
+        creadoBy: uid(caro.mail), rango: 1000, ...cerca(0.001, 0)},
     },
   });
 

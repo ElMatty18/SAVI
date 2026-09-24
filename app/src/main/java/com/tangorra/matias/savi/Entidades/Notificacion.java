@@ -14,6 +14,8 @@ public class Notificacion {
     private String title;
     private String creadoBy;
     private Integer rango;
+    // Las notificaciones viejas no tienen fecha
+    private java.util.Date creacion;
 
     // uid -> uid de quienes ya la vieron (vistoPor/{uid}). Las listas viejas se leen como {"0": uid}.
     private HashMap<String, String> vistoPor;
@@ -89,5 +91,13 @@ public class Notificacion {
     @Exclude
     public boolean vistaPor(String idUsuario) {
         return vistoPor != null && (vistoPor.containsKey(idUsuario) || vistoPor.containsValue(idUsuario));
+    }
+
+    public java.util.Date getCreacion() {
+        return creacion;
+    }
+
+    public void setCreacion(java.util.Date creacion) {
+        this.creacion = creacion;
     }
 }

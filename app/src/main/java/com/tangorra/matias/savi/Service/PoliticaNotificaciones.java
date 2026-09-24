@@ -29,11 +29,16 @@ public final class PoliticaNotificaciones {
                 || enRango(notificacion, usuario.getPerfil().getDomicilioAlterno());
     }
 
-    static boolean enRango(Notificacion notificacion, Domicilio domicilio) {
+    public static boolean enRango(Notificacion notificacion, Domicilio domicilio) {
         if (domicilio == null || notificacion.getRango() == null) {
             return false;
         }
-        double distancia = MapsUtils.distanciaCoord(notificacion.getLat(), notificacion.getLng(), domicilio.getLat(), domicilio.getLng());
-        return distancia < notificacion.getRango();
+        // El rango esta en metros (es el radio que se dibuja en el mapa); distanciaCoord devuelve km.
+        // Antes se comparaban directamente y un rango de "100" alcanzaba a 100 km.
+        return distanciaMetros(notificacion, domicilio) < notificacion.getRango();
+    }
+
+    public static double distanciaMetros(Notificacion notificacion, Domicilio domicilio) {
+        return MapsUtils.distanciaCoord(notificacion.getLat(), notificacion.getLng(), domicilio.getLat(), domicilio.getLng()) * 1000;
     }
 }

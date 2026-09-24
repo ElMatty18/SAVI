@@ -40,7 +40,6 @@ import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.View.PopUpInformacion;
-import com.tangorra.matias.savi.View.PopUpNotificaciones;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import androidx.activity.result.ActivityResultLauncher;
@@ -56,6 +55,8 @@ import com.tangorra.matias.savi.ui.comun.AlertasAdapter;
 import com.tangorra.matias.savi.ui.comun.PresentacionAlerta;
 import com.tangorra.matias.savi.ui.familia.FamiliaActivity;
 import com.tangorra.matias.savi.ui.inicio.InicioViewModel;
+import com.tangorra.matias.savi.ui.notificaciones.NotificacionesActivity;
+import com.tangorra.matias.savi.ui.notificaciones.NuevaNotificacionActivity;
 import com.tangorra.matias.savi.ui.perfil.PerfilActivity;
 
 import java.util.ArrayList;
@@ -182,7 +183,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         findViewById(R.id.btn_llamar).setOnClickListener(v -> abrirTelefono());
         findViewById(R.id.mainAlarmasGrupos).setOnClickListener(v -> startActivity(AlertasActivity.grupo(this)));
         findViewById(R.id.mainAlarmasFamilia).setOnClickListener(v -> startActivity(AlertasActivity.familia(this)));
-        findViewById(R.id.mainNotificaciones).setOnClickListener(v -> startActivity(new Intent(this, PopUpNotificaciones.class)));
+        findViewById(R.id.mainNotificaciones).setOnClickListener(v -> startActivity(new Intent(this, NotificacionesActivity.class)));
         btnVerTodas.setOnClickListener(v -> startActivity(AlertasActivity.grupo(this)));
         findViewById(R.id.btn_unirse_grupo).setOnClickListener(v -> abrirScan());
         findViewById(R.id.btn_crear_grupo).setOnClickListener(v -> startActivity(new Intent(this, CrearGrupoActivity.class)));
@@ -301,8 +302,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.configurarCuenta) {
             startActivity(new Intent(this, ConfiguracionActivity.class));
         } else if (id == R.id.addNotificacion) {
-            startActivity(new Intent(this, NotificacionActivity.class));
-            finish();
+            startActivity(new Intent(this, NuevaNotificacionActivity.class));
         } else if (id == R.id.informacion) {
             startActivity(new Intent(this, PopUpInformacion.class));
         }

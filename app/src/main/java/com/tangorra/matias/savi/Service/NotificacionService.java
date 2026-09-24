@@ -15,7 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
+import com.tangorra.matias.savi.ui.notificaciones.NotificacionesActivity;
 import com.tangorra.matias.savi.Entidades.Notificacion;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
@@ -68,10 +68,10 @@ public class NotificacionService extends Service {
             return;
         }
         PendingIntent accion = PendingIntent.getActivity(context, 0,
-                new Intent(context, MenuPrincipalActivity.class),
+                new Intent(context, NotificacionesActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         Notificador.mostrar(context, Notificador.CANAL_NOTIFICACIONES, notificacion.getId(),
-                "Notificacion! " + notificacion.getTitle(), notificacion.getContenido(), accion, false);
+                notificacion.getTitle(), notificacion.getContenido(), accion, false);
         marcarVisto(notificacion.getId(), usuario.getId());
     }
 
