@@ -7,7 +7,7 @@
 
     "Usuario": {
       ".read": "auth != null",
-      ".indexOn": ["mail", "idGrupo", "id", "fcmToken"],
+      ".indexOn": ["mail", "idGrupo", "idFamilia", "id", "fcmToken"],
       "$idUsuario": {
         ".write": "auth != null",
         // La clave nunca debe volver a guardarse en la base

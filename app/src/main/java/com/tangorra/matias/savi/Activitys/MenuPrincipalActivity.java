@@ -47,6 +47,7 @@ import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Service.ServiciosSesion;
+import com.tangorra.matias.savi.data.Sesion;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
@@ -348,6 +349,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private void limpiarSesion() {
         ServiciosSesion.detener(this);
+        Sesion.cerrar();
         FirebaseAuth.getInstance().signOut();
         SesionManager.setUsuario(null);
         SesionManager.setGrupo(null);

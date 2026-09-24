@@ -8,7 +8,7 @@
     "Usuario": {
       // Cualquier usuario autenticado puede leer perfiles (integrantes del grupo, QR de familia)
       ".read": "auth != null",
-      ".indexOn": ["mail", "idGrupo", "id", "fcmToken"],
+      ".indexOn": ["mail", "idGrupo", "idFamilia", "id", "fcmToken"],
       "$uid": {
         // Cada uno escribe solo su propio registro
         ".write": "auth != null && auth.uid === $uid",

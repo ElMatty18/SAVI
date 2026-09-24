@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_nombre_corto" translatable="false">SAVI</string>
+    <string name="acceso_subtitulo">Sistema de Asistencia Vecinal Integral</string>
+    <string name="acceso_mail">Mail</string>
+    <string name="acceso_clave">Clave</string>
+    <string name="acceso_ingresar">Ingresar</string>
+    <string name="acceso_crear_cuenta">Crear cuenta</string>
+    <string name="acceso_otra_cuenta">Usar otra cuenta</string>
+    <string name="error_campo_requerido">Completá este campo</string>
+    <string name="error_mail_invalido">El mail no es válido</string>
+    <string name="error_clave_insegura">Usá entre 6 y 30 caracteres, con mayúscula, minúscula y número</string>
+</resources>

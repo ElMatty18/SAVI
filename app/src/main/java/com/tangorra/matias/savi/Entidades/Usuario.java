@@ -153,6 +153,12 @@ public class Usuario implements Serializable {
         return false;
     }
 
+    /** Nombre y apellido con mayusculas, como se muestra (y se guarda en "dirigida" de las alertas). */
+    @Exclude
+    public String getGlosaFormateada(){
+        return com.tangorra.matias.savi.Utils.StringUtils.getTextoFormateado(getGlosa());
+    }
+
     @Exclude
     public String getGlosa(){
         return getNombre() + " " + getApellido();

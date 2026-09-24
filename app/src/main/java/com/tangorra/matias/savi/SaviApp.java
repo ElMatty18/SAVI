@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Utils.Notificador;
+import com.tangorra.matias.savi.data.Sesion;
 
 public class SaviApp extends Application {
 
@@ -21,6 +22,12 @@ public class SaviApp extends Application {
         }
         SesionManager.init(this);
         Notificador.crearCanales(this);
+
+        // Sesion ya iniciada (por ejemplo, al reabrir la app despues de que Android la cerro)
+        String uid = FirebaseAuth.getInstance().getUid();
+        if (uid != null) {
+            Sesion.iniciar(uid);
+        }
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override

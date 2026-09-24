@@ -23,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tangorra.matias.savi.Activitys.MainActivity;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorAlertas;
 import com.tangorra.matias.savi.Adaptadores.AdaptadorNotificacion;
 import com.tangorra.matias.savi.Entidades.Alerta;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md_primary">#82D5C8</color>
+    <color name="md_onPrimary">#003731</color>
+    <color name="md_primaryContainer">#005048</color>
+    <color name="md_onPrimaryContainer">#9EF2E4</color>
+    <color name="md_secondary">#B1CCC6</color>
+    <color name="md_onSecondary">#1C3531</color>
+    <color name="md_secondaryContainer">#334B47</color>
+    <color name="md_onSecondaryContainer">#CCE8E2</color>
+    <color name="md_tertiary">#FFB59A</color>
+    <color name="md_onTertiary">#5B1B00</color>
+    <color name="md_tertiaryContainer">#7B2E0F</color>
+    <color name="md_onTertiaryContainer">#FFDBCF</color>
+    <color name="md_error">#FFB4AB</color>
+    <color name="md_onError">#690005</color>
+    <color name="md_errorContainer">#93000A</color>
+    <color name="md_onErrorContainer">#FFDAD6</color>
+    <color name="md_background">#0E1513</color>
+    <color name="md_onBackground">#DDE4E1</color>
+    <color name="md_surface">#0E1513</color>
+    <color name="md_onSurface">#DDE4E1</color>
+    <color name="md_surfaceVariant">#3F4946</color>
+    <color name="md_onSurfaceVariant">#BEC9C5</color>
+    <color name="md_surfaceContainerLowest">#090F0E</color>
+    <color name="md_surfaceContainerLow">#171D1B</color>
+    <color name="md_surfaceContainer">#1B2120</color>
+    <color name="md_surfaceContainerHigh">#252B2A</color>
+    <color name="md_surfaceContainerHighest">#303635</color>
+    <color name="md_outline">#899390</color>
+    <color name="md_outlineVariant">#3F4946</color>
+    <color name="md_inverseSurface">#DDE4E1</color>
+    <color name="md_inverseOnSurface">#2B3230</color>
+    <color name="md_inversePrimary">#006A60</color>
+
+    <color name="alerta_activa">#FFB4AB</color>
+    <color name="alerta_activa_contenedor">#93000A</color>
+    <color name="alerta_atencion">#FFB95F</color>
+    <color name="alerta_atencion_contenedor">#6A3B00</color>
+    <color name="alerta_cerrada">#B1CCC6</color>
+    <color name="alerta_cerrada_contenedor">#334B47</color>
+</resources>

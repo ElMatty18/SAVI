@@ -49,7 +49,7 @@ import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
-import com.tangorra.matias.savi.Service.AlertaRepositorio;
+import com.tangorra.matias.savi.data.AlertaRepositorio;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;

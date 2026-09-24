@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paleta Material 3 generada a partir del verde azulado del icono (#00897B) -->
+<resources>
+    <color name="md_primary">#006A60</color>
+    <color name="md_onPrimary">#FFFFFF</color>
+    <color name="md_primaryContainer">#9EF2E4</color>
+    <color name="md_onPrimaryContainer">#00201C</color>
+    <color name="md_secondary">#4A635F</color>
+    <color name="md_onSecondary">#FFFFFF</color>
+    <color name="md_secondaryContainer">#CCE8E2</color>
+    <color name="md_onSecondaryContainer">#05201C</color>
+    <color name="md_tertiary">#9A4524</color>
+    <color name="md_onTertiary">#FFFFFF</color>
+    <color name="md_tertiaryContainer">#FFDBCF</color>
+    <color name="md_onTertiaryContainer">#380D00</color>
+    <color name="md_error">#BA1A1A</color>
+    <color name="md_onError">#FFFFFF</color>
+    <color name="md_errorContainer">#FFDAD6</color>
+    <color name="md_onErrorContainer">#410002</color>
+    <color name="md_background">#F4FBF8</color>
+    <color name="md_onBackground">#171D1B</color>
+    <color name="md_surface">#F4FBF8</color>
+    <color name="md_onSurface">#171D1B</color>
+    <color name="md_surfaceVariant">#DAE5E1</color>
+    <color name="md_onSurfaceVariant">#3F4946</color>
+    <color name="md_surfaceContainerLowest">#FFFFFF</color>
+    <color name="md_surfaceContainerLow">#EEF5F2</color>
+    <color name="md_surfaceContainer">#E9EFEC</color>
+    <color name="md_surfaceContainerHigh">#E3EAE7</color>
+    <color name="md_surfaceContainerHighest">#DDE4E1</color>
+    <color name="md_outline">#6F7976</color>
+    <color name="md_outlineVariant">#BEC9C5</color>
+    <color name="md_inverseSurface">#2B3230</color>
+    <color name="md_inverseOnSurface">#ECF2EF</color>
+    <color name="md_inversePrimary">#82D5C8</color>
+
+    <!-- Colores de estado de las alertas -->
+    <color name="alerta_activa">#BA1A1A</color>
+    <color name="alerta_activa_contenedor">#FFDAD6</color>
+    <color name="alerta_atencion">#8B5000</color>
+    <color name="alerta_atencion_contenedor">#FFDDB8</color>
+    <color name="alerta_cerrada">#4A635F</color>
+    <color name="alerta_cerrada_contenedor">#CCE8E2</color>
+</resources>
