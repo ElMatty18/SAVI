@@ -27,7 +27,38 @@ public final class PresentacionAlerta {
             R.drawable.alarma5, R.drawable.alarma6, R.drawable.alarma7,
     };
 
+    private static final String[] DESCRIPCIONES = {
+            "Suena solo en la casa elegida",
+            "Suena para todo el grupo, menos en la casa elegida",
+            "Suena para todo el grupo",
+            "Vibra en la casa elegida",
+            "Suena en la casa elegida y vibra para el resto",
+            "Suena para todo el grupo",
+            "Aviso silencioso para todo el grupo",
+    };
+
     private PresentacionAlerta() {
+    }
+
+    /** Como se avisa a los vecinos segun el tipo (ver PoliticaAlertas). */
+    public static String comoSeAvisa(String tipo) {
+        for (int i = 0; i < TIPOS.length; i++) {
+            if (TIPOS[i].equals(tipo)) {
+                return DESCRIPCIONES[i];
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Tipos que se refieren a una casa: dirigidos a "todo el grupo" no le avisarian a nadie
+     * (por ejemplo, "Alarma sonando" solo suena en la casa destinataria).
+     */
+    public static boolean requiereDestinatario(String tipo) {
+        return StringUtils.ALARMA_SONANDO.equals(tipo)
+                || StringUtils.SOSPECHA_ROBO.equals(tipo)
+                || StringUtils.DANO_VEHICULO.equals(tipo)
+                || StringUtils.PRINCIPIO_FUEGO.equals(tipo);
     }
 
     @DrawableRes

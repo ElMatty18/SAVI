@@ -40,14 +40,15 @@ import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Service.ServiciosSesion;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
-import com.tangorra.matias.savi.View.PopUpAlertasFamilia;
-import com.tangorra.matias.savi.View.PopUpAlertasGrupo;
 import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.View.PopUpInformacion;
 import com.tangorra.matias.savi.View.PopUpNotificaciones;
 import com.tangorra.matias.savi.data.Sesion;
 import com.tangorra.matias.savi.data.UsuarioRepositorio;
 import com.tangorra.matias.savi.ui.acceso.AccesoActivity;
+import com.tangorra.matias.savi.ui.alertas.AlertasActivity;
+import com.tangorra.matias.savi.ui.alertas.DetalleAlertaActivity;
+import com.tangorra.matias.savi.ui.alertas.EmitirAlertaActivity;
 import com.tangorra.matias.savi.ui.comun.AlertasAdapter;
 import com.tangorra.matias.savi.ui.comun.PresentacionAlerta;
 import com.tangorra.matias.savi.ui.inicio.InicioViewModel;
@@ -171,13 +172,13 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
                 Snackbar.make(drawer, StringUtils.notSetGroup, Snackbar.LENGTH_LONG).show();
                 return;
             }
-            startActivity(new Intent(this, AlertaActivity.class));
+            startActivity(new Intent(this, EmitirAlertaActivity.class));
         });
         findViewById(R.id.btn_llamar).setOnClickListener(v -> abrirTelefono());
-        findViewById(R.id.mainAlarmasGrupos).setOnClickListener(v -> startActivity(new Intent(this, PopUpAlertasGrupo.class)));
-        findViewById(R.id.mainAlarmasFamilia).setOnClickListener(v -> startActivity(new Intent(this, PopUpAlertasFamilia.class)));
+        findViewById(R.id.mainAlarmasGrupos).setOnClickListener(v -> startActivity(AlertasActivity.grupo(this)));
+        findViewById(R.id.mainAlarmasFamilia).setOnClickListener(v -> startActivity(AlertasActivity.familia(this)));
         findViewById(R.id.mainNotificaciones).setOnClickListener(v -> startActivity(new Intent(this, PopUpNotificaciones.class)));
-        btnVerTodas.setOnClickListener(v -> startActivity(new Intent(this, PopUpAlertasGrupo.class)));
+        btnVerTodas.setOnClickListener(v -> startActivity(AlertasActivity.grupo(this)));
         findViewById(R.id.btn_unirse_grupo).setOnClickListener(v -> abrirScan());
         findViewById(R.id.btn_crear_grupo).setOnClickListener(v -> {
             startActivity(new Intent(this, GrupoVecinalActivity.class));
@@ -228,9 +229,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     private void abrirAlerta(Alerta alerta) {
-        Intent intent = new Intent(this, RespuestaAlertaActivity.class);
-        intent.putExtra(StringUtils.parametroAlerta, alerta);
-        startActivity(intent);
+        startActivity(DetalleAlertaActivity.intent(this, alerta.getIdGrupo(), alerta.getId()));
     }
 
     private void cargarImagenPerfil(final ImageView destino) {

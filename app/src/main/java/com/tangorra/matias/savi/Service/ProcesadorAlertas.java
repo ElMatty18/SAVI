@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
-import com.tangorra.matias.savi.Activitys.RespuestaAlertaActivity;
+import com.tangorra.matias.savi.ui.alertas.DetalleAlertaActivity;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.Configuracion;
 import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
@@ -44,27 +44,42 @@ public final class ProcesadorAlertas {
         if (respuestaAutomatica) {
             responderAutomaticamente(usuario, alerta, idGrupo);
         } else if (appEnPrimerPlano()) {
-            context.startActivity(intentRespuesta(context, alerta));
+            context.startActivity(intentRespuesta(context, alerta, idGrupo, false));
         }
 
         PoliticaAlertas.Aviso aviso = PoliticaAlertas.aviso(alerta, usuario);
         if (aviso != null) {
             Intent destino = respuestaAutomatica
                     ? new Intent(context, MenuPrincipalActivity.class)
-                    : intentRespuesta(context, alerta);
+                    : intentRespuesta(context, alerta, idGrupo, aviso.modo == PoliticaAlertas.Modo.SONORA);
             PendingIntent accion = PendingIntent.getActivity(context, alerta.getId() != null ? alerta.getId().hashCode() : 0,
                     destino, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             Notificador.mostrar(context, Notificador.canal(aviso.modo), alerta.getId(),
-                    aviso.nivel + "! " + alerta.getAlarma(),
-                    "Dirigida -> " + alerta.getDirigida(),
+                    alerta.getAlarma(),
+                    textoNotificacion(alerta, usuario),
                     accion,
                     !respuestaAutomatica && aviso.modo == PoliticaAlertas.Modo.SONORA);
         }
     }
 
-    private static Intent intentRespuesta(Context context, Alerta alerta) {
-        Intent intent = new Intent(context, RespuestaAlertaActivity.class);
-        intent.putExtra(StringUtils.parametroAlerta, alerta);
+    /** "En tu casa · la emitio Ana Garcia" */
+    static String textoNotificacion(Alerta alerta, Usuario usuario) {
+        String donde;
+        if (PoliticaAlertas.esDirigidaA(alerta, usuario)) {
+            donde = "En tu casa";
+        } else if (alerta.getDirigida() == null || StringUtils.ALL_USERS.equals(alerta.getDirigida())) {
+            donde = "En el barrio";
+        } else {
+            donde = "En la casa de " + alerta.getDirigida().trim();
+        }
+        String quien = alerta.getCreadoBy() != null ? StringUtils.getTextoFormateado(alerta.getCreadoBy()).trim() : null;
+        return quien == null || quien.isEmpty() ? donde : donde + " · la emitió " + quien;
+    }
+
+    private static Intent intentRespuesta(Context context, Alerta alerta, String idGrupo, boolean urgente) {
+        Intent intent = urgente
+                ? DetalleAlertaActivity.intentUrgente(context, idGrupo, alerta.getId())
+                : DetalleAlertaActivity.intent(context, idGrupo, alerta.getId());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }

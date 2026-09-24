@@ -114,4 +114,22 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="drawableTint">?attr/colorPrimary</item>
     </style>
+
+    <style name="Texto.Savi.Dato" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="drawableTint">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="Boton.Savi.Autoridad" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLines">2</item>
+    </style>
 </resources>

@@ -31,6 +31,9 @@ public class Alerta implements Serializable {
     // Las alertas viejas guardaban una lista; Firebase la lee igual como mapa {"0": ..., "1": ...}.
     private HashMap<String, RespuestaAlerta> respuestas;
 
+    // Grupo al que pertenece; no se guarda (esta implicito en la ruta) pero se completa al leerla
+    private transient String idGrupo;
+
     public Alerta(String id, String casa, String alarma, Date creacion, String creadoBy) {
         this.id = id;
         this.dirigida = casa;
@@ -111,6 +114,22 @@ public class Alerta implements Serializable {
 
     public void setRespuestas(HashMap<String, RespuestaAlerta> respuestas) {
         this.respuestas = respuestas;
+    }
+
+    @Exclude
+    public String getIdGrupo() {
+        return idGrupo;
+    }
+
+    @Exclude
+    public void setIdGrupo(String idGrupo) {
+        this.idGrupo = idGrupo;
+    }
+
+    /** Si la alerta fue emitida por o dirigida a alguno de estos usuarios. */
+    @Exclude
+    public boolean involucraA(java.util.Set<String> idsUsuarios) {
+        return idsUsuarios.contains(creadoById) || idsUsuarios.contains(dirigidaId);
     }
 
     @Exclude

@@ -30,8 +30,8 @@ import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
-import com.tangorra.matias.savi.View.PopUpFamiliarAlertas;
 import com.tangorra.matias.savi.View.PopUpViewInfoFamiliar;
+import com.tangorra.matias.savi.ui.alertas.AlertasActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +123,7 @@ public class AdaptadorUsuarios extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     usuarioSelecc= personas.get(position);
-                    ((FamiliaActivity)context).startActivity(new Intent(context, PopUpFamiliarAlertas.class).putExtra("usuarioSelecc", usuarioSelecc));
+                    ((FamiliaActivity)context).startActivity(AlertasActivity.miembro(context, usuarioSelecc));
                 }
             });
         }

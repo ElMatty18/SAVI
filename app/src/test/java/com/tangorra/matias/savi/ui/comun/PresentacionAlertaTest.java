@@ -36,4 +36,20 @@ public class PresentacionAlertaTest {
         a.setEstado(StringUtils.alertaDesactivada);
         assertEquals(PresentacionAlerta.Estado.CERRADA, PresentacionAlerta.estado(a));
     }
+
+    @Test
+    public void losTiposQueHablanDeUnaCasaRequierenDestinatario() {
+        // Coherente con PoliticaAlertas: estos tipos solo avisan en funcion del destinatario
+        org.junit.Assert.assertTrue(PresentacionAlerta.requiereDestinatario(StringUtils.ALARMA_SONANDO));
+        org.junit.Assert.assertTrue(PresentacionAlerta.requiereDestinatario(StringUtils.DANO_VEHICULO));
+        org.junit.Assert.assertFalse(PresentacionAlerta.requiereDestinatario(StringUtils.AGRESION));
+        org.junit.Assert.assertFalse(PresentacionAlerta.requiereDestinatario(StringUtils.MAL_ESTACIONADO));
+    }
+
+    @Test
+    public void todosLosTiposTienenImagenYDescripcion() {
+        for (String tipo : PresentacionAlerta.TIPOS) {
+            org.junit.Assert.assertFalse(tipo, PresentacionAlerta.comoSeAvisa(tipo).isEmpty());
+        }
+    }
 }

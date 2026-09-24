@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/raiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    tools:context=".ui.alertas.DetalleAlertaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationContentDescription="@string/volver"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/detalle_titulo" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progreso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- Encabezado -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imagen"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/Forma.Savi.Mediana" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tipo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                        android:textColor="?attr/colorOnSurface"
+                        tools:text="Sospecha de robo" />
+
+                    <TextView
+                        android:id="@+id/estado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/fondo_etiqueta"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        tools:text="Activa" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/destino"
+                style="@style/Texto.Savi.Dato"
+                android:layout_marginTop="8dp"
+                app:drawableStartCompat="@drawable/ic_person_pin_circle"
+                tools:text="Para Ana Garcia" />
+
+            <TextView
+                android:id="@+id/creador"
+                style="@style/Texto.Savi.Dato"
+                app:drawableStartCompat="@drawable/ic_campaign"
+                tools:text="Emitida por Beto Lopez" />
+
+            <TextView
+                android:id="@+id/cuando"
+                style="@style/Texto.Savi.Dato"
+                app:drawableStartCompat="@drawable/ic_schedule"
+                tools:text="hace 12 min" />
+
+            <!-- Nivel -->
+            <com.google.android.material.card.MaterialCardView
+                style="?attr/materialCardViewFilledStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/detalle_nivel"
+                            android:textAppearance="?attr/textAppearanceTitleSmall"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <TextView
+                            android:id="@+id/nivel_texto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?attr/textAppearanceTitleSmall"
+                            tools:text="Alto" />
+                    </LinearLayout>
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/nivel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:max="100"
+                        app:trackCornerRadius="4dp"
+                        app:trackThickness="8dp" />
+
+                    <TextView
+                        android:id="@+id/nivel_detalle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        tools:text="1 de 2 vecinos confirmaron" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Responder -->
+            <LinearLayout
+                android:id="@+id/seccion_responder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/pregunta"
+                    style="@style/Texto.Savi.Seccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detalle_pregunta" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_confirmar"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="?attr/colorError"
+                        android:text="@string/detalle_confirmar"
+                        android:textColor="?attr/colorOnError"
+                        app:icon="@drawable/ic_check_circle"
+                        app:iconTint="?attr/colorOnError" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_falsa"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:text="@string/detalle_falsa"
+                        app:icon="@drawable/ic_cancel" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cerrar"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/detalle_cerrar"
+                android:visibility="gone"
+                app:icon="@drawable/ic_task_alt" />
+
+            <!-- Autoridades -->
+            <LinearLayout
+                android:id="@+id/seccion_autoridades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/Texto.Savi.Seccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detalle_autoridades" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_policia"
+                        style="@style/Boton.Savi.Autoridad"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/autoridad_policia"
+                        app:icon="@drawable/ic_local_police" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_emergencias"
+                        style="@style/Boton.Savi.Autoridad"
+                        android:text="@string/autoridad_emergencias"
+                        app:icon="@drawable/ic_emergency" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_bomberos"
+                        style="@style/Boton.Savi.Autoridad"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/autoridad_bomberos"
+                        app:icon="@drawable/ic_fire_truck" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_violencia"
+                        style="@style/Boton.Savi.Autoridad"
+                        android:contentDescription="@string/autoridad_violencia_descripcion"
+                        android:text="@string/autoridad_violencia"
+                        app:icon="@drawable/ic_support_agent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Respuestas -->
+            <TextView
+                style="@style/Texto.Savi.Seccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detalle_respuestas" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista_respuestas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_respuesta" />
+
+            <TextView
+                android:id="@+id/sin_respuestas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:text="@string/detalle_sin_respuestas"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:visibility="gone" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -89,7 +89,8 @@ public final class Notificador {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, canal)
                 .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.icon_casa)
+                .setSmallIcon(R.drawable.ic_notificacion)
+                .setColor(androidx.core.content.ContextCompat.getColor(context, R.color.md_error))
                 .setContentTitle(titulo)
                 .setContentText(texto)
                 .setCategory(NotificationCompat.CATEGORY_ALARM);

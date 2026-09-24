@@ -89,7 +89,6 @@ dependencies {
     implementation 'com.mig35:carousellayoutmanager:1.4.6' // Carrusel
     implementation 'de.hdodenhof:circleimageview:3.1.0' // Imagen circular
     implementation 'com.github.bumptech.glide:glide:4.16.0' // Descarga y recorte de imagenes
-    implementation 'com.github.Hitomis:CircleMenu:v1.1.0'
 
     // Codigo QR
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'

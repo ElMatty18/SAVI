@@ -39,6 +39,47 @@ public final class PoliticaAlertas {
         return !respondio(alerta, usuario.getId());
     }
 
+    /** Desde el detalle se puede responder mientras la alerta no este cerrada, salvo quien la creo. */
+    public static boolean puedeResponder(Alerta alerta, Usuario usuario) {
+        if (alerta == null || usuario == null || usuario.getId() == null) {
+            return false;
+        }
+        boolean abierta = StringUtils.alertaActiva.equals(alerta.getEstado())
+                || StringUtils.alertaConfirmadaDirigida.equals(alerta.getEstado());
+        return abierta && !esCreador(alerta, usuario) && !respondio(alerta, usuario.getId());
+    }
+
+    /** Quien la creo puede darla por resuelta. */
+    public static boolean puedeCerrar(Alerta alerta, Usuario usuario) {
+        return alerta != null && usuario != null && esCreador(alerta, usuario)
+                && !StringUtils.alertaDesactivada.equals(alerta.getEstado());
+    }
+
+    public static boolean esCreador(Alerta alerta, Usuario usuario) {
+        return usuario.getId() != null && usuario.getId().equals(alerta.getCreadoById());
+    }
+
+    /** Se sugiere llamar a las autoridades si el destinatario la confirmo o los vecinos la consideran grave. */
+    public static boolean sugerirAutoridades(Alerta alerta) {
+        return StringUtils.alertaConfirmadaDirigida.equals(alerta.getEstado()) || alerta.obtenerNivelAlerta() >= 50;
+    }
+
+    /**
+     * Estado nuevo al responder: solo el destinatario confirma o desactiva la alerta.
+     * @return el estado a guardar, o null si no cambia.
+     */
+    public static String estadoAlResponder(Alerta alerta, Usuario usuario, String respuesta) {
+        if (!esDirigidaA(alerta, usuario) || alerta.getDirigidaId() == null) {
+            return null;
+        }
+        if (StringUtils.respuesta_cancela.equals(respuesta)) {
+            return StringUtils.alertaDesactivada;
+        } else if (StringUtils.respuesta_confirma.equals(respuesta)) {
+            return StringUtils.alertaConfirmadaDirigida;
+        }
+        return null;
+    }
+
     public static boolean respondio(Alerta alerta, String idUsuario) {
         if (alerta.getRespuestas() != null && alerta.getRespuestas().containsKey(idUsuario)) {
             return true;

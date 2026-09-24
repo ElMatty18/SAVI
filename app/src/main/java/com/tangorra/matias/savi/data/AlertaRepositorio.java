@@ -28,24 +28,31 @@ public final class AlertaRepositorio {
     }
 
     /** Alertas del grupo, las mas nuevas primero. */
-    public static LiveData<List<Alerta>> alertasGrupo(String idGrupo) {
+    public static LiveData<List<Alerta>> alertasGrupo(final String idGrupo) {
         return new FirebaseLiveData<>(alertas(idGrupo), new FirebaseLiveData.Parser<List<Alerta>>() {
             @Override
             public List<Alerta> parse(@NonNull DataSnapshot snapshot) {
                 List<Alerta> lista = FirebaseLiveData.lista(Alerta.class).parse(snapshot);
+                for (Alerta alerta : lista) {
+                    alerta.setIdGrupo(idGrupo);
+                }
                 Collections.sort(lista, POR_FECHA_DESC);
                 return lista;
             }
         });
     }
 
+    public static void ordenarPorFecha(List<Alerta> lista) {
+        Collections.sort(lista, POR_FECHA_DESC);
+    }
+
     public static LiveData<Alerta> alerta(String idGrupo, String idAlerta) {
         return new FirebaseLiveData<>(alertas(idGrupo).child(idAlerta), FirebaseLiveData.objeto(Alerta.class));
     }
 
-    /** Crea una alerta nueva firmada por el usuario. Devuelve su id. */
-    public static String emitir(String idGrupo, Usuario creador, String tipo, Usuario destinatario) {
-        String id = alertas(idGrupo).push().getKey();
+    /** Crea una alerta nueva firmada por el usuario. El resultado de la tarea es el id de la alerta. */
+    public static com.google.android.gms.tasks.Task<String> emitir(String idGrupo, Usuario creador, String tipo, Usuario destinatario) {
+        final String id = alertas(idGrupo).push().getKey();
         Alerta alerta = new Alerta(id,
                 destinatario != null ? destinatario.getGlosaFormateada() : com.tangorra.matias.savi.Utils.StringUtils.ALL_USERS,
                 tipo, new Date(), creador.getGlosa());
@@ -54,8 +61,17 @@ public final class AlertaRepositorio {
         if (destinatario != null) {
             alerta.setDirigidaId(destinatario.getId());
         }
-        alertas(idGrupo).child(id).setValue(alerta);
-        return id;
+        return alertas(idGrupo).child(id).setValue(alerta).continueWith(t -> {
+            if (!t.isSuccessful()) {
+                throw t.getException();
+            }
+            return id;
+        });
+    }
+
+    /** Quien creo la alerta la da por resuelta. */
+    public static com.google.android.gms.tasks.Task<Void> cerrar(String idGrupo, String idAlerta) {
+        return alertas(idGrupo).child(idAlerta).child("estado").setValue(com.tangorra.matias.savi.Utils.StringUtils.alertaDesactivada);
     }
 
     private static final Comparator<Alerta> POR_FECHA_DESC = new Comparator<Alerta>() {
@@ -84,15 +100,15 @@ public final class AlertaRepositorio {
      *
      * @param nuevoEstado estado a asignar a la alerta, o null para no modificarlo.
      */
-    public static void responder(String idGrupo, String idAlerta, RespuestaAlerta respuesta, String nuevoEstado) {
+    public static com.google.android.gms.tasks.Task<Void> responder(String idGrupo, String idAlerta, RespuestaAlerta respuesta, String nuevoEstado) {
         if (idGrupo == null || idAlerta == null || respuesta.getIdUsuario() == null) {
-            return;
+            return com.google.android.gms.tasks.Tasks.forException(new IllegalArgumentException("Alerta o usuario invalidos"));
         }
         Map<String, Object> cambios = new HashMap<>();
         cambios.put("respuestas/" + respuesta.getIdUsuario(), respuesta);
         if (nuevoEstado != null) {
             cambios.put("estado", nuevoEstado);
         }
-        alertas(idGrupo).child(idAlerta).updateChildren(cambios);
+        return alertas(idGrupo).child(idAlerta).updateChildren(cambios);
     }
 }

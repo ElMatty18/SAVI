@@ -107,4 +107,29 @@ public class PoliticaAlertasTest {
         a.setDirigida(StringUtils.getTextoFormateado(yo.getGlosa()));
         assertEquals(PoliticaAlertas.Modo.VIBRACION, PoliticaAlertas.aviso(a, yo).modo);
     }
+
+    @Test
+    public void puedeResponderMientrasEsteAbiertaYNoLaHayaCreado() {
+        Alerta a = alerta(StringUtils.AGRESION, "u2", "u3");
+        assertTrue(PoliticaAlertas.puedeResponder(a, yo));
+        a.setEstado(StringUtils.alertaConfirmadaDirigida);
+        assertTrue(PoliticaAlertas.puedeResponder(a, yo));
+        a.setEstado(StringUtils.alertaDesactivada);
+        assertFalse(PoliticaAlertas.puedeResponder(a, yo));
+        assertFalse(PoliticaAlertas.puedeResponder(alerta(StringUtils.AGRESION, "u1", "u3"), yo));
+    }
+
+    @Test
+    public void soloElCreadorPuedeCerrarla() {
+        assertTrue(PoliticaAlertas.puedeCerrar(alerta(StringUtils.AGRESION, "u1", null), yo));
+        assertFalse(PoliticaAlertas.puedeCerrar(alerta(StringUtils.AGRESION, "u2", null), yo));
+    }
+
+    @Test
+    public void soloElDestinatarioCambiaElEstadoAlResponder() {
+        Alerta paraMi = alerta(StringUtils.SOSPECHA_ROBO, "u2", "u1");
+        assertEquals(StringUtils.alertaConfirmadaDirigida, PoliticaAlertas.estadoAlResponder(paraMi, yo, StringUtils.respuesta_confirma));
+        assertEquals(StringUtils.alertaDesactivada, PoliticaAlertas.estadoAlResponder(paraMi, yo, StringUtils.respuesta_cancela));
+        assertNull(PoliticaAlertas.estadoAlResponder(alerta(StringUtils.SOSPECHA_ROBO, "u2", "u3"), yo, StringUtils.respuesta_confirma));
+    }
 }

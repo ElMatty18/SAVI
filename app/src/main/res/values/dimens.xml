@@ -30,4 +30,5 @@
     <fraction name="half_margin">48%</fraction>
     <fraction name="quarter">25%</fraction>
 
+    <dimen name="margen_boton_inferior">16dp</dimen>
 </resources>
