@@ -39,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/tarjeta_estado"
@@ -52,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingVertical="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="8dp">
 
@@ -61,7 +63,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingVertical="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:textColor="?attr/colorOnSurface" />
 

@@ -1,7 +1,5 @@
 package com.tangorra.matias.savi.Entidades;
 
-import android.widget.ImageView;
-
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
@@ -44,18 +42,6 @@ public class Usuario implements Serializable {
     private Estado estado;
 
     private PerfilUsuario perfil = new PerfilUsuario();
-
-    private transient  ImageView imgUsuario;
-
-    @Exclude
-    public ImageView getImgUsuario() {
-        return imgUsuario;
-    }
-
-    @Exclude
-    public void setImgUsuario(ImageView imgUsuario) {
-        this.imgUsuario = imgUsuario;
-    }
 
     public Usuario(String id,String mail) {
         this.id =id ;

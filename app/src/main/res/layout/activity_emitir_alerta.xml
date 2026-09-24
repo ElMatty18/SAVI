@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="12dp">
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
 
             <TextView
                 style="@style/Texto.Savi.Seccion"
@@ -77,7 +78,8 @@
                 android:id="@+id/destinos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
                 app:selectionRequired="true"
                 app:singleSelection="true" />
 

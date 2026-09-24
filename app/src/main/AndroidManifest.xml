@@ -16,6 +16,8 @@
     <application
         android:name=".SaviApp"
         android:allowBackup="false"
+        android:dataExtractionRules="@xml/reglas_extraccion_datos"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon_casa"
