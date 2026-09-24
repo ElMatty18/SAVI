@@ -1,0 +1,37 @@
+{
+  "rules": {
+    // Solo usuarios autenticados. Los ids de /Usuario son push-keys (no el uid de Auth),
+    // por eso todavia no se puede restringir la escritura al propio usuario: ver README.
+    ".read": false,
+    ".write": false,
+
+    "Usuario": {
+      ".read": "auth != null",
+      ".indexOn": ["mail", "idGrupo", "id", "fcmToken"],
+      "$idUsuario": {
+        ".write": "auth != null",
+        // La clave nunca debe volver a guardarse en la base
+        "clave": { ".validate": false }
+      }
+    },
+    "Grupo": {
+      ".read": "auth != null",
+      ".indexOn": ["id"],
+      "$idGrupo": {
+        ".write": "auth != null"
+      }
+    },
+    "Familia": {
+      ".read": "auth != null",
+      "$idFamilia": {
+        ".write": "auth != null"
+      }
+    },
+    "Notificacion": {
+      ".read": "auth != null",
+      "$idNotificacion": {
+        ".write": "auth != null"
+      }
+    }
+  }
+}

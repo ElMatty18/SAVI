@@ -1,8 +1,9 @@
 package com.tangorra.matias.savi.Utils;
 
-import android.support.v7.app.AppCompatActivity;
+public final class FirebaseUtils {
 
-public class FirebaseUtils extends AppCompatActivity  {
+    private FirebaseUtils() {
+    }
 
     public static String dbGrupo = "Grupo";
     public static String dbUsuario = "Usuario";

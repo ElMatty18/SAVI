@@ -7,19 +7,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -28,9 +28,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.azoft.carousellayoutmanager.CarouselLayoutManager;
-import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.mig35.carousellayoutmanager.CarouselLayoutManager;
+import com.mig35.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.mig35.carousellayoutmanager.CenterScrollListener;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +46,8 @@ import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Service.ServiciosSesion;
+import com.google.firebase.auth.FirebaseAuth;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
 import com.tangorra.matias.savi.View.PopUpAlertasFamilia;
@@ -109,6 +111,24 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
         caracteristicasSAVI();
         addCabecera(navigationView);
+
+        pedirPermisos();
+    }
+
+    // Ubicacion (domicilios, mapas) y notificaciones (Android 13+) se piden al entrar a la app.
+    private void pedirPermisos() {
+        java.util.List<String> faltantes = new java.util.ArrayList<>();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            faltantes.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            faltantes.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (android.os.Build.VERSION.SDK_INT >= 33
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            faltantes.add(Manifest.permission.POST_NOTIFICATIONS);
+        }
+        if (!faltantes.isEmpty()) {
+            ActivityCompat.requestPermissions(this, faltantes.toArray(new String[0]), MY_PERMISSIONS_REQUEST);
+        }
     }
 
 
@@ -195,12 +215,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     public void abrirTelefono() {
+        // ACTION_DIAL abre el marcador sin llamar, no necesita el permiso CALL_PHONE
         Intent llamar = new Intent(Intent.ACTION_DIAL);
         llamar.setData(Uri.parse("tel:911"));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            checkPhonePermission();
-            return;
-        }
         startActivity(llamar);
     }
 
@@ -330,6 +347,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     private void limpiarSesion() {
+        ServiciosSesion.detener(this);
+        FirebaseAuth.getInstance().signOut();
         SesionManager.setUsuario(null);
         SesionManager.setGrupo(null);
     }
@@ -393,7 +412,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private void abrirScan() {
         IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         integrator.setPrompt(StringUtils.openScanGroup);
         integrator.setCameraId(0);
         integrator.setBeepEnabled(false);
@@ -401,29 +420,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         integrator.initiateScan();
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
-    public void checkPhonePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CALL_PHONE)) {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-        } else {
-
-        }
-    }
+    public static final int MY_PERMISSIONS_REQUEST = 99;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -444,6 +441,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         SesionManager.getUsuario().setIdGrupo(contents);
         persistirUsuario(SesionManager.getUsuario());
         recuperarDatosGrupoUsuario(SesionManager.getUsuario().getIdGrupo());
+        // El servicio de alertas pasa a escuchar el grupo nuevo
+        ServiciosSesion.iniciar(this);
     }
 
     private void persistirUsuario(Usuario u) {
@@ -451,7 +450,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     private void recuperarDatosGrupoUsuario(String idGrupo) {
-        dbGrupo.orderByChild("id").equalTo(idGrupo).limitToFirst(1).addValueEventListener(grupoListener);
+        dbGrupo.orderByChild("id").equalTo(idGrupo).limitToFirst(1).addListenerForSingleValueEvent(grupoListener);
     }
 
 
@@ -473,25 +472,16 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         };
     }
 
-    @NonNull
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        break;
-                    }
-                    abrirTelefono();
-                } else {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSIONS_REQUEST) {
+            for (int resultado : grantResults) {
+                if (resultado != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, StringUtils.denegatePermission, Toast.LENGTH_LONG).show();
+                    break;
                 }
-                break;
             }
         }
     }
-
-
 }

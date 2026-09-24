@@ -2,9 +2,9 @@ package com.tangorra.matias.savi.View;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -109,6 +109,11 @@ public class PopUpFamiliarAlertas extends AppCompatActivity {
         };
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        if (dbGrupoVecinal != null) {
+            dbGrupoVecinal.removeEventListener(alarmasFamiliar);
+        }
+        super.onDestroy();
+    }
 }

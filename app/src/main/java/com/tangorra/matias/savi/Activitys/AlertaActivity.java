@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +19,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.azoft.carousellayoutmanager.CarouselLayoutManager;
-import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.mig35.carousellayoutmanager.CarouselLayoutManager;
+import com.mig35.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.mig35.carousellayoutmanager.CenterScrollListener;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -97,7 +97,7 @@ public class AlertaActivity extends AppCompatActivity {
 
     private void recuperarIntegrantesGrupo(){
         if (SesionManager.getUsuario().getIdGrupo() != null){
-            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getUsuario().getIdGrupo()).addValueEventListener(integrantesListener);
+            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getUsuario().getIdGrupo()).addListenerForSingleValueEvent(integrantesListener);
         }
     }
 
@@ -106,6 +106,7 @@ public class AlertaActivity extends AppCompatActivity {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listIntegrantes.clear();
                 for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
                     Usuario usuario = imageSnapshot.getValue(Usuario.class);
                     listIntegrantes.add(usuario);
@@ -173,6 +174,10 @@ public class AlertaActivity extends AppCompatActivity {
         emitirAlerta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (alarmaSeleccion == null || (!allUsers && idDirigida == null)) {
+                    android.widget.Toast.makeText(AlertaActivity.this, StringUtils.fieldRequired, android.widget.Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!allUsers) {
                     persistir(usuarioSeleccion, alarmaSeleccion, idDirigida);
                 }else {
@@ -187,8 +192,7 @@ public class AlertaActivity extends AppCompatActivity {
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent volverMenu = new Intent(AlertaActivity.this, MenuPrincipalActivity.class);
-                startActivity(volverMenu);
+                onBackPressed();
             }
         });
 
@@ -209,6 +213,8 @@ public class AlertaActivity extends AppCompatActivity {
             String id = dbGrupoVecinal.push().getKey();
             Alerta alerta = new Alerta(id, usuarioDirigida, descripcion, new Date(), SesionManager.getUsuario().getGlosa());
             alerta.setEstado(StringUtils.alertaActiva);
+            // Sin creador, el resto de los vecinos fallaba al procesar la alerta
+            alerta.setCreadoById(SesionManager.getUsuario().getId());
             dbGrupoVecinal.child(FirebaseUtils.dbAlerta).child(id).setValue(alerta);
         }
     }

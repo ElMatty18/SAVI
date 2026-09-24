@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -49,6 +49,8 @@ public class FamiliaActivity extends AppCompatActivity {
     private ValueEventListener familiaBorrarListener = getBorrarFamiliaListener();
 
     private ArrayList<Usuario> listFamiliares = new ArrayList<Usuario>();
+
+    private DatabaseReference refFamilia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +121,7 @@ public class FamiliaActivity extends AppCompatActivity {
     private void aceptarBorrado() {
         //eliminar persona actual del grupo familiar
         dbUsuarios.child(SesionManager.getUsuario().getId()).child("idFamilia").setValue(null);
-        dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiaBorrarListener);
+        dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addListenerForSingleValueEvent(familiaBorrarListener);
     }
 
     private void getVistaFamilia() {
@@ -129,13 +131,17 @@ public class FamiliaActivity extends AppCompatActivity {
 
     private void cargarFamilia() {
         if (SesionManager.getUsuario().getIdFamilia() != null) {
-            dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiaListener);
+            if (refFamilia != null) {
+                refFamilia.removeEventListener(familiaListener);
+            }
+            refFamilia = dbFamilias.child(SesionManager.getUsuario().getIdFamilia());
+            refFamilia.addValueEventListener(familiaListener);
         }
     }
 
     private void abrirScan(Activity activity) {
         IntentIntegrator integrator = new IntentIntegrator(activity);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         integrator.setPrompt("SAVI ScanQR - Familia");
         integrator.setCameraId(0);
         integrator.setBeepEnabled(false);
@@ -164,7 +170,7 @@ public class FamiliaActivity extends AppCompatActivity {
                 Toast.makeText(this, "Se cancelo la busqueda", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                dbUsuarios.orderByChild("id").equalTo(result.getContents()).limitToFirst(1).addValueEventListener(usuarioListener);
+                dbUsuarios.orderByChild("id").equalTo(result.getContents()).limitToFirst(1).addListenerForSingleValueEvent(usuarioListener);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -223,8 +229,6 @@ public class FamiliaActivity extends AppCompatActivity {
 
                     dbUsuarios.child(SesionManager.getUsuario().getId()).setValue(SesionManager.getUsuario());
                 }
-                dbUsuarios.removeEventListener(usuarioListener);
-                dbUsuarios.removeEventListener(familiaListener);
 
                 cargarFamilia();
             }
@@ -307,21 +311,18 @@ public class FamiliaActivity extends AppCompatActivity {
         listFamiliares = new ArrayList<Usuario>();
         dbUsuarios.removeEventListener(usuarioListenerFamiliar);
         for (String idFamiliar: idsFamilia) {
-            dbUsuarios.orderByChild("id").equalTo(idFamiliar).limitToFirst(1).addValueEventListener(usuarioListenerFamiliar);
+            dbUsuarios.orderByChild("id").equalTo(idFamiliar).limitToFirst(1).addListenerForSingleValueEvent(usuarioListenerFamiliar);
         }
         getVistaFamilia();
     }
 
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        // El listener se registra sobre el nodo de la familia: hay que quitarlo de esa misma referencia
+        if (refFamilia != null) {
+            refFamilia.removeEventListener(familiaListener);
+        }
+        super.onDestroy();
     }
-
-   /* private void puntoLimpiezaListeners() {
-        dbUsuarios.removeEventListener(usuarioListener);
-        dbUsuarios.removeEventListener(usuarioListenerFamiliar);
-        dbFamilias.removeEventListener(familiaListener);
-        dbFamilias.removeEventListener(familiaBorrarListener);
-    }*/
 }

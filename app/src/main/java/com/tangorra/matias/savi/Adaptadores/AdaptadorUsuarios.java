@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,15 +131,15 @@ public class AdaptadorUsuarios extends BaseAdapter {
     }
 
     private void obtenerDatosGrupo() {
-        dbGrupo.orderByChild("id").equalTo(usuarioSelecc.getIdGrupo()).limitToFirst(1).addValueEventListener(grupoListener);
+        dbGrupo.orderByChild("id").equalTo(usuarioSelecc.getIdGrupo()).limitToFirst(1).addListenerForSingleValueEvent(grupoListener);
     }
 
     private void obtenerDatosDomicilioA() {
-        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addValueEventListener(domicilioListener);
+        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addListenerForSingleValueEvent(domicilioListener);
     }
 
     private void obtenerDatosDomicilioB() {
-        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addValueEventListener(domicilioAlternoListener);
+        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addListenerForSingleValueEvent(domicilioAlternoListener);
     }
 
     public AdaptadorUsuarios(Context context, ArrayList<Usuario> persona) {
@@ -256,7 +256,7 @@ public class AdaptadorUsuarios extends BaseAdapter {
     }
 
     private void aceptarBorrado() {
-        dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiarBorrarListener);
+        dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addListenerForSingleValueEvent(familiarBorrarListener);
     }
 
     @NonNull

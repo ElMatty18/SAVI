@@ -7,10 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +46,8 @@ public class PopUpNotificaciones extends AppCompatActivity {
     private Context popNotificaciones;
 
 
+    private ValueEventListener notificacionesListener;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +68,7 @@ public class PopUpNotificaciones extends AppCompatActivity {
 
         dbNotificaciones = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion);
 
-        dbNotificaciones.addValueEventListener(new ValueEventListener() {
+        notificacionesListener = dbNotificaciones.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 notificaciones.clear();
@@ -90,6 +92,11 @@ public class PopUpNotificaciones extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        if (notificacionesListener != null) {
+            dbNotificaciones.removeEventListener(notificacionesListener);
+        }
+        super.onDestroy();
+    }
 }

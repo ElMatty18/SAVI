@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +28,10 @@ import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
-import com.tangorra.matias.savi.Service.AlertaService;
-import com.tangorra.matias.savi.Service.NotificacionService;
+import com.tangorra.matias.savi.Service.ServiciosSesion;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
+import com.tangorra.matias.savi.Utils.Validaciones;
 
 import java.util.ArrayList;
 
@@ -45,8 +44,11 @@ public class AccesoActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Button registrarse, entrar;
 
+    private static final String PREF_USUARIO = "usuario";
+    // Versiones anteriores guardaban la clave en texto plano: se borra al iniciar.
+    private static final String PREF_CLAVE_LEGACY = "clave";
+
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseAuth.AuthStateListener mAuthListener = getmAuthListener();
 
     private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener usuarioListener = getUsuarioListener();
@@ -65,9 +67,6 @@ public class AccesoActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private LinearLayout removeLastAccess;
-
-    private String regExMail = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$\n";
-    private String regExPass = "^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{5,10}$";
 
 
     @Override
@@ -89,6 +88,7 @@ public class AccesoActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
 
         entrar = findViewById(R.id.btn_entrar);
         entrar.setOnClickListener(new View.OnClickListener() {
@@ -106,20 +106,26 @@ public class AccesoActivity extends AppCompatActivity {
             }
         });
 
+        continuarSesion();
+    }
 
-
+    // Firebase Auth persiste la sesion: si ya hay un usuario autenticado no hace falta pedir la clave.
+    private void continuarSesion() {
+        if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().getEmail() != null) {
+            openDialogo(StringUtils.userLogin);
+            recuperarDatosUsuario(mAuth.getCurrentUser().getEmail());
+        }
     }
 
     private void removeLastAccess() {
         removeLastAccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getPreferences(context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                editor.putString("usuario", "");
-                editor.putString("clave", "");
-                editor.commit();
+                getPreferences(Context.MODE_PRIVATE).edit()
+                        .remove(PREF_USUARIO)
+                        .remove(PREF_CLAVE_LEGACY)
+                        .apply();
+                mAuth.signOut();
 
                 txtEmail.setText("");
                 txtClave.setText("");
@@ -129,33 +135,15 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     private void loadLastAcces() {
-        SharedPreferences sharedPreferences = getPreferences(context.MODE_PRIVATE);
-        String usuario = sharedPreferences.getString("usuario","");
-        String clave = sharedPreferences.getString("clave","");
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove(PREF_CLAVE_LEGACY).apply();
 
+        String usuario = sharedPreferences.getString(PREF_USUARIO,"");
         txtEmail.setText(usuario);
-        txtClave.setText(clave);
 
-        if (usuario.equals("") || clave.equals("")){
+        if (usuario.equals("")){
             removeLastAccess.setVisibility(View.INVISIBLE);
         }
-    }
-
-    @NonNull
-    private FirebaseAuth.AuthStateListener getmAuthListener() {
-        return new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = mAuth.getCurrentUser();
-                if (user != null) {
-                    Intent menu = new Intent(AccesoActivity.this, MenuPrincipalActivity.class);
-                    startActivity(menu);
-                    finish();
-                } else {
-                    //no esta logueado
-                }
-            }
-        };
     }
 
     @Override
@@ -164,25 +152,21 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     private void logearUsuario(){
-        if (formValido()){
+        if (formValido(false)){
             final String email = txtEmail.getText().toString().trim();
-            final String pass = txtClave.getText().toString().trim();
+            final String pass = txtClave.getText().toString();
 
-            if ((!email.isEmpty() && !pass.isEmpty()) && internet){
+            if (internet){
                 openDialogo(StringUtils.userLogin);
                 mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful() && internet){
-                            if (task.getException() instanceof FirebaseAuthUserCollisionException){
-                                Toast.makeText(getApplicationContext(),StringUtils.userWithEqualMail, Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(),StringUtils.checkData, Toast.LENGTH_LONG).show();
-                            }
+                        if (!task.isSuccessful()){
+                            closeDialogo();
+                            Toast.makeText(getApplicationContext(),StringUtils.checkData, Toast.LENGTH_LONG).show();
                         } else {
                             recuperarDatosUsuario(email);
                         }
-                        closeDialogo();
                     }
                 });
 
@@ -218,11 +202,16 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     private void recuperarDatosUsuario(String email) {
-        dbUsuarios.orderByChild("mail").equalTo(email).limitToFirst(1).addValueEventListener(usuarioListener);
+        dbUsuarios.orderByChild("mail").equalTo(email).limitToFirst(1).addListenerForSingleValueEvent(usuarioListener);
     }
 
     private void recuperarDatosGrupoUsuario(String idGrupo) {
-        dbGrupo.orderByChild("id").equalTo(idGrupo).limitToFirst(1).addValueEventListener(grupoListener);
+        if (idGrupo == null){
+            SesionManager.setGrupo(new Grupo());
+            ingresar(usuario.getMail());
+            return;
+        }
+        dbGrupo.orderByChild("id").equalTo(idGrupo).limitToFirst(1).addListenerForSingleValueEvent(grupoListener);
     }
 
     @NonNull
@@ -230,20 +219,26 @@ public class AccesoActivity extends AppCompatActivity {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usuario encontrado = null;
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
-                    usuario = imageSnapshot.getValue(Usuario.class);
-                    if (usuario.getNombre() != null && usuario.getApellido() != null){
-                        Toast.makeText(getApplicationContext(),StringUtils.welcome + StringUtils.getTextoFormateado(usuario.getGlosa()), Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(),StringUtils.welcomeFirst, Toast.LENGTH_LONG).show();
-                    }
+                    encontrado = imageSnapshot.getValue(Usuario.class);
+                }
+                if (encontrado == null){
+                    errorIngreso(StringUtils.userNotFound);
+                    return;
+                }
+                usuario = encontrado;
+                if (usuario.getNombre() != null && usuario.getApellido() != null){
+                    Toast.makeText(getApplicationContext(),StringUtils.welcome + StringUtils.getTextoFormateado(usuario.getGlosa()), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),StringUtils.welcomeFirst, Toast.LENGTH_LONG).show();
                 }
                 recuperarDatosGrupoUsuario(usuario.getIdGrupo());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                errorIngreso(databaseError.getMessage());
             }
         };
     }
@@ -267,18 +262,30 @@ public class AccesoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                errorIngreso(databaseError.getMessage());
             }
         };
     }
 
+    private void errorIngreso(String mensaje) {
+        closeDialogo();
+        mAuth.signOut();
+        Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
+    }
+
     private void ingresar(String mail) {
+        closeDialogo();
         SesionManager.setUsuario(usuario);
+
+        // Limpieza de datos legados: la clave nunca debio persistirse en la base.
+        if (usuario.getId() != null){
+            dbUsuarios.child(usuario.getId()).child(PREF_CLAVE_LEGACY).removeValue();
+        }
 
         saveAccess();
 
         //lanzar listener de alertas
-        listenerRun();
+        ServiciosSesion.iniciar(this);
 
         if (usuario.datosIncompletos()){
             goToDatosUsuario(mail);
@@ -288,35 +295,23 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     private void saveAccess() {
-        SharedPreferences sharedPreferences = getPreferences(context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString("usuario", usuario.getMail());
-        editor.putString("clave", usuario.getClave());
-        editor.commit();
-    }
-
-    private void listenerRun() {
-        Intent alertaService = new Intent(this, AlertaService.class);
-        startService(alertaService);
-
-        Intent notificacionService = new Intent(this, NotificacionService.class);
-        startService(notificacionService);
+        // Solo se recuerda el mail: la sesion la mantiene Firebase Auth.
+        getPreferences(Context.MODE_PRIVATE).edit()
+                .putString(PREF_USUARIO, usuario.getMail())
+                .apply();
     }
 
     private void registrarUsuario(){
-        if (formValido()){
+        if (formValido(true)){
             final String email = txtEmail.getText().toString().trim();
-            final String pass = txtClave.getText().toString().trim();
-            if (!email.isEmpty() && !pass.isEmpty()){
-                openDialogo(StringUtils.userRegister);
-                mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(getListenerAuthentication(email, pass));
-            }
+            final String pass = txtClave.getText().toString();
+            openDialogo(StringUtils.userRegister);
+            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(getListenerAuthentication(email));
         }
     }
 
     @NonNull
-    private OnCompleteListener<AuthResult> getListenerAuthentication(final String email, final String pass) {
+    private OnCompleteListener<AuthResult> getListenerAuthentication(final String email) {
         return new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -328,47 +323,51 @@ public class AccesoActivity extends AppCompatActivity {
                     }
                 } else {
                     //se logueo mail + clave
-                    persistir(email, pass);
+                    persistir(email);
                 }
                 closeDialogo();
             }
         };
     }
 
-    private boolean formValido() {
+    private boolean formValido(boolean validarFortalezaClave) {
         boolean valido=true;
-        if( txtEmail.getText().toString().length() == 0 ){
+        String mail = txtEmail.getText().toString().trim();
+        String clave = txtClave.getText().toString();
+
+        if (mail.isEmpty()){
             txtEmail.setError( StringUtils.fieldRequired );
-            if (!regExMail.matches(txtEmail.getText().toString())){
-                txtEmail.setError( StringUtils.fieldInvalid );
-            }
+            valido=false;
+        } else if (!Validaciones.esMailValido(mail)){
+            txtEmail.setError( StringUtils.fieldInvalid );
             valido=false;
         }
-        if( txtClave.getText().toString().length() == 0 ){
+
+        if (clave.isEmpty()){
             txtClave.setError( StringUtils.fieldRequired );
-            if (!regExPass.matches(txtClave.getText().toString())){
-                txtEmail.setError( StringUtils.fieldInvalid );
-            }
+            valido=false;
+        } else if (validarFortalezaClave && !Validaciones.esClaveSegura(clave)){
+            txtClave.setError( StringUtils.passInvalid );
             valido=false;
         }
         return valido;
     }
 
-    private void persistir(String email, String pass) {
+    private void persistir(String email) {
         String id = dbUsuarios.push().getKey();
-        Usuario nuevo=new Usuario(id, email, pass);
+        Usuario nuevo=new Usuario(id, email);
         dbUsuarios.child(id).setValue(nuevo);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        dbUsuarios.removeEventListener(usuarioListener);
+    protected void onDestroy() {
+        closeDialogo();
+        super.onDestroy();
     }
 
     private void recuperarIntegrantesGrupo(){
         if (SesionManager.getGrupo().getId() != null){
-            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getGrupo().getId()).addValueEventListener(integrantesListener);
+            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getGrupo().getId()).addListenerForSingleValueEvent(integrantesListener);
         }
     }
 
@@ -378,6 +377,7 @@ public class AccesoActivity extends AppCompatActivity {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listIntegrantes.clear();
                 for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
                     Usuario usuario = imageSnapshot.getValue(Usuario.class);
                     listIntegrantes.add(usuario);
@@ -388,7 +388,7 @@ public class AccesoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                errorIngreso(databaseError.getMessage());
             }
         };
     }

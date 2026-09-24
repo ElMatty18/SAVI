@@ -2,9 +2,9 @@ package com.tangorra.matias.savi.View;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -82,9 +82,19 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
 
     }
 
+    // Dos familiares del mismo grupo traen las mismas alertas
+    private boolean yaCargada(String idAlerta) {
+        for (Alerta a : alertas) {
+            if (a.getId() != null && a.getId().equals(idAlerta)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void cargarFamilia() {
         if (SesionManager.getUsuario().getIdFamilia() != null) {
-            dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiaListener);
+            dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addListenerForSingleValueEvent(familiaListener);
         }
     }
 
@@ -96,6 +106,9 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                     Alerta alerta = imageSnapshot.getValue(Alerta.class);
+                    if (alerta == null || yaCargada(alerta.getId())) {
+                        continue;
+                    }
                     alertas.add(alerta);
                     ArrayList<Alerta> alertasDetalle = new ArrayList<Alerta>();
                     alertasDetalle.add(alerta);
@@ -140,7 +153,7 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
     private void cargarDatosFamilia(List<String> idsFamilia){
         listFamiliares = new ArrayList<Usuario>();
         for (String idFamiliar: idsFamilia) {
-            dbUsuarios.orderByChild("id").equalTo(idFamiliar).limitToFirst(1).addValueEventListener(usuarioListenerFamiliar);
+            dbUsuarios.orderByChild("id").equalTo(idFamiliar).limitToFirst(1).addListenerForSingleValueEvent(usuarioListenerFamiliar);
         }
 
     }
@@ -157,7 +170,7 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
 
                     if (usuarioFamiliar != null && usuarioFamiliar.getIdGrupo() != null){
                         dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(usuarioFamiliar.getIdGrupo()).child("alertas");
-                        dbGrupoVecinal.addValueEventListener(alarmasFamiliar);
+                        dbGrupoVecinal.addListenerForSingleValueEvent(alarmasFamiliar);
                     }
                 }
 

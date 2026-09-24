@@ -1,24 +1,28 @@
 package com.tangorra.matias.savi.Activitys;
 
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Window;
 
-import com.tangorra.matias.savi.BroadCastReciber.EstadoDispositivo;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final long SPLASH_SCREEN_DELAY = 2000;
 
-    private EstadoDispositivo estadoDispositivo;
-    private IntentFilter intentFilter;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable navegar = new Runnable() {
+        @Override
+        public void run() {
+            startActivity(new Intent(MainActivity.this, AccesoActivity.class));
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,36 +34,13 @@ public class MainActivity extends AppCompatActivity {
         SesionManager.clean();
 
         //se dispara despues de 2 segundos
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                // Start the next activity
-                Intent navegar = new Intent(MainActivity.this, AccesoActivity.class);
-                startActivity(navegar);
-                finish();
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(task, SPLASH_SCREEN_DELAY);
-    }
-
-    private void initSystem(){
-        intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
-        estadoDispositivo = new EstadoDispositivo();
+        handler.postDelayed(navegar, SPLASH_SCREEN_DELAY);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //registerReceiver(estadoDispositivo, intentFilter);
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //unregisterReceiver(estadoDispositivo);
+    protected void onDestroy() {
+        // Evita abrir el login si el usuario salio durante el splash
+        handler.removeCallbacks(navegar);
+        super.onDestroy();
     }
 }

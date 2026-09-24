@@ -12,10 +12,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -49,6 +49,8 @@ import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.RespuestaAlerta;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Service.AlertaRepositorio;
+import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.Utils.DateUtils;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
@@ -293,30 +295,23 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
 
     private void responderAlerta(String respuesta){
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).child("estado").setValue(respuesta);
-
-        RespuestaAlerta respuestaAlerta = new RespuestaAlerta();
-        respuestaAlerta.setIdUsuario(SesionManager.getUsuario().getId());
-        respuestaAlerta.setNombreUsuario(SesionManager.getUsuario().getNombre());
-        respuestaAlerta.setApellidoUsuario(SesionManager.getUsuario().getApellido());
-        respuestaAlerta.setCreacion(new Date());
-        respuestaAlerta.setIdAlarma(alerta.getId());
+        Usuario usuario = SesionManager.getUsuario();
+        RespuestaAlerta respuestaAlerta = AlertaRepositorio.nuevaRespuesta(usuario, alerta.getId());
         respuestaAlerta.setRespuesta(respuesta);
 
-        if (alerta.getRespuestas() == null){
-            alerta.setRespuestas(new ArrayList<RespuestaAlerta>());
-        }
-        alerta.getRespuestas().add(respuestaAlerta);
-
-        if (alerta.getDirigidaId().equals(SesionManager.getUsuario().getId())) {
+        // Solo el destinatario de la alerta puede confirmarla o desactivarla
+        String nuevoEstado = null;
+        if (usuario.getId().equals(alerta.getDirigidaId())) {
             if (respuesta.equals(StringUtils.respuesta_cancela)){
-                alerta.setEstado(StringUtils.alertaDesactivada);
+                nuevoEstado = StringUtils.alertaDesactivada;
             } else if (respuesta.equals(StringUtils.respuesta_confirma)){
-                alerta.setEstado(StringUtils.alertaConfirmadaDirigida);
+                nuevoEstado = StringUtils.alertaConfirmadaDirigida;
             }
         }
 
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas").child(alerta.getId()).setValue(alerta);
+        String idGrupo = usuario.getIdGrupo() != null ? usuario.getIdGrupo() : SesionManager.getGrupo().getId();
+        AlertaRepositorio.responder(idGrupo, alerta.getId(), respuestaAlerta, nuevoEstado);
+        finish();
     }
 
 
@@ -338,39 +333,17 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
     }
 
     public void abrirTelefono(String tel) {
+        // ACTION_DIAL abre el marcador sin llamar, no necesita el permiso CALL_PHONE
         Intent llamar = new Intent(Intent.ACTION_DIAL);
         llamar.setData(Uri.parse("tel:"+tel));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            checkPhonePermission();
-            return;
-        }
         startActivity(llamar);
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
-    public void checkPhonePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CALL_PHONE)) {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-        } else {
-
-        }
+    @Override
+    protected void onDestroy() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.removeUpdates(locationListener);
+        super.onDestroy();
     }
-
-
 }
 

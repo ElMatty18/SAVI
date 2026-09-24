@@ -8,3 +8,10 @@
 /build
 /captures
 .externalNativeBuild
+/app/release
+*.apk
+*.aab
+*.jks
+*.keystore
+/functions/node_modules
+/.firebase

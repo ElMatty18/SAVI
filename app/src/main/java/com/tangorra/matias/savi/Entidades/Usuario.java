@@ -2,6 +2,8 @@ package com.tangorra.matias.savi.Entidades;
 
 import android.widget.ImageView;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,7 +12,6 @@ public class Usuario implements Serializable {
     private String id;
     private String idFamilia;
 
-    private String clave;
     private String mail;
 
     private String nombre;
@@ -26,6 +27,9 @@ public class Usuario implements Serializable {
 
     private Configuracion configuracion;
 
+    // Token de FCM del ultimo dispositivo donde inicio sesion (lo usan las Cloud Functions)
+    private String fcmToken;
+
     public Grupo getGrupo() {
         return grupo;
     }
@@ -40,18 +44,19 @@ public class Usuario implements Serializable {
 
     private transient  ImageView imgUsuario;
 
+    @Exclude
     public ImageView getImgUsuario() {
         return imgUsuario;
     }
 
+    @Exclude
     public void setImgUsuario(ImageView imgUsuario) {
         this.imgUsuario = imgUsuario;
     }
 
-    public Usuario(String id,String mail, String clave) {
+    public Usuario(String id,String mail) {
         this.id =id ;
         this.mail = mail;
-        this.clave = clave;
     }
 
     public Usuario() {
@@ -137,14 +142,7 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
+    @Exclude
     public Boolean datosIncompletos(){
         if (this.nombre == null || this.apellido == null  || this.dni == null || this.celular == null || this.fijo == null){
             return true;
@@ -152,6 +150,7 @@ public class Usuario implements Serializable {
         return false;
     }
 
+    @Exclude
     public String getGlosa(){
         return getNombre() + " " + getApellido();
     }
@@ -178,5 +177,13 @@ public class Usuario implements Serializable {
 
     public void setConfiguracion(Configuracion configuracion) {
         this.configuracion = configuracion;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

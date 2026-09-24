@@ -2,7 +2,7 @@ package com.tangorra.matias.savi.Adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -71,15 +71,15 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
 
     private void obtenerDatosGrupo() {
-        dbGrupo.orderByChild("id").equalTo(usuarioSelecc.getIdGrupo()).limitToFirst(1).addValueEventListener(grupoListener);
+        dbGrupo.orderByChild("id").equalTo(usuarioSelecc.getIdGrupo()).limitToFirst(1).addListenerForSingleValueEvent(grupoListener);
     }
 
     private void obtenerDatosDomicilioA() {
-        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addValueEventListener(domicilioListener);
+        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addListenerForSingleValueEvent(domicilioListener);
     }
 
     private void obtenerDatosDomicilioB() {
-        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addValueEventListener(domicilioAlternoListener);
+        dbUsuarios.orderByChild("id").equalTo(usuarioSelecc.getId()).limitToFirst(1).addListenerForSingleValueEvent(domicilioAlternoListener);
     }
 
     public AdaptadorCombinado(Context context, ArrayList<Usuario> persona) {
@@ -176,7 +176,7 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
 
     private void aceptarBorrado() {
-        dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addValueEventListener(familiarBorrarListener);
+        dbFamilias.child(SesionManager.getUsuario().getIdFamilia()).addListenerForSingleValueEvent(familiarBorrarListener);
     }
 
     @NonNull
@@ -326,7 +326,7 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
 
     private void recuperarIntegrantesGrupo(){
         if (SesionManager.getUsuario().getIdGrupo() != null){
-            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getUsuario().getIdGrupo()).addValueEventListener(integrantesListener);
+            dbUsuarios.orderByChild("idGrupo").equalTo(SesionManager.getUsuario().getIdGrupo()).addListenerForSingleValueEvent(integrantesListener);
         }
     }
 
