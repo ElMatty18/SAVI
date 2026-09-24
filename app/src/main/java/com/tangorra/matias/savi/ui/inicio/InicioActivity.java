@@ -1,4 +1,4 @@
-package com.tangorra.matias.savi.Activitys;
+package com.tangorra.matias.savi.ui.inicio;
 
 import android.Manifest;
 import android.content.Intent;
@@ -38,7 +38,6 @@ import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Service.ServiciosSesion;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.StringUtils;
-import com.tangorra.matias.savi.View.PopUpInformacion;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import androidx.activity.result.ActivityResultLauncher;
@@ -54,7 +53,7 @@ import com.tangorra.matias.savi.ui.comun.AlertasAdapter;
 import com.tangorra.matias.savi.ui.comun.PresentacionAlerta;
 import com.tangorra.matias.savi.ui.configuracion.RespuestaAutomaticaActivity;
 import com.tangorra.matias.savi.ui.familia.FamiliaActivity;
-import com.tangorra.matias.savi.ui.inicio.InicioViewModel;
+import com.tangorra.matias.savi.ui.informacion.InformacionActivity;
 import com.tangorra.matias.savi.ui.notificaciones.NotificacionesActivity;
 import com.tangorra.matias.savi.ui.notificaciones.NuevaNotificacionActivity;
 import com.tangorra.matias.savi.ui.perfil.DomiciliosActivity;
@@ -64,9 +63,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Pantalla de inicio: estado del barrio, acciones principales y ultimas alertas. */
-public class MenuPrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    public static String usuario = "user";
+public class InicioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int ALERTAS_EN_INICIO = 5;
     public static final int MY_PERMISSIONS_REQUEST = 99;
@@ -305,7 +302,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.addNotificacion) {
             startActivity(new Intent(this, NuevaNotificacionActivity.class));
         } else if (id == R.id.informacion) {
-            startActivity(new Intent(this, PopUpInformacion.class));
+            startActivity(new Intent(this, InformacionActivity.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);

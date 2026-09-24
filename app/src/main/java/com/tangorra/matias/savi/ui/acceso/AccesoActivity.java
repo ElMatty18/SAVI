@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
+import com.tangorra.matias.savi.ui.inicio.InicioActivity;
 import com.tangorra.matias.savi.ui.perfil.PerfilActivity;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
@@ -132,7 +132,7 @@ public class AccesoActivity extends AppCompatActivity {
 
         startActivity(usuario.datosIncompletos()
                 ? PerfilActivity.intent(this, true)
-                : new Intent(this, MenuPrincipalActivity.class));
+                : new Intent(this, InicioActivity.class));
         finish();
     }
 

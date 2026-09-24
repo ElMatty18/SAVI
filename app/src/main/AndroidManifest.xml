@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon_casa"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Savi.Legado">
+        android:theme="@style/Theme.Savi">
         <activity
             android:name=".ui.acceso.AccesoActivity"
             android:exported="false"
@@ -42,7 +42,7 @@
 
         <!-- singleTask: las pantallas viejas vuelven al inicio con startActivity y se apilaban copias -->
         <activity
-            android:name=".Activitys.MenuPrincipalActivity"
+            android:name=".ui.inicio.InicioActivity"
             android:label="@string/title_activity_menu_principal"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Savi" />
@@ -83,6 +83,10 @@
             android:theme="@style/Theme.Savi"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.informacion.InformacionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi" />
+        <activity
             android:name=".ui.perfil.PerfilActivity"
             android:exported="false"
             android:theme="@style/Theme.Savi"
@@ -122,10 +126,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <activity
-            android:name=".View.PopUpInformacion"
-            android:theme="@style/AppTheme.PopUpSavi" />
 
     </application>
 

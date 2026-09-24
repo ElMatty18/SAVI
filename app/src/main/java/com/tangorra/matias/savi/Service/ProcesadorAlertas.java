@@ -8,7 +8,7 @@ import android.content.Intent;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
-import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
+import com.tangorra.matias.savi.ui.inicio.InicioActivity;
 import com.tangorra.matias.savi.ui.alertas.DetalleAlertaActivity;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.Configuracion;
@@ -51,7 +51,7 @@ public final class ProcesadorAlertas {
                 PoliticaAlertas.aviso(alerta, usuario), usuario.getConfiguracion(), new java.util.Date());
         if (aviso != null) {
             Intent destino = respuestaAutomatica
-                    ? new Intent(context, MenuPrincipalActivity.class)
+                    ? new Intent(context, InicioActivity.class)
                     : intentRespuesta(context, alerta, idGrupo, aviso.modo == PoliticaAlertas.Modo.SONORA);
             PendingIntent accion = PendingIntent.getActivity(context, alerta.getId() != null ? alerta.getId().hashCode() : 0,
                     destino, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);

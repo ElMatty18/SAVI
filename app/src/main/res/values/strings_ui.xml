@@ -64,7 +64,6 @@
     <string name="autoridad_violencia">Género\n144</string>
     <string name="autoridad_violencia_descripcion">Línea 144, violencia de género</string>
     <string name="cancelar">Cancelar</string>
-    <string name="aceptar">Aceptar</string>
     <string name="emitir_titulo">Emitir alerta</string>
     <string name="emitir_que_pasa">¿Qué está pasando?</string>
     <string name="emitir_para_quien">¿Dónde?</string>
@@ -72,7 +71,6 @@
     <string name="emitir_requiere_casa">Este tipo de alerta necesita una casa: elegí a qué vecino avisar</string>
     <string name="emitir_confirmar_titulo">¿Emitir la alerta?</string>
     <string name="emitir_confirmar_texto">%1$s — %2$s.\n\nLos vecinos del grupo van a recibir el aviso ahora.</string>
-    <string name="emitir_enviada">Alerta emitida</string>
     <string name="emitir_error">No se pudo emitir la alerta</string>
     <string name="emitir_en_casa_de">en la casa de %1$s</string>
     <string name="emitir_en_el_grupo">para todo el grupo</string>
@@ -106,7 +104,6 @@
     <string name="familia_sin_domicilio">No tiene domicilio cargado</string>
     <string name="familia_vacio_titulo">Sumá a tu familia</string>
     <string name="familia_vacio_detalle">Escaneá el código de un familiar, o mostrale el tuyo, para ver las alertas de cada uno.</string>
-    <string name="familia_en_grupo">En %1$s</string>
     <string name="perfil_titulo">Mi perfil</string>
     <string name="perfil_titulo_primera_vez">Completá tu perfil</string>
     <string name="perfil_bienvenida">Tus vecinos y familiares van a ver estos datos para poder contactarte ante una alerta.</string>
@@ -120,7 +117,6 @@
     <string name="perfil_opcional">Opcional</string>
     <string name="perfil_domicilios">Mis domicilios</string>
     <string name="perfil_guardar">Guardar</string>
-    <string name="perfil_guardado">Perfil guardado</string>
     <string name="perfil_error">No se pudo guardar el perfil</string>
     <string name="perfil_dni_invalido">Ingresá un DNI válido</string>
     <string name="ubicacion_instruccion">Mové el mapa hasta que el pin quede en el lugar correcto.</string>
@@ -202,4 +198,15 @@
     <string name="modo_no_molestar_fecha">Hasta las</string>
     <string name="modo_ignorar">Ignorar todo</string>
     <string name="modo_ignorar_desc">No recibís avisos de alertas hasta desactivarla.</string>
+    <string name="info_titulo">Acerca de SAVI</string>
+    <string name="info_version">Versión %1$s</string>
+    <string name="info_que_es">Qué es</string>
+    <string name="info_tipos">Tipos de alerta</string>
+    <string name="info_emergencias">Números de emergencia</string>
+    <string name="info_creditos">Créditos</string>
+    <string name="info_unicen">Universidad Nacional del Centro de la Provincia de Buenos Aires</string>
+    <string name="emergencia_policia">Policía</string>
+    <string name="emergencia_medica">Emergencias médicas (SAME)</string>
+    <string name="emergencia_bomberos">Bomberos</string>
+    <string name="emergencia_violencia">Violencia de género</string>
 </resources>

@@ -27,7 +27,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
+import com.tangorra.matias.savi.ui.inicio.InicioActivity;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Utils.DateUtils;
@@ -116,7 +116,7 @@ public class PerfilActivity extends AppCompatActivity {
             PerfilViewModel.Resultado r = evento.consumir();
             if (r == PerfilViewModel.Resultado.GUARDADO) {
                 if (primeraVez) {
-                    startActivity(new Intent(this, MenuPrincipalActivity.class));
+                    startActivity(new Intent(this, InicioActivity.class));
                 }
                 finish();
             } else if (r == PerfilViewModel.Resultado.ERROR) {
