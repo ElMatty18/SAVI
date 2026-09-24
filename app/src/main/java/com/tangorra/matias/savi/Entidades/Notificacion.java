@@ -1,6 +1,8 @@
 package com.tangorra.matias.savi.Entidades;
 
-import java.util.List;
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
 
 public class Notificacion {
 
@@ -13,7 +15,8 @@ public class Notificacion {
     private String creadoBy;
     private Integer rango;
 
-    private List<String> vistoPor;
+    // uid -> uid de quienes ya la vieron (vistoPor/{uid}). Las listas viejas se leen como {"0": uid}.
+    private HashMap<String, String> vistoPor;
 
     public Notificacion() {
 
@@ -59,11 +62,11 @@ public class Notificacion {
         this.contenido = contenido;
     }
 
-    public List<String> getVistoPor() {
+    public HashMap<String, String> getVistoPor() {
         return vistoPor;
     }
 
-    public void setVistoPor(List<String> vistoPor) {
+    public void setVistoPor(HashMap<String, String> vistoPor) {
         this.vistoPor = vistoPor;
     }
 
@@ -81,5 +84,10 @@ public class Notificacion {
 
     public void setRango(Integer rango) {
         this.rango = rango;
+    }
+
+    @Exclude
+    public boolean vistaPor(String idUsuario) {
+        return vistoPor != null && (vistoPor.containsKey(idUsuario) || vistoPor.containsValue(idUsuario));
     }
 }

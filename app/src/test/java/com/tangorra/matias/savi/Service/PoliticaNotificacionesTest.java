@@ -6,7 +6,7 @@ import com.tangorra.matias.savi.Entidades.Usuario;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -57,8 +57,13 @@ public class PoliticaNotificacionesTest {
         assertFalse(PoliticaNotificaciones.debeNotificar(propia, u));
 
         Notificacion vista = notificacion(5);
-        vista.setVistoPor(new ArrayList<String>());
-        vista.getVistoPor().add("u1");
+        vista.setVistoPor(new HashMap<String, String>());
+        vista.getVistoPor().put("u1", "u1");
         assertFalse(PoliticaNotificaciones.debeNotificar(vista, u));
+
+        Notificacion vistaFormatoViejo = notificacion(5);
+        vistaFormatoViejo.setVistoPor(new HashMap<String, String>());
+        vistaFormatoViejo.getVistoPor().put("0", "u1");
+        assertFalse(PoliticaNotificaciones.debeNotificar(vistaFormatoViejo, u));
     }
 }

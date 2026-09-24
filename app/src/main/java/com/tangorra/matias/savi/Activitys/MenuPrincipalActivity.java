@@ -446,7 +446,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     private void persistirUsuario(Usuario u) {
-        dbUsuarios.child(u.getId()).setValue(u);
+        dbUsuarios.child(u.getId()).child("idGrupo").setValue(u.getIdGrupo());
     }
 
     private void recuperarDatosGrupoUsuario(String idGrupo) {

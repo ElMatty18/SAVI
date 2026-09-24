@@ -7,7 +7,7 @@ import com.tangorra.matias.savi.Utils.StringUtils;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -55,8 +55,19 @@ public class PoliticaAlertasTest {
         Alerta a = alerta(StringUtils.AGRESION, "u2", null);
         RespuestaAlerta r = new RespuestaAlerta();
         r.setIdUsuario("u1");
-        a.setRespuestas(new ArrayList<RespuestaAlerta>());
-        a.getRespuestas().add(r);
+        a.setRespuestas(new HashMap<String, RespuestaAlerta>());
+        a.getRespuestas().put("u1", r);
+        assertFalse(PoliticaAlertas.requiereRespuesta(a, yo));
+    }
+
+    @Test
+    public void reconoceRespuestasDelFormatoViejo() {
+        // Las listas viejas se leen como {"0": respuesta, "1": ...}
+        Alerta a = alerta(StringUtils.AGRESION, "u2", null);
+        RespuestaAlerta r = new RespuestaAlerta();
+        r.setIdUsuario("u1");
+        a.setRespuestas(new HashMap<String, RespuestaAlerta>());
+        a.getRespuestas().put("0", r);
         assertFalse(PoliticaAlertas.requiereRespuesta(a, yo));
     }
 

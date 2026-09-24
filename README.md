@@ -40,15 +40,45 @@ También se puede abrir la carpeta en Android Studio y ejecutar la configuració
 
 La configuración está en `firebase.json`:
 
-- `database.rules.json` son las reglas de la Realtime Database: exigen autenticación, bloquean el campo `clave` y declaran índices.
+- `database.rules.json` son las reglas **definitivas**. Cada usuario escribe solo su registro (`/Usuario/{uid}`), solo los integrantes de un grupo crean alertas, y cada vecino escribe solo su respuesta y su "visto".
+- `database.rules.transicion.json` son reglas **provisorias**: solo exigen estar autenticado. Sirven mientras existan cuentas creadas antes de usar el uid como clave.
 - `storage.rules` restringe las fotos de perfil a usuarios autenticados, imágenes de hasta 5 MB.
 - `functions/` contiene las Cloud Functions que mandan un push FCM al crearse una alerta o una notificación, para que lleguen con la app cerrada. Requieren el plan Blaze.
+- `tools/` tiene los tests de reglas y el script de migración. Corren contra el emulador de Firebase con `cd tools && npm ci && npm test`.
+
+### Modelo de datos
+
+```
+Usuario/{uid}                       id = uid de Firebase Auth
+Grupo/{idGrupo}/alertas/{idAlerta}
+    respuestas/{uid}                una por vecino
+Familia/{idFamilia}/{uid}: uid
+Notificacion/{id}
+    vistoPor/{uid}: uid
+```
+
+### Pasar al modelo por uid (una sola vez)
 
 ```bash
 npm i -g firebase-tools && firebase login
-(cd functions && npm ci)
-firebase deploy --only database,storage,functions
+
+# 1. Ya mismo: cerrar la base (hoy es legible sin autenticación)
+firebase deploy --only database --config firebase.transicion.json
+
+# 2. Publicar la versión nueva de la app. Es compatible con cuentas viejas y nuevas.
+
+# 3. Migrar los datos. Necesita una service account del proyecto:
+#    Consola > Configuración > Cuentas de servicio > Generar nueva clave privada
+export GOOGLE_APPLICATION_CREDENTIALS=/ruta/service-account.json
+cd tools && npm ci
+npm run migrar                # simulación: muestra qué cambiaría y guarda un backup
+npm run migrar -- --aplicar   # migra la base y copia las fotos de perfil
+
+# 4. Reglas definitivas, storage y functions
+cd .. && firebase deploy --only database,storage,functions
 ```
+
+La migración es idempotente: se puede volver a correr sin efectos. Deja intactos los usuarios que no tengan cuenta en Auth y avisa cuáles son.
 
 ### Cómo llegan las alertas
 
@@ -58,5 +88,5 @@ firebase deploy --only database,storage,functions
 
 ## Pendiente conocido
 
-- **Los ids de `/Usuario` son push-keys, no el `uid` de Firebase Auth.** Por eso las reglas solo pueden exigir `auth != null` y no "cada uno escribe lo suyo". Para cerrarlo hay que migrar las claves a `auth.uid`.
+- **Cualquier usuario autenticado puede leer los perfiles** (incluidos DNI y teléfonos), porque el grupo y la familia los necesitan. Una mejora posible es separar los datos sensibles en un nodo privado.
 - **Las pantallas acceden a Firebase directamente.** El siguiente paso de arquitectura es una capa de repositorio con ViewModel/LiveData y pasar los textos de `StringUtils` a `strings.xml`.

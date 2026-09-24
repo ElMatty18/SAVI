@@ -201,8 +201,28 @@ public class AccesoActivity extends AppCompatActivity {
         finish();
     }
 
-    private void recuperarDatosUsuario(String email) {
-        dbUsuarios.orderByChild("mail").equalTo(email).limitToFirst(1).addListenerForSingleValueEvent(usuarioListener);
+    private void recuperarDatosUsuario(final String email) {
+        String uid = mAuth.getUid();
+        if (uid == null){
+            errorIngreso(StringUtils.userNotFound);
+            return;
+        }
+        dbUsuarios.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    usuarioEncontrado(snapshot.getValue(Usuario.class));
+                } else {
+                    // Cuentas creadas antes de usar el uid como clave (hasta correr la migracion)
+                    dbUsuarios.orderByChild("mail").equalTo(email).limitToFirst(1).addListenerForSingleValueEvent(usuarioListener);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                errorIngreso(databaseError.getMessage());
+            }
+        });
     }
 
     private void recuperarDatosGrupoUsuario(String idGrupo) {
@@ -214,6 +234,20 @@ public class AccesoActivity extends AppCompatActivity {
         dbGrupo.orderByChild("id").equalTo(idGrupo).limitToFirst(1).addListenerForSingleValueEvent(grupoListener);
     }
 
+    private void usuarioEncontrado(Usuario encontrado) {
+        if (encontrado == null){
+            errorIngreso(StringUtils.userNotFound);
+            return;
+        }
+        usuario = encontrado;
+        if (usuario.getNombre() != null && usuario.getApellido() != null){
+            Toast.makeText(getApplicationContext(),StringUtils.welcome + StringUtils.getTextoFormateado(usuario.getGlosa()), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(),StringUtils.welcomeFirst, Toast.LENGTH_LONG).show();
+        }
+        recuperarDatosGrupoUsuario(usuario.getIdGrupo());
+    }
+
     @NonNull
     private ValueEventListener getUsuarioListener() {
         return new ValueEventListener() {
@@ -223,17 +257,7 @@ public class AccesoActivity extends AppCompatActivity {
                 for (DataSnapshot imageSnapshot: dataSnapshot.getChildren()) {
                     encontrado = imageSnapshot.getValue(Usuario.class);
                 }
-                if (encontrado == null){
-                    errorIngreso(StringUtils.userNotFound);
-                    return;
-                }
-                usuario = encontrado;
-                if (usuario.getNombre() != null && usuario.getApellido() != null){
-                    Toast.makeText(getApplicationContext(),StringUtils.welcome + StringUtils.getTextoFormateado(usuario.getGlosa()), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(),StringUtils.welcomeFirst, Toast.LENGTH_LONG).show();
-                }
-                recuperarDatosGrupoUsuario(usuario.getIdGrupo());
+                usuarioEncontrado(encontrado);
             }
 
             @Override
@@ -354,7 +378,8 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     private void persistir(String email) {
-        String id = dbUsuarios.push().getKey();
+        // El uid de Firebase Auth es la clave del usuario: las reglas de la base se apoyan en eso
+        String id = mAuth.getUid();
         Usuario nuevo=new Usuario(id, email);
         dbUsuarios.child(id).setValue(nuevo);
     }

@@ -24,6 +24,10 @@ import com.google.firebase.storage.UploadTask;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
+import java.util.Map;
+import java.util.HashMap;
+import com.tangorra.matias.savi.Utils.DateUtils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.View.PopUpDomicilio;
 import com.tangorra.matias.savi.View.PopUpDomicilioAlternativo;
@@ -123,9 +127,8 @@ public class PerfilActivity extends AppCompatActivity {
                 if (formValido()){
                     Usuario usuario = SesionManager.getUsuario();
                     if (usuario.getId()== null){
-                        //primer ingreso
-                        String id = dbUsuarios.push().getKey();
-                        usuario.setId(id);
+                        //primer ingreso: el id del usuario es su uid de Firebase Auth
+                        usuario.setId(FirebaseAuth.getInstance().getUid());
                     }
 
                     GuardarUsuario(usuario);
@@ -164,7 +167,7 @@ public class PerfilActivity extends AppCompatActivity {
                 month ++;
                 String date = dayOfMonth + "/" + month + "/" + year;
                 mDisplayDate.setText(date);
-                fechaNacimiento= new Date(year, month,dayOfMonth);
+                fechaNacimiento= DateUtils.fecha(year, month - 1, dayOfMonth);
             }
         };
     }
@@ -177,10 +180,19 @@ public class PerfilActivity extends AppCompatActivity {
         usuario.setCelular(celularUsuario.getText().toString().trim());
         usuario.setFechaNacimiento(fechaNacimiento);
 
-        dbUsuarios.child(usuario.getId()).setValue(usuario);
-        dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario).child(usuario.getId());
-        dbUsuarios.child("perfil").child("domicilio").setValue(usuario.getPerfil().getDomicilio());
-        dbUsuarios.child("perfil").child("domicilioAlterno").setValue(usuario.getPerfil().getDomicilioAlterno());
+        // Solo los campos de esta pantalla: reescribir el usuario completo pisaba cambios hechos por otros
+        // (por ejemplo, un familiar que lo agrego a su familia).
+        Map<String, Object> cambios = new HashMap<>();
+        cambios.put("id", usuario.getId());
+        cambios.put("mail", usuario.getMail());
+        cambios.put("nombre", usuario.getNombre());
+        cambios.put("apellido", usuario.getApellido());
+        cambios.put("dni", usuario.getDni());
+        cambios.put("fijo", usuario.getFijo());
+        cambios.put("celular", usuario.getCelular());
+        cambios.put("fechaNacimiento", usuario.getFechaNacimiento());
+        cambios.put("perfil", usuario.getPerfil());
+        dbUsuarios.child(usuario.getId()).updateChildren(cambios);
     }
 
     private boolean formValido() {
@@ -220,12 +232,8 @@ public class PerfilActivity extends AppCompatActivity {
         celularUsuario.setText(SesionManager.getUsuario().getCelular());
 
         if (SesionManager.getUsuario().getFechaNacimiento() != null){
-            int year = SesionManager.getUsuario().getFechaNacimiento().getYear();
-            int month = SesionManager.getUsuario().getFechaNacimiento().getMonth();
-            int dayOfMonth = SesionManager.getUsuario().getFechaNacimiento().getDate();
-
-            String date = dayOfMonth + "/" + month + "/" + year;
-            mDisplayDate.setText(date);
+            fechaNacimiento = DateUtils.normalizar(SesionManager.getUsuario().getFechaNacimiento());
+            mDisplayDate.setText(DateUtils.sdf3.format(fechaNacimiento));
         }
     }
 

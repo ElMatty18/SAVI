@@ -15,8 +15,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
 import com.tangorra.matias.savi.Entidades.Notificacion;
 import com.tangorra.matias.savi.Entidades.SesionManager;
@@ -24,8 +22,6 @@ import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.Utils.Notificador;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Escucha las notificaciones del barrio mientras la app esta activa.
@@ -79,30 +75,13 @@ public class NotificacionService extends Service {
         marcarVisto(notificacion.getId(), usuario.getId());
     }
 
-    private static void marcarVisto(String idNotificacion, final String idUsuario) {
+    private static void marcarVisto(String idNotificacion, String idUsuario) {
         if (idNotificacion == null) {
             return;
         }
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion).child(idNotificacion).child("vistoPor")
-                .runTransaction(new Transaction.Handler() {
-                    @NonNull
-                    @Override
-                    public Transaction.Result doTransaction(@NonNull MutableData actual) {
-                        List<String> vistoPor = new ArrayList<>();
-                        for (MutableData item : actual.getChildren()) {
-                            vistoPor.add(item.getValue(String.class));
-                        }
-                        if (!vistoPor.contains(idUsuario)) {
-                            vistoPor.add(idUsuario);
-                        }
-                        actual.setValue(vistoPor);
-                        return Transaction.success(actual);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError error, boolean committed, DataSnapshot snapshot) {
-                    }
-                });
+        // Cada usuario marca solo su propia entrada: no hace falta transaccion
+        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion).child(idNotificacion)
+                .child("vistoPor").child(idUsuario).setValue(idUsuario);
     }
 
     @NonNull

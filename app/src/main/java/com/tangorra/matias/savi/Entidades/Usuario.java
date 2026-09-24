@@ -30,10 +30,13 @@ public class Usuario implements Serializable {
     // Token de FCM del ultimo dispositivo donde inicio sesion (lo usan las Cloud Functions)
     private String fcmToken;
 
+    // Solo para mostrar en pantalla: no se guarda dentro del usuario
+    @Exclude
     public Grupo getGrupo() {
         return grupo;
     }
 
+    @Exclude
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }

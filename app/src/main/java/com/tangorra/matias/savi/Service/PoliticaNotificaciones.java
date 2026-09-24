@@ -18,7 +18,7 @@ public final class PoliticaNotificaciones {
         if (usuario.getId().equals(notificacion.getCreadoBy())) {
             return false;
         }
-        if (notificacion.getVistoPor() != null && notificacion.getVistoPor().contains(usuario.getId())) {
+        if (notificacion.vistaPor(usuario.getId())) {
             return false;
         }
         if (usuario.getPerfil() == null) {

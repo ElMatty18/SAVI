@@ -15,3 +15,7 @@
 *.keystore
 /functions/node_modules
 /.firebase
+/tools/node_modules
+# Backups de la migracion: contienen datos personales
+backup-*.json
+*-debug.log

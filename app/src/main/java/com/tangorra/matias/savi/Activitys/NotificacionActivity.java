@@ -117,6 +117,8 @@ public class NotificacionActivity extends AppCompatActivity implements OnMapRead
     private void populateNotificacion() {
         String id = dbNotificacion.push().getKey();
         notificacion.setId(id);
+        // Sin creador, quien la emitia tambien la recibia
+        notificacion.setCreadoBy(SesionManager.getUsuario().getId());
         notificacion.setTitle(titleNotificacion.getText().toString());
         notificacion.setContenido(contenidoNotificacion.getText().toString());
         notificacion.setLat(lat);

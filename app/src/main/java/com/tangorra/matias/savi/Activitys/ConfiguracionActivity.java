@@ -472,7 +472,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
 
 
     private void persistirUsuario(Usuario u) {
-        dbUsuarios.child(u.getId()).setValue(u);
+        dbUsuarios.child(u.getId()).child("configuracion").setValue(u.getConfiguracion());
     }
 
     private void fechaPicker() {

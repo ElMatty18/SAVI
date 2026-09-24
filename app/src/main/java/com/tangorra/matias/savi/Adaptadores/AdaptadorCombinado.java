@@ -310,7 +310,7 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
         ListView listViewRespuestas =  convertView.findViewById(R.id.listViewRespuestas);
         respuestasAlertas.clear();
         if (itemAlerta.getRespuestas() != null){
-            for (RespuestaAlerta itemRespuesta : itemAlerta.getRespuestas() ) {
+            for (RespuestaAlerta itemRespuesta : itemAlerta.listaRespuestas() ) {
                 respuestasAlertas.add(itemRespuesta);
             }
         }

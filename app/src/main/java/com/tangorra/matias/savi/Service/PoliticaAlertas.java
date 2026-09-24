@@ -40,10 +40,11 @@ public final class PoliticaAlertas {
     }
 
     public static boolean respondio(Alerta alerta, String idUsuario) {
-        if (alerta.getRespuestas() == null) {
-            return false;
+        if (alerta.getRespuestas() != null && alerta.getRespuestas().containsKey(idUsuario)) {
+            return true;
         }
-        for (RespuestaAlerta item : alerta.getRespuestas()) {
+        // Formato viejo: lista sin clave por usuario
+        for (RespuestaAlerta item : alerta.listaRespuestas()) {
             if (item != null && idUsuario.equals(item.getIdUsuario())) {
                 return true;
             }

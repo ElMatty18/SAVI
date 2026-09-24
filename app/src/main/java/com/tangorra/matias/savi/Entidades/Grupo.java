@@ -80,10 +80,13 @@ public class Grupo implements Serializable {
         this.nombre = nombre;
     }
 
+    // Se carga en memoria con una consulta por idGrupo; no se guarda dentro del grupo
+    @com.google.firebase.database.Exclude
     public List<Usuario> getIntegrantes() {
         return integrantes;
     }
 
+    @com.google.firebase.database.Exclude
     public void setIntegrantes(List<Usuario> integrantes) {
         this.integrantes = integrantes;
     }

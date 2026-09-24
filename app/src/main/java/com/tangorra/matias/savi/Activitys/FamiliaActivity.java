@@ -23,6 +23,9 @@ import com.tangorra.matias.savi.Adaptadores.AdaptadorUsuarios;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
+import com.tangorra.matias.savi.Utils.StringUtils;
+import java.util.Map;
+import java.util.HashMap;
 import com.tangorra.matias.savi.Utils.FirebaseUtils;
 import com.tangorra.matias.savi.View.PopUpViewQRPersona;
 
@@ -177,58 +180,48 @@ public class FamiliaActivity extends AppCompatActivity {
         }
     }
 
+    private static void agregarAFamilia(Map<String, Object> cambios, String idFamilia, String idUsuario) {
+        cambios.put(FirebaseUtils.dbFamilia + "/" + idFamilia + "/" + idUsuario, idUsuario);
+        cambios.put(FirebaseUtils.dbUsuario + "/" + idUsuario + "/idFamilia", idFamilia);
+    }
+
     @NonNull
     private ValueEventListener getUsuarioListener() {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Usuario usuario = new Usuario();
+                Usuario usuario = null;
                 for (DataSnapshot imageSnapshot : dataSnapshot.getChildren()) {
                     usuario = imageSnapshot.getValue(Usuario.class);
                 }
-                Toast.makeText(getApplicationContext(), "Se agrega " + usuario.getNombre() + " " + usuario.getApellido(), Toast.LENGTH_LONG).show();
-                if (SesionManager.getUsuario().getIdFamilia() == null && usuario.getIdFamilia() == null) {
-                    //se crea un grupo nuevo, con los dos usuario
-                    String idFamilia = dbFamilias.push().getKey();
-
-                    String id1 = dbFamilias.push().getKey();
-                    String idUsuario1 = SesionManager.getUsuario().getId();
-                    SesionManager.getUsuario().setIdFamilia(idFamilia);
-                    dbFamilias.child(idFamilia).child(id1).setValue(idUsuario1);
-
-                    String id2 = dbFamilias.push().getKey();
-                    String idUsuario2 = usuario.getId();
-                    usuario.setIdFamilia(idFamilia);
-                    dbFamilias.child(idFamilia).child(id2).setValue(idUsuario2);
-
-                    //actualiza los usuarios
-                    dbUsuarios.child(SesionManager.getUsuario().getId()).setValue(SesionManager.getUsuario());
-                    dbUsuarios.child(usuario.getId()).setValue(usuario);
-
-                } else if (SesionManager.getUsuario().getIdFamilia() != null) {
-                    //agrego a la familia de u1 el usuario u2
-
-                    String idFamilia = SesionManager.getUsuario().getIdFamilia();
-
-                    String id2 = dbFamilias.push().getKey();
-                    String idUsuario2 = usuario.getId();
-                    usuario.setIdFamilia(idFamilia);
-                    dbFamilias.child(idFamilia).child(id2).setValue(idUsuario2);
-
-                    dbUsuarios.child(usuario.getId()).setValue(usuario);
-
-                } else if (usuario.getIdFamilia() != null) {
-                    //agrego a la familia de u2 el usuario u1
-
-                    String idFamilia = usuario.getIdFamilia();
-
-                    String id1 = dbFamilias.push().getKey();
-                    String idUsuario1 = SesionManager.getUsuario().getId();
-                    SesionManager.getUsuario().setIdFamilia(idFamilia);
-                    dbFamilias.child(idFamilia).child(id1).setValue(idUsuario1);
-
-                    dbUsuarios.child(SesionManager.getUsuario().getId()).setValue(SesionManager.getUsuario());
+                Usuario yo = SesionManager.getUsuario();
+                if (usuario == null || usuario.getId() == null || usuario.getId().equals(yo.getId())) {
+                    Toast.makeText(getApplicationContext(), StringUtils.userNotFound, Toast.LENGTH_LONG).show();
+                    return;
                 }
+                Toast.makeText(getApplicationContext(), "Se agrega " + usuario.getNombre() + " " + usuario.getApellido(), Toast.LENGTH_LONG).show();
+
+                // Una sola escritura atomica. Las entradas de /Familia usan el uid como clave, y del otro
+                // usuario solo se modifica idFamilia (antes se reescribia su registro completo).
+                Map<String, Object> cambios = new HashMap<>();
+                String idFamilia;
+                if (yo.getIdFamilia() == null && usuario.getIdFamilia() == null) {
+                    //se crea un grupo nuevo, con los dos usuario
+                    idFamilia = dbFamilias.push().getKey();
+                    agregarAFamilia(cambios, idFamilia, yo.getId());
+                    agregarAFamilia(cambios, idFamilia, usuario.getId());
+                    yo.setIdFamilia(idFamilia);
+                } else if (yo.getIdFamilia() != null) {
+                    //agrego a la familia de u1 el usuario u2
+                    idFamilia = yo.getIdFamilia();
+                    agregarAFamilia(cambios, idFamilia, usuario.getId());
+                } else {
+                    //agrego a la familia de u2 el usuario u1
+                    idFamilia = usuario.getIdFamilia();
+                    agregarAFamilia(cambios, idFamilia, yo.getId());
+                    yo.setIdFamilia(idFamilia);
+                }
+                FirebaseDatabase.getInstance().getReference().updateChildren(cambios);
 
                 cargarFamilia();
             }
