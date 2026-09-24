@@ -93,6 +93,7 @@ public class RespuestaAlerta implements Serializable {
         this.mensajeAutomatica = mensajeAutomatica;
     }
 
+    @com.google.firebase.database.Exclude
     public String getGlosa(){
         return getNombreUsuario() + " " + getApellidoUsuario();
     }

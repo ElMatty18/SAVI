@@ -1,143 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_inicio"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activitys.MenuPrincipalActivity"
-    tools:showIn="@layout/app_bar_menu_principal"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_horizontal_margin"
-    android:id="@+id/menu_contenido">
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp">
+
+        <!-- Estado del barrio -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/tarjeta_barrio"
+            style="?attr/materialCardViewFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_home_pin"
+                        app:tint="?attr/colorOnPrimaryContainer" />
+
+                    <TextView
+                        android:id="@+id/nombre_grupo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        tools:text="Barrio Demo" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/estado_barrio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    tools:text="2 alertas activas" />
+
+                <TextView
+                    android:id="@+id/detalle_barrio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    tools:text="3 vecinos en el grupo" />
+
+                <LinearLayout
+                    android:id="@+id/acciones_sin_grupo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_unirse_grupo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/inicio_unirse"
+                        app:icon="@drawable/ic_qr_code_scanner" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_crear_grupo"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/inicio_crear_grupo"
+                        app:icon="@drawable/ic_add" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Acciones principales -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_emitir_alerta"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="?attr/colorError"
+                android:text="@string/inicio_emitir_alerta"
+                android:textColor="?attr/colorOnError"
+                app:icon="@drawable/ic_campaign"
+                app:iconTint="?attr/colorOnError" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_llamar"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:text="@string/inicio_llamar"
+                app:icon="@drawable/ic_call" />
+        </LinearLayout>
+
+        <!-- Accesos rapidos -->
+        <TextView
+            style="@style/Texto.Savi.Seccion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inicio_accesos" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorBlanco"
-                android:textStyle="bold"
-                android:textSize="21sp"
-                android:id="@+id/textUsuarioMenuPrincipal"/>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mainAlarmasGrupos"
+                style="@style/Tarjeta.Savi.Acceso"
+                android:layout_marginEnd="8dp">
 
-            <ImageView
-                android:id="@+id/imgUsuarioMenuPrincipal"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/icon_casa"
-                />
+                <TextView
+                    style="@style/Texto.Savi.Acceso"
+                    android:text="@string/inicio_alertas_grupo"
+                    app:drawableTopCompat="@drawable/ic_groups" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mainAlarmasFamilia"
+                style="@style/Tarjeta.Savi.Acceso"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    style="@style/Texto.Savi.Acceso"
+                    android:text="@string/inicio_alertas_familia"
+                    app:drawableTopCompat="@drawable/ic_family_restroom" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mainNotificaciones"
+                style="@style/Tarjeta.Savi.Acceso">
+
+                <TextView
+                    style="@style/Texto.Savi.Acceso"
+                    android:text="@string/inicio_notificaciones"
+                    app:drawableTopCompat="@drawable/ic_notifications" />
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-        <android.support.v7.widget.CardView
-            android:layout_width="350dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
-                <LinearLayout
-                    android:id="@+id/mainAlarmasGrupos"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Alertas Grupo"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorGris"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_alarma"/>
+        <!-- Ultimas alertas -->
+        <TextView
+            style="@style/Texto.Savi.Seccion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inicio_ultimas_alertas" />
 
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/mainAlarmasFamilia"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Alertas Familia"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_familia"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/mainNotificaciones"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Notificaciones"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/menu_notificacion"/>
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_muestra"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lista_alertas"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_centerInParent="true" />
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_alerta_resumen" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/sin_alertas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
+            android:text="@string/inicio_sin_alertas"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:visibility="gone"
+            app:drawableTint="?attr/colorOnSurfaceVariant"
+            app:drawableTopCompat="@drawable/ic_check_circle" />
 
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ver_todas"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/inicio_ver_todas"
+            app:icon="@drawable/ic_chevron_right"
+            app:iconGravity="end" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

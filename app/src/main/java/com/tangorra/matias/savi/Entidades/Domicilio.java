@@ -1,6 +1,5 @@
 package com.tangorra.matias.savi.Entidades;
 
-import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 
@@ -31,5 +30,10 @@ public class Domicilio  implements Serializable {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    /** Los domicilios sin cargar quedan en (0, 0). */
+    public static boolean estaCargado(Domicilio domicilio) {
+        return domicilio != null && (domicilio.lat != 0 || domicilio.lng != 0);
     }
 }

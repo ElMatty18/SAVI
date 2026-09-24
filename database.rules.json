@@ -1,0 +1,81 @@
+{
+  // Reglas definitivas: requieren que /Usuario este indexado por el uid de Firebase Auth.
+  // Deployar recien despues de correr tools/migracion/migrar-uid.js (ver README).
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "Usuario": {
+      // Cualquier usuario autenticado puede leer perfiles (integrantes del grupo, QR de familia)
+      ".read": "auth != null",
+      ".indexOn": ["mail", "idGrupo", "idFamilia", "id", "fcmToken"],
+      "$uid": {
+        // Cada uno escribe solo su propio registro
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.child('id').val() === $uid",
+
+        "idFamilia": {
+          // Un familiar puede sumarme a su familia, o sacarme de ella
+          ".write": "auth != null && ((newData.exists() && newData.val() === newData.parent().parent().child(auth.uid).child('idFamilia').val()) || (!newData.exists() && data.val() === root.child('Usuario').child(auth.uid).child('idFamilia').val()))",
+          ".validate": "newData.isString()"
+        },
+        "fcmToken": { ".validate": "newData.isString()" },
+        // La clave nunca debe volver a guardarse en la base
+        "clave": { ".validate": false }
+      }
+    },
+
+    "Grupo": {
+      ".read": "auth != null",
+      ".indexOn": ["id"],
+      "$idGrupo": {
+        // Se puede crear un grupo nuevo, pero no borrar ni pisar uno existente
+        ".write": "auth != null && !data.exists() && newData.exists()",
+
+        "alertas": {
+          "$idAlerta": {
+            // Solo integrantes del grupo, y firmando con su propio uid
+            ".write": "auth != null && !data.exists() && root.child('Usuario').child(auth.uid).child('idGrupo').val() === $idGrupo && newData.child('creadoById').val() === auth.uid",
+            ".validate": "newData.hasChildren(['id', 'alarma', 'estado', 'creadoById'])",
+
+            "respuestas": {
+              "$uid": {
+                ".write": "auth != null && auth.uid === $uid && root.child('Usuario').child(auth.uid).child('idGrupo').val() === $idGrupo",
+                ".validate": "newData.child('idUsuario').val() === $uid"
+              }
+            },
+            "estado": {
+              // Solo el destinatario (confirma/desactiva) o quien la creo
+              ".write": "auth != null && (auth.uid === data.parent().child('dirigidaId').val() || auth.uid === data.parent().child('creadoById').val())",
+              ".validate": "newData.isString()"
+            }
+          }
+        }
+      }
+    },
+
+    "Familia": {
+      ".read": "auth != null",
+      "$idFamilia": {
+        "$uid": {
+          // Sumarse a uno mismo (escaneando el QR de un familiar), o que un integrante sume o saque a otro
+          ".write": "auth != null && (auth.uid === $uid || root.child('Usuario').child(auth.uid).child('idFamilia').val() === $idFamilia || newData.parent().parent().parent().child('Usuario').child(auth.uid).child('idFamilia').val() === $idFamilia)",
+          ".validate": "newData.val() === $uid"
+        }
+      }
+    },
+
+    "Notificacion": {
+      ".read": "auth != null",
+      "$idNotificacion": {
+        ".write": "auth != null && !data.exists() && newData.child('creadoBy').val() === auth.uid",
+        "vistoPor": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.val() === $uid"
+          }
+        }
+      }
+    }
+  }
+}

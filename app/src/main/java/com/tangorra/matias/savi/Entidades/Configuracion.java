@@ -1,5 +1,8 @@
 package com.tangorra.matias.savi.Entidades;
 
+import com.tangorra.matias.savi.Utils.DateUtils;
+import com.tangorra.matias.savi.Utils.StringUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -37,18 +40,27 @@ public class Configuracion implements Serializable {
 
 
 
-    public boolean validarVacaciones(Date fecha) {
-        if ((inicioVacaciones != null) && (finVacaciones != null)){
-            return fechaRango(inicioVacaciones, new Date(),finVacaciones);
+    /**
+     * Si la respuesta automatica aplica en este momento. Antes solo se miraba si estaba activa,
+     * asi que por ejemplo el modo vacaciones seguia respondiendo despues de volver.
+     */
+    public boolean vigente(Date ahora) {
+        if (!configuracionActiva || configuracionSeleccionada == null) {
+            return false;
         }
-        return false;
-    }
-
-    private boolean fechaRango(Date inicioVacaciones, Date actual, Date finVacaciones) {
-        if ( inicioVacaciones.before(actual) && actual.before(finVacaciones) ){
-            return true;
+        if (configuracionSeleccionada.equals(StringUtils.config_vacaciones)) {
+            Date inicio = DateUtils.normalizar(inicioVacaciones);
+            Date fin = DateUtils.normalizar(finVacaciones);
+            return inicio != null && fin != null
+                    && !ahora.before(DateUtils.inicioDelDia(inicio)) && ahora.before(DateUtils.finDelDia(fin));
+        } else if (configuracionSeleccionada.equals(StringUtils.config_casaSola)) {
+            Date dia = DateUtils.normalizar(ausenciaDia);
+            return dia != null && !ahora.before(DateUtils.inicioDelDia(dia)) && ahora.before(DateUtils.finDelDia(dia));
+        } else if (configuracionSeleccionada.equals(StringUtils.config_noMolestar)) {
+            return noMolestar != null && ahora.before(noMolestar);
         }
-        return false;
+        // Visitas en casa e ignorar todo: rigen hasta que el usuario las desactive
+        return true;
     }
 
     public boolean isConfiguracionActiva() {

@@ -1,11 +1,12 @@
 package com.tangorra.matias.savi.Utils;
 
-import com.google.android.gms.flags.impl.DataUtils;
 
 public  class StringUtils {
 
     public static String fieldRequired = "Campo requerido!";
     public static String fieldInvalid = "Campo no valido!";
+    public static String passInvalid = "La clave debe tener entre 6 y 30 caracteres, con mayuscula, minuscula y numero";
+    public static String userNotFound = "No se encontraron los datos del usuario";
     public static String userLogin = "Logueando usuario...";
 
     public static String userWithEqualMail = "Ya existe un usuario registrado con el Mail ingresado";

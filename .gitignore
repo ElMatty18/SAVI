@@ -8,3 +8,17 @@
 /build
 /captures
 .externalNativeBuild
+/app/release
+*.apk
+*.aab
+*.jks
+*.keystore
+/functions/node_modules
+/.firebase
+/tools/node_modules
+# Backups de la migracion: contienen datos personales
+backup-*.json
+*-debug.log
+# Claves de service account de Firebase/Google Cloud: nunca se versionan
+*-firebase-adminsdk-*.json
+service-account*.json
