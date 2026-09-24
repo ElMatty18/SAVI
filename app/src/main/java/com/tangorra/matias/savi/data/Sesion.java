@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
 import com.tangorra.matias.savi.Entidades.Usuario;
 
@@ -37,6 +38,7 @@ public final class Sesion {
                 actual.setGrupo(anterior.getGrupo());
             }
             SesionManager.setUsuario(actual);
+            actualizarGrupo(actual.getIdGrupo());
             usuario.setValue(actual);
         }
 
@@ -47,6 +49,25 @@ public final class Sesion {
     };
 
     private Sesion() {
+    }
+
+    /** Mantiene el grupo en memoria cuando el usuario se une, cambia o sale de un grupo. */
+    private static void actualizarGrupo(String idGrupo) {
+        Grupo actual = SesionManager.getGrupo();
+        String idActual = actual != null ? actual.getId() : null;
+        if (idGrupo == null) {
+            if (idActual != null) {
+                SesionManager.setGrupo(new Grupo());
+            }
+            return;
+        }
+        if (!idGrupo.equals(idActual)) {
+            GrupoRepositorio.leer(idGrupo).addOnSuccessListener(grupo -> {
+                if (grupo != null) {
+                    SesionManager.setGrupo(grupo);
+                }
+            });
+        }
     }
 
     public static synchronized void iniciar(String uid) {

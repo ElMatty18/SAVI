@@ -32,4 +32,5 @@
 
     <dimen name="margen_boton_inferior">16dp</dimen>
     <dimen name="lado_qr">240dp</dimen>
+    <dimen name="alto_toolbar">64dp</dimen>
 </resources>

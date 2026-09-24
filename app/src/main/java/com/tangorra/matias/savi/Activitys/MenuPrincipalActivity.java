@@ -30,8 +30,6 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.tangorra.matias.savi.Entidades.Alerta;
 import com.tangorra.matias.savi.Entidades.Grupo;
 import com.tangorra.matias.savi.Entidades.SesionManager;
@@ -43,8 +41,13 @@ import com.tangorra.matias.savi.Utils.StringUtils;
 import com.tangorra.matias.savi.View.PopUpDomiciliosMenu;
 import com.tangorra.matias.savi.View.PopUpInformacion;
 import com.tangorra.matias.savi.View.PopUpNotificaciones;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+import androidx.activity.result.ActivityResultLauncher;
+import com.tangorra.matias.savi.data.GrupoRepositorio;
 import com.tangorra.matias.savi.data.Sesion;
-import com.tangorra.matias.savi.data.UsuarioRepositorio;
+import com.tangorra.matias.savi.ui.grupo.CrearGrupoActivity;
+import com.tangorra.matias.savi.ui.grupo.GrupoActivity;
 import com.tangorra.matias.savi.ui.acceso.AccesoActivity;
 import com.tangorra.matias.savi.ui.alertas.AlertasActivity;
 import com.tangorra.matias.savi.ui.alertas.DetalleAlertaActivity;
@@ -182,10 +185,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         findViewById(R.id.mainNotificaciones).setOnClickListener(v -> startActivity(new Intent(this, PopUpNotificaciones.class)));
         btnVerTodas.setOnClickListener(v -> startActivity(AlertasActivity.grupo(this)));
         findViewById(R.id.btn_unirse_grupo).setOnClickListener(v -> abrirScan());
-        findViewById(R.id.btn_crear_grupo).setOnClickListener(v -> {
-            startActivity(new Intent(this, GrupoVecinalActivity.class));
-            finish();
-        });
+        findViewById(R.id.btn_crear_grupo).setOnClickListener(v -> startActivity(new Intent(this, CrearGrupoActivity.class)));
     }
 
     private void mostrarUsuario(Usuario u) {
@@ -287,12 +287,10 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.agregarDomicilio) {
             startActivity(new Intent(this, PopUpDomiciliosMenu.class));
         } else if (id == R.id.crear_grupo) {
-            startActivity(new Intent(this, GrupoVecinalActivity.class));
-            finish();
+            startActivity(new Intent(this, CrearGrupoActivity.class));
         } else if (id == R.id.mostarGrupo) {
-            if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null) {
-                startActivity(new Intent(this, GrupoVecinalViewActivity.class));
-                finish();
+            if (grupo != null && grupo.getId() != null) {
+                startActivity(new Intent(this, GrupoActivity.class));
             } else {
                 Snackbar.make(drawer, StringUtils.notSetGroup, Snackbar.LENGTH_LONG).show();
             }
@@ -314,44 +312,27 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     }
 
     private void abrirScan() {
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setPrompt(StringUtils.openScanGroup);
-        integrator.setCameraId(0);
-        integrator.setBeepEnabled(false);
-        integrator.setBarcodeImageEnabled(false);
-        integrator.initiateScan();
+        escaner.launch(new ScanOptions()
+                .setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                .setPrompt(StringUtils.openScanGroup)
+                .setBeepEnabled(false)
+                .setOrientationLocked(false));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Snackbar.make(drawer, StringUtils.cancelScan, Snackbar.LENGTH_SHORT).show();
-            } else {
-                agregarGrupo(result.getContents());
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+    private final ActivityResultLauncher<ScanOptions> escaner = registerForActivityResult(new ScanContract(), resultado -> {
+        if (resultado.getContents() == null) {
+            return;
         }
-    }
-
-    private void agregarGrupo(String idGrupo) {
         Usuario u = SesionManager.getUsuario();
-        u.setIdGrupo(idGrupo);
-        // Solo cambia idGrupo; la sesion en vivo actualiza la pantalla con el grupo nuevo
-        UsuarioRepositorio.usuarios().child(u.getId()).child("idGrupo").setValue(idGrupo);
-        FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo).child(idGrupo).get()
-                .addOnSuccessListener(snapshot -> {
-                    Grupo nuevo = snapshot.getValue(Grupo.class);
-                    if (nuevo != null) {
-                        SesionManager.setGrupo(nuevo);
-                    }
-                });
-        // El servicio de alertas pasa a escuchar el grupo nuevo
-        ServiciosSesion.iniciar(this);
-    }
+        GrupoRepositorio.unirse(u.getId(), resultado.getContents())
+                .addOnSuccessListener(nuevo -> {
+                    // La sesion en vivo actualiza la pantalla; el servicio pasa a escuchar el grupo nuevo
+                    ServiciosSesion.iniciar(this);
+                    Snackbar.make(drawer, getString(R.string.inicio_unido, nuevo.getNombre()), Snackbar.LENGTH_LONG).show();
+                })
+                .addOnFailureListener(e -> Snackbar.make(drawer,
+                        e.getMessage() != null ? e.getMessage() : getString(R.string.inicio_error_unirse), Snackbar.LENGTH_LONG).show());
+    });
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

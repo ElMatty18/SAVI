@@ -84,6 +84,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
 
     implementation 'com.google.android.gms:play-services-maps:19.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
 
     // UI
     implementation 'com.mig35:carousellayoutmanager:1.4.6' // Carrusel

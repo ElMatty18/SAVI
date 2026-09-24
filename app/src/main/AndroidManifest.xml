@@ -52,6 +52,19 @@
             android:theme="@style/Theme.Savi" />
 
         <activity
+            android:name=".ui.comun.SelectorUbicacionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi" />
+        <activity
+            android:name=".ui.grupo.CrearGrupoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.grupo.GrupoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi" />
+        <activity
             android:name=".ui.perfil.PerfilActivity"
             android:exported="false"
             android:theme="@style/Theme.Savi"
@@ -68,8 +81,6 @@
             android:name=".ui.alertas.EmitirAlertaActivity"
             android:exported="false"
             android:theme="@style/Theme.Savi" />
-
-        <activity android:name=".Activitys.GrupoVecinalActivity" />
 
         <!-- La key de Maps se inyecta desde local.properties (MAPS_API_KEY), ver README. -->
         <meta-data
@@ -96,8 +107,6 @@
 
         <activity android:name=".Activitys.ConfiguracionActivity"
             android:theme="@style/AppTheme.PopUpSavi.solid"/>
-
-        <activity android:name=".Activitys.GrupoVecinalViewActivity" />
         <activity android:name=".Activitys.NotificacionActivity" />
         <activity
             android:name=".View.PopUpNotificaciones"
@@ -110,9 +119,6 @@
             android:theme="@style/AppTheme.PopUpSavi.solid" />
         <activity
             android:name=".View.PopUpDomiciliosMenu"
-            android:theme="@style/AppTheme.PopUpSavi.solid" />
-        <activity
-            android:name=".View.PopUpViewQRGrupo"
             android:theme="@style/AppTheme.PopUpSavi.solid" />
 
         <activity

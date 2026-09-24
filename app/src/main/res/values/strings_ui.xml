@@ -123,4 +123,33 @@
     <string name="perfil_guardado">Perfil guardado</string>
     <string name="perfil_error">No se pudo guardar el perfil</string>
     <string name="perfil_dni_invalido">Ingresá un DNI válido</string>
+    <string name="ubicacion_instruccion">Mové el mapa hasta que el pin quede en el lugar correcto.</string>
+    <string name="ubicacion_mia">Mi ubicación</string>
+    <string name="ubicacion_confirmar">Confirmar</string>
+    <string name="ubicacion_sin_permiso">Sin permiso de ubicación: elegí el lugar moviendo el mapa</string>
+    <string name="ubicacion_no_disponible">No se pudo obtener tu ubicación. Revisá que el GPS esté activado</string>
+    <string name="grupo_crear_titulo">Nuevo grupo vecinal</string>
+    <string name="grupo_crear_explicacion">Un grupo reúne a los vecinos de una zona para avisarse ante una emergencia. Después vas a poder invitarlos con un código QR.</string>
+    <string name="grupo_nombre">Nombre del grupo</string>
+    <string name="grupo_zona">Zona</string>
+    <string name="grupo_elegir_centro">Elegir el centro de la zona</string>
+    <string name="grupo_centro_elegido">Centro elegido · tocá para cambiarlo</string>
+    <string name="grupo_radio">Radio</string>
+    <string name="grupo_radio_ayuda">Hasta dónde llega el barrio desde el centro elegido.</string>
+    <string name="grupo_metros">%1$d m</string>
+    <string name="grupo_crear">Crear grupo</string>
+    <string name="grupo_error_crear">No se pudo crear el grupo</string>
+    <string name="grupo_titulo">Mi grupo vecinal</string>
+    <string name="grupo_zona_texto">Zona de %1$d m alrededor del centro</string>
+    <string name="grupo_invitar">Invitar vecinos</string>
+    <string name="grupo_qr_detalle">Pedile a tu vecino que lo escanee desde "Unirme" en la pantalla de inicio.</string>
+    <string name="grupo_salir">Salir del grupo</string>
+    <string name="grupo_salir_texto">Vas a dejar de recibir las alertas del barrio. Podés volver a unirte con el código de un vecino.</string>
+    <string name="grupo_vos">Vos</string>
+    <plurals name="grupo_vecinos">
+        <item quantity="one">%d vecino</item>
+        <item quantity="other">%d vecinos</item>
+    </plurals>
+    <string name="inicio_unido">Te uniste a %1$s</string>
+    <string name="inicio_error_unirse">No se pudo unir al grupo</string>
 </resources>
