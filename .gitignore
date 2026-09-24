@@ -19,3 +19,6 @@
 # Backups de la migracion: contienen datos personales
 backup-*.json
 *-debug.log
+# Claves de service account de Firebase/Google Cloud: nunca se versionan
+*-firebase-adminsdk-*.json
+service-account*.json
