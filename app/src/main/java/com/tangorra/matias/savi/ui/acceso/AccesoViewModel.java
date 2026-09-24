@@ -49,8 +49,17 @@ public class AccesoViewModel extends ViewModel {
 
     private static final String CLAVE_LEGADA = "clave";
 
+    // Sin conexion (o con una sesion revocada) las lecturas de la base pueden no terminar nunca
+    private static final long LIMITE_CARGA_MS = 15_000;
+
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final MutableLiveData<Estado> estado = new MutableLiveData<>(Estado.inicial());
+    private final android.os.Handler temporizador = new android.os.Handler(android.os.Looper.getMainLooper());
+    private final Runnable vencimiento = () -> {
+        if (estado.getValue() != null && estado.getValue().tipo == Estado.Tipo.CARGANDO) {
+            estado.setValue(Estado.error("Sin conexión. Revisá tu internet e intentá de nuevo"));
+        }
+    };
 
     public LiveData<Estado> estado() {
         return estado;
@@ -86,6 +95,8 @@ public class AccesoViewModel extends ViewModel {
     }
 
     private void cargarSesion(final String mail) {
+        temporizador.removeCallbacks(vencimiento);
+        temporizador.postDelayed(vencimiento, LIMITE_CARGA_MS);
         final String uid = auth.getUid();
         UsuarioRepositorio.usuarios().child(uid).get()
                 .continueWithTask(t -> {
@@ -103,12 +114,18 @@ public class AccesoViewModel extends ViewModel {
                     return cargarGrupo(usuario).continueWith(t -> usuario);
                 })
                 .addOnSuccessListener(usuario -> {
+                    temporizador.removeCallbacks(vencimiento);
+                    if (estado.getValue() == null || estado.getValue().tipo != Estado.Tipo.CARGANDO) {
+                        // Ya se informo que vencio el tiempo: no entrar por detras del usuario
+                        return;
+                    }
                     SesionManager.setUsuario(usuario);
                     // Limpieza de datos legados: la clave nunca debio persistirse en la base
                     UsuarioRepositorio.usuarios().child(usuario.getId()).child(CLAVE_LEGADA).removeValue();
                     estado.setValue(Estado.ingreso(usuario));
                 })
                 .addOnFailureListener(e -> {
+                    temporizador.removeCallbacks(vencimiento);
                     auth.signOut();
                     fallo(e);
                 });
@@ -142,6 +159,11 @@ public class AccesoViewModel extends ViewModel {
             return hijo.getValue(clase);
         }
         return null;
+    }
+
+    @Override
+    protected void onCleared() {
+        temporizador.removeCallbacks(vencimiento);
     }
 
     private void fallo(@NonNull Exception e) {

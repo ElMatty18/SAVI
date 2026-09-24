@@ -55,7 +55,6 @@ import com.tangorra.matias.savi.ui.configuracion.RespuestaAutomaticaActivity;
 import com.tangorra.matias.savi.ui.familia.FamiliaActivity;
 import com.tangorra.matias.savi.ui.informacion.InformacionActivity;
 import com.tangorra.matias.savi.ui.notificaciones.NotificacionesActivity;
-import com.tangorra.matias.savi.ui.notificaciones.NuevaNotificacionActivity;
 import com.tangorra.matias.savi.ui.perfil.DomiciliosActivity;
 import com.tangorra.matias.savi.ui.perfil.PerfilActivity;
 
@@ -300,7 +299,7 @@ public class InicioActivity extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.configurarCuenta) {
             startActivity(new Intent(this, RespuestaAutomaticaActivity.class));
         } else if (id == R.id.addNotificacion) {
-            startActivity(new Intent(this, NuevaNotificacionActivity.class));
+            startActivity(new Intent(this, NotificacionesActivity.class));
         } else if (id == R.id.informacion) {
             startActivity(new Intent(this, InformacionActivity.class));
         }

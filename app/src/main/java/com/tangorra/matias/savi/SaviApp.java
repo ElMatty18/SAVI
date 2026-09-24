@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,8 +18,6 @@ public class SaviApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // La app esta solo en castellano: fechas relativas, formatos y textos del sistema tambien
-        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es-AR"));
         if (BuildConfig.USAR_EMULADOR) {
             usarEmuladorFirebase();
         }

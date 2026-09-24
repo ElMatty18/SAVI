@@ -18,6 +18,7 @@
         android:allowBackup="false"
         android:dataExtractionRules="@xml/reglas_extraccion_datos"
         android:fullBackupContent="false"
+        android:localeConfig="@xml/locales_config"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon_casa"
@@ -113,6 +114,16 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+
+        <!-- Guarda el idioma de la app en Android < 13 (en 13+ lo guarda el sistema) -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
 
         <!-- service -->
 

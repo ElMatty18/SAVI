@@ -9,6 +9,8 @@ import android.view.inputmethod.EditorInfo;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.ViewCompat;
@@ -48,6 +50,7 @@ public class AccesoActivity extends AppCompatActivity {
 
     // Mientras se verifica una sesion guardada se mantiene el splash
     private boolean verificandoSesion;
+    private static final long MAXIMO_SPLASH_MS = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,12 @@ public class AccesoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_acceso);
 
         splash.setKeepOnScreenCondition(() -> verificandoSesion);
+
+        // La app esta solo en castellano: los componentes del sistema (calendarios, relojes) tambien.
+        // Debe llamarse con una Activity creada; queda guardado para los proximos inicios.
+        if (AppCompatDelegate.getApplicationLocales().isEmpty()) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es-AR"));
+        }
 
         View raiz = findViewById(R.id.raiz);
         ViewCompat.setOnApplyWindowInsetsListener(raiz, (v, insets) -> {
@@ -92,6 +101,9 @@ public class AccesoActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             verificandoSesion = viewModel.continuarSesion();
+            // El splash no puede quedar indefinidamente: sin ventana, Android declara un ANR al primer toque.
+            // Pasado el limite se muestra el login con la barra de progreso mientras termina la carga.
+            raiz.postDelayed(() -> verificandoSesion = false, MAXIMO_SPLASH_MS);
         }
     }
 

@@ -11,22 +11,22 @@
     <string name="action_exit_sistema">Salir</string>
 
     <!-- menu principal title -->
-    <string name="menu_grupo_vecinal">Grupo Vecinal</string>
-    <string name="menu_notificacion">Notificacion</string>
-    <string name="menu_ajustes">Ajustes</string>
-    <string name="menu_configuracion">Configuracion</string>
-    <string name="menu_terminos">Sobre SAVI</string>
+    <string name="menu_grupo_vecinal">Grupo vecinal</string>
+    <string name="menu_notificacion">Barrio</string>
+    <string name="menu_ajustes">Mi cuenta</string>
+    <string name="menu_configuracion">Alertas</string>
+    <string name="menu_terminos">SAVI</string>
 
     <!-- menu principal items -->
-    <string name="item_crear_grupo">Crear Grupo</string>
-    <string name="item_unirse_grupo">Unirse a Grupo Vecinal</string>
-    <string name="item_ver_grupo">Ver Grupo Vecinal</string>
-    <string name="item_notificacion">Crear notificacion</string>
-    <string name="item_perfil">Perfil</string>
-    <string name="item_familiares">Familiares</string>
-    <string name="item_domicilios">Domicilios</string>
-    <string name="item_configuracion">Configuracion</string>
-    <string name="item_info">Informacion</string>
+    <string name="item_crear_grupo">Crear grupo</string>
+    <string name="item_unirse_grupo">Unirme con un código</string>
+    <string name="item_ver_grupo">Mi grupo</string>
+    <string name="item_notificacion">Avisos del barrio</string>
+    <string name="item_perfil">Mi perfil</string>
+    <string name="item_familiares">Mi familia</string>
+    <string name="item_domicilios">Mis domicilios</string>
+    <string name="item_configuracion">Respuesta automática</string>
+    <string name="item_info">Acerca de SAVI</string>
 
     <!-- datos de usuario en registrarse -->
 

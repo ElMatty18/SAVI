@@ -92,7 +92,7 @@ async function main() {
 
   await getDatabase(app).ref().set({
     Usuario,
-    Grupo: {[GRUPO]: {id: GRUPO, nombre: "Barrio Demo", maxUsuarios: 20, maxRango: 2, ...BASE, alertas}},
+    Grupo: {[GRUPO]: {id: GRUPO, nombre: "Barrio Demo", maxUsuarios: 20, maxRango: 500, ...BASE, alertas}},
     Familia: {[FAMILIA]: {[uid(ana.mail)]: uid(ana.mail), [uid(beto.mail)]: uid(beto.mail)}},
     Notificacion: {
       "notif-1": {id: "notif-1", title: "Corte de luz", contenido: "Manana de 9 a 13 por obras en la cuadra",

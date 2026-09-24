@@ -8,21 +8,17 @@
         <item android:title="@string/menu_grupo_vecinal">
             <menu>
                 <item
-                    android:id="@+id/crear_grupo"
-                    android:icon="@drawable/ic_add"
-                    android:title="@string/item_crear_grupo" />
+                    android:id="@+id/mostarGrupo"
+                    android:icon="@drawable/ic_groups"
+                    android:title="@string/item_ver_grupo" />
                 <item
                     android:id="@+id/unirseGrupo"
                     android:icon="@drawable/ic_qr_code_scanner"
                     android:title="@string/item_unirse_grupo" />
                 <item
-                    android:id="@+id/mostarGrupo"
-                    android:icon="@drawable/ic_groups"
-                    android:title="@string/item_ver_grupo"
-                    />
-
-
-
+                    android:id="@+id/crear_grupo"
+                    android:icon="@drawable/ic_add"
+                    android:title="@string/item_crear_grupo" />
             </menu>
         </item>
     </group>
