@@ -31,4 +31,5 @@
     <fraction name="quarter">25%</fraction>
 
     <dimen name="margen_boton_inferior">16dp</dimen>
+    <dimen name="lado_qr">240dp</dimen>
 </resources>

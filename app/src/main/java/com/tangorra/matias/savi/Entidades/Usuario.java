@@ -147,7 +147,8 @@ public class Usuario implements Serializable {
 
     @Exclude
     public Boolean datosIncompletos(){
-        if (this.nombre == null || this.apellido == null  || this.dni == null || this.celular == null || this.fijo == null){
+        // El telefono fijo es opcional: muchos vecinos ya no tienen
+        if (vacio(nombre) || vacio(apellido) || vacio(dni) || vacio(celular)){
             return true;
         }
         return false;
@@ -157,6 +158,10 @@ public class Usuario implements Serializable {
     @Exclude
     public String getGlosaFormateada(){
         return com.tangorra.matias.savi.Utils.StringUtils.getTextoFormateado(getGlosa());
+    }
+
+    private static boolean vacio(String valor) {
+        return valor == null || valor.trim().isEmpty();
     }
 
     @Exclude

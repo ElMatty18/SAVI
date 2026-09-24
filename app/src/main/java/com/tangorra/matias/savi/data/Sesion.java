@@ -54,6 +54,11 @@ public final class Sesion {
             return;
         }
         cerrar();
+        // Mientras llega la base, se muestra lo que ya esta en memoria
+        Usuario enMemoria = SesionManager.getUsuario();
+        if (enMemoria != null && uid.equals(enMemoria.getId())) {
+            usuario.setValue(enMemoria);
+        }
         referencia = UsuarioRepositorio.usuarios().child(uid);
         referencia.addValueEventListener(listener);
     }

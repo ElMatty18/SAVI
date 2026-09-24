@@ -37,4 +37,14 @@ public class ValidacionesTest {
         assertFalse(Validaciones.esClaveSegura("BarrioSeguro")); // sin numero
         assertFalse(Validaciones.esClaveSegura("Barrio 2024"));  // con espacio
     }
+
+    @Test
+    public void dni() {
+        assertTrue(Validaciones.esDniValido("30123456"));
+        assertTrue(Validaciones.esDniValido("30.123.456"));
+        assertTrue(Validaciones.esDniValido("5123456"));
+        assertFalse(Validaciones.esDniValido(""));
+        assertFalse(Validaciones.esDniValido("123"));
+        assertFalse(Validaciones.esDniValido("30123456a"));
+    }
 }

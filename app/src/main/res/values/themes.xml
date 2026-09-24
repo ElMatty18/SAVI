@@ -132,4 +132,10 @@
         <item name="android:layout_weight">1</item>
         <item name="android:maxLines">2</item>
     </style>
+
+    <style name="Campo.Savi" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
 </resources>

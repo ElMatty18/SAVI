@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tangorra.matias.savi.Activitys.MenuPrincipalActivity;
-import com.tangorra.matias.savi.Activitys.PerfilActivity;
+import com.tangorra.matias.savi.ui.perfil.PerfilActivity;
 import com.tangorra.matias.savi.Entidades.Usuario;
 import com.tangorra.matias.savi.R;
 import com.tangorra.matias.savi.Service.ServiciosSesion;
@@ -130,8 +130,9 @@ public class AccesoActivity extends AppCompatActivity {
         Sesion.iniciar(usuario.getId());
         ServiciosSesion.iniciar(this);
 
-        Class<?> destino = usuario.datosIncompletos() ? PerfilActivity.class : MenuPrincipalActivity.class;
-        startActivity(new Intent(this, destino).putExtra(MenuPrincipalActivity.usuario, usuario.getMail()));
+        startActivity(usuario.datosIncompletos()
+                ? PerfilActivity.intent(this, true)
+                : new Intent(this, MenuPrincipalActivity.class));
         finish();
     }
 

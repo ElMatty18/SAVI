@@ -15,6 +15,11 @@ public final class Validaciones {
         return mail != null && MAIL.matcher(mail.trim()).matches();
     }
 
+    /** DNI argentino: 7 u 8 digitos (se aceptan puntos). */
+    public static boolean esDniValido(String dni) {
+        return dni != null && dni.replace(".", "").trim().matches("\\d{7,8}");
+    }
+
     public static boolean esClaveSegura(String clave) {
         return clave != null && CLAVE.matcher(clave).matches();
     }

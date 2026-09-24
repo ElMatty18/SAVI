@@ -1,247 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/raiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/gradiente_informacion"
-    android:gravity="center_vertical"
-    >
+    android:background="?attr/colorSurface"
+    tools:context=".ui.perfil.PerfilActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
 
-        <TextView
-            android:id="@+id/textView2"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationContentDescription="@string/volver"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/perfil_titulo" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pefil_title"
-            android:gravity="center_horizontal"
-            android:textSize="18sp"
-            android:textColor="@color/colorBlanco"
-            android:textStyle="italic"
-            />
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@drawable/gradiente_perfil2"
-            />
-
-    </LinearLayout>
-
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_gravity="center_horizontal">
+        android:clipToPadding="false"
+        android:paddingBottom="96dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:background="@color/colorBlanco"
-            >
-
-            <EditText android:id="@+id/txtNombreUsuario"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:hint="@string/nombre"
-                android:inputType="text" />
-
-            <EditText android:id="@+id/txtApellidoUsuario"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:hint="@string/apellido"
-                android:inputType="text" />
-
-            <EditText android:id="@+id/txtDniUsuario"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:hint="@string/documento"
-                android:inputType="number"
-                android:ems="8"/>
+            android:paddingHorizontal="16dp">
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/nacimiento"
-                android:id="@+id/tvDate"
-                android:textSize="20dp"/>
-
-            <EditText android:id="@+id/txtCelularUsuario"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:hint="@string/celular"
-                android:ems="8"
-                android:inputType="phone" />
-
-            <EditText android:id="@+id/txtTelefonoUsuario"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:hint="@string/fijo"
-                android:ems="8"
-                android:inputType="phone" />
-
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            >
-            <LinearLayout
+                android:id="@+id/bienvenida"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-                <LinearLayout
-                    android:id="@+id/perfilFoto"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Foto"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorGris"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/icon_camara"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
-                <LinearLayout
-                    android:id="@+id/perfilDomicilio"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/domicilio"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorGris"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/icon_map"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/perfilFamilia"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/perfilDomicilioAlternativo"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/trabajo"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <ImageView
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/icon_map_secundario"/>
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/perfil_bienvenida"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:visibility="gone" />
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:layout_margin="@dimen/activity_horizontal_margin">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="8dp">
 
-                <LinearLayout
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    android:contentDescription="@string/perfil_cambiar_foto"
+                    android:src="@drawable/icon_casa" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_foto"
+                    style="?attr/floatingActionButtonSmallSecondaryStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:contentDescription="@string/perfil_cambiar_foto"
+                    app:srcCompat="@drawable/ic_edit" />
+            </FrameLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/campo_nombre"
+                style="@style/Campo.Savi"
+                android:hint="@string/perfil_nombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_nombre"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
+                    android:layout_height="wrap_content"
+                    android:autofillHints="personGivenName"
+                    android:inputType="textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <Button
-                        android:id="@+id/btnSavePerfil"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btt_aceptar"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/campo_apellido"
+                style="@style/Campo.Savi"
+                android:hint="@string/perfil_apellido">
 
-                    <Button
-                        android:id="@+id/btnVolverMenuPerfil"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btt_back"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_apellido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="personFamilyName"
+                    android:inputType="textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/campo_dni"
+                style="@style/Campo.Savi"
+                android:hint="@string/perfil_dni">
 
-            </FrameLayout >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_dni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="9" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/campo_nacimiento"
+                style="@style/Campo.Savi"
+                android:hint="@string/perfil_nacimiento"
+                app:endIconDrawable="@drawable/ic_schedule"
+                app:endIconMode="custom">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_nacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/campo_celular"
+                style="@style/Campo.Savi"
+                android:hint="@string/perfil_celular"
+                app:startIconDrawable="@drawable/ic_call">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_celular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="phone"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/campo_fijo"
+                style="@style/Campo.Savi"
+                android:hint="@string/perfil_fijo"
+                app:helperText="@string/perfil_opcional"
+                app:startIconDrawable="@drawable/ic_call">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_fijo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_domicilios"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/perfil_domicilios"
+                app:icon="@drawable/ic_location_on" />
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-
-    </ScrollView>
-
-
-
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_guardar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:text="@string/perfil_guardar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
