@@ -9,15 +9,15 @@
             <menu>
                 <item
                     android:id="@+id/crear_grupo"
-                    android:icon="@android:drawable/ic_menu_compass"
+                    android:icon="@drawable/ic_add"
                     android:title="@string/item_crear_grupo" />
                 <item
                     android:id="@+id/unirseGrupo"
-                    android:icon="@android:drawable/ic_menu_add"
+                    android:icon="@drawable/ic_qr_code_scanner"
                     android:title="@string/item_unirse_grupo" />
                 <item
                     android:id="@+id/mostarGrupo"
-                    android:icon="@android:drawable/ic_menu_search"
+                    android:icon="@drawable/ic_groups"
                     android:title="@string/item_ver_grupo"
                     />
 
@@ -31,7 +31,7 @@
         <menu>
             <item
                 android:id="@+id/addNotificacion"
-                android:icon="@android:drawable/ic_dialog_info"
+                android:icon="@drawable/ic_notifications"
                 android:title="@string/item_notificacion" />
         </menu>
     </item>
@@ -40,15 +40,15 @@
         <menu>
             <item
                 android:id="@+id/datosPersonales"
-                android:icon="@android:drawable/ic_menu_edit"
+                android:icon="@drawable/ic_person"
                 android:title="@string/item_perfil" />
             <item
                 android:id="@+id/familiares"
-                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:icon="@drawable/ic_family_restroom"
                 android:title="@string/item_familiares" />
             <item
                 android:id="@+id/agregarDomicilio"
-                android:icon="@android:drawable/ic_menu_mylocation"
+                android:icon="@drawable/ic_location_on"
                 android:title="@string/item_domicilios" />
         </menu>
     </item>
@@ -57,7 +57,7 @@
         <menu>
             <item
                 android:id="@+id/configurarCuenta"
-                android:icon="@android:drawable/ic_menu_manage"
+                android:icon="@drawable/ic_settings"
                 android:title="@string/item_configuracion" />
         </menu>
     </item>
@@ -66,7 +66,7 @@
         <menu>
         <item
             android:id="@+id/informacion"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/ic_info"
             android:title="@string/item_info" />
         </menu>
     </item>

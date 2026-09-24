@@ -1,48 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.MenuPrincipalActivity"
-    android:background="@drawable/gradiente"
-    android:id="@+id/layout_menu">
+    android:background="?attr/colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/barra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        >
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorGris"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            />
-
+            android:layout_height="?attr/actionBarSize"
+            app:navigationContentDescription="@string/navigation_drawer_open"
+            app:navigationIcon="@drawable/ic_menu" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include android:id="@+id/contenido_menu_principal" layout="@layout/content_menu_principal" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/crearAlertaVecinal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorAmarillo"
-        app:srcCompat="@android:drawable/ic_dialog_alert" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/alertaAutoridades"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorRojo"
-        app:srcCompat="@android:drawable/ic_lock_lock" />
-
+    <include
+        layout="@layout/content_menu_principal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

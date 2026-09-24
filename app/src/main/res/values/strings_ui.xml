@@ -10,4 +10,27 @@
     <string name="error_campo_requerido">Completá este campo</string>
     <string name="error_mail_invalido">El mail no es válido</string>
     <string name="error_clave_insegura">Usá entre 6 y 30 caracteres, con mayúscula, minúscula y número</string>
+    <string name="inicio_saludo">Hola, %1$s</string>
+    <string name="inicio_unirse">Unirme</string>
+    <string name="inicio_crear_grupo">Crear grupo</string>
+    <string name="inicio_emitir_alerta">Emitir alerta</string>
+    <string name="inicio_llamar">Llamar al 911</string>
+    <string name="inicio_accesos">Accesos rápidos</string>
+    <string name="inicio_alertas_grupo">Alertas del grupo</string>
+    <string name="inicio_alertas_familia">Familia</string>
+    <string name="inicio_notificaciones">Notificaciones</string>
+    <string name="inicio_ultimas_alertas">Últimas alertas</string>
+    <string name="inicio_sin_alertas">No hay alertas en tu grupo</string>
+    <string name="inicio_ver_todas">Ver todas</string>
+    <string name="inicio_sin_grupo">No estás en un grupo vecinal</string>
+    <string name="inicio_sin_grupo_detalle">Unite con el QR de un vecino o creá un grupo nuevo</string>
+    <string name="inicio_todo_tranquilo">Todo tranquilo</string>
+    <plurals name="inicio_alertas_activas">
+        <item quantity="one">%d alerta activa</item>
+        <item quantity="other">%d alertas activas</item>
+    </plurals>
+    <plurals name="inicio_vecinos">
+        <item quantity="one">%d vecino en el grupo</item>
+        <item quantity="other">%d vecinos en el grupo</item>
+    </plurals>
 </resources>

@@ -41,11 +41,12 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- singleTask: las pantallas viejas vuelven al inicio con startActivity y se apilaban copias -->
         <activity
             android:name=".Activitys.MenuPrincipalActivity"
-            android:clearTaskOnLaunch="true"
             android:label="@string/title_activity_menu_principal"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Savi" />
         <activity android:name=".Activitys.GrupoVecinalActivity" />
         <activity
             android:name=".Activitys.MapsActivity"
