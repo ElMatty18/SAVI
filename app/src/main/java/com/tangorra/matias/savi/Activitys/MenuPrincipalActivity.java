@@ -52,6 +52,7 @@ import com.tangorra.matias.savi.ui.alertas.DetalleAlertaActivity;
 import com.tangorra.matias.savi.ui.alertas.EmitirAlertaActivity;
 import com.tangorra.matias.savi.ui.comun.AlertasAdapter;
 import com.tangorra.matias.savi.ui.comun.PresentacionAlerta;
+import com.tangorra.matias.savi.ui.configuracion.RespuestaAutomaticaActivity;
 import com.tangorra.matias.savi.ui.familia.FamiliaActivity;
 import com.tangorra.matias.savi.ui.inicio.InicioViewModel;
 import com.tangorra.matias.savi.ui.notificaciones.NotificacionesActivity;
@@ -300,7 +301,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.familiares) {
             startActivity(new Intent(this, FamiliaActivity.class));
         } else if (id == R.id.configurarCuenta) {
-            startActivity(new Intent(this, ConfiguracionActivity.class));
+            startActivity(new Intent(this, RespuestaAutomaticaActivity.class));
         } else if (id == R.id.addNotificacion) {
             startActivity(new Intent(this, NuevaNotificacionActivity.class));
         } else if (id == R.id.informacion) {

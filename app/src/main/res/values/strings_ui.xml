@@ -179,4 +179,27 @@
     <string name="domicilios_cambiar">Cambiar</string>
     <string name="domicilios_quitar">Quitar domicilio</string>
     <string name="domicilios_error">No se pudo guardar el domicilio</string>
+    <string name="respuesta_titulo">Respuesta automática</string>
+    <string name="respuesta_explicacion">Mientras esté activa, SAVI responde por vos las alertas del barrio para que tus vecinos sepan tu situación.</string>
+    <string name="respuesta_desactivada">No hay respuesta automática activa</string>
+    <string name="respuesta_activa">Activa: %1$s</string>
+    <string name="respuesta_vencida">%1$s (ya no rige)</string>
+    <string name="respuesta_desactivar">Desactivar</string>
+    <string name="respuesta_activar">Activar respuesta automática</string>
+    <string name="respuesta_mensaje">Mensaje para tus vecinos</string>
+    <string name="respuesta_mensaje_ayuda">Opcional. Ej.: "Vuelvo el domingo, cualquier cosa llamen a mi hermana"</string>
+    <string name="respuesta_error">No se pudo guardar la respuesta automática</string>
+    <string name="modo_vacaciones">De vacaciones</string>
+    <string name="modo_vacaciones_desc">Entre dos fechas. Recibís los avisos igual.</string>
+    <string name="modo_vacaciones_fecha">Fechas del viaje</string>
+    <string name="modo_casa_sola">Casa sola hoy</string>
+    <string name="modo_casa_sola_desc">Un día puntual en que no hay nadie en casa.</string>
+    <string name="modo_casa_sola_fecha">Día</string>
+    <string name="modo_visitas">Visitas en casa</string>
+    <string name="modo_visitas_desc">Hay gente que no es del barrio en tu casa.</string>
+    <string name="modo_no_molestar">No molestar</string>
+    <string name="modo_no_molestar_desc">Los avisos llegan en silencio hasta la hora que elijas.</string>
+    <string name="modo_no_molestar_fecha">Hasta las</string>
+    <string name="modo_ignorar">Ignorar todo</string>
+    <string name="modo_ignorar_desc">No recibís avisos de alertas hasta desactivarla.</string>
 </resources>

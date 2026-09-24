@@ -78,6 +78,11 @@
             android:exported="false"
             android:theme="@style/Theme.Savi" />
         <activity
+            android:name=".ui.configuracion.RespuestaAutomaticaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Savi"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.perfil.PerfilActivity"
             android:exported="false"
             android:theme="@style/Theme.Savi"
@@ -117,9 +122,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <activity android:name=".Activitys.ConfiguracionActivity"
-            android:theme="@style/AppTheme.PopUpSavi.solid"/>
 
         <activity
             android:name=".View.PopUpInformacion"

@@ -47,7 +47,8 @@ public final class ProcesadorAlertas {
             context.startActivity(intentRespuesta(context, alerta, idGrupo, false));
         }
 
-        PoliticaAlertas.Aviso aviso = PoliticaAlertas.aviso(alerta, usuario);
+        PoliticaAlertas.Aviso aviso = PoliticaAlertas.ajustarPorConfiguracion(
+                PoliticaAlertas.aviso(alerta, usuario), usuario.getConfiguracion(), new java.util.Date());
         if (aviso != null) {
             Intent destino = respuestaAutomatica
                     ? new Intent(context, MenuPrincipalActivity.class)
@@ -89,7 +90,7 @@ public final class ProcesadorAlertas {
     }
 
     private static boolean tieneConfiguracionActiva(Usuario usuario) {
-        return usuario.getConfiguracion() != null && usuario.getConfiguracion().isConfiguracionActiva();
+        return usuario.getConfiguracion() != null && usuario.getConfiguracion().vigente(new java.util.Date());
     }
 
     private static void responderAutomaticamente(Usuario usuario, Alerta alerta, String idGrupo) {

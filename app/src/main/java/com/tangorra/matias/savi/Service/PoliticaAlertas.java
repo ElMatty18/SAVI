@@ -16,13 +16,31 @@ public final class PoliticaAlertas {
         public final String nivel;
         public final Modo modo;
 
-        Aviso(String nivel, Modo modo) {
+        public Aviso(String nivel, Modo modo) {
             this.nivel = nivel;
             this.modo = modo;
         }
     }
 
     private PoliticaAlertas() {
+    }
+
+    /**
+     * Con una respuesta automatica vigente el aviso cambia: "no molestar" lo hace silencioso
+     * e "ignorar todo" lo suprime. El resto de los modos avisa normalmente.
+     */
+    public static Aviso ajustarPorConfiguracion(Aviso aviso, com.tangorra.matias.savi.Entidades.Configuracion configuracion,
+                                                java.util.Date ahora) {
+        if (aviso == null || configuracion == null || !configuracion.vigente(ahora)) {
+            return aviso;
+        }
+        String modo = configuracion.getConfiguracionSeleccionada();
+        if (StringUtils.config_ignorarTodo.equals(modo)) {
+            return null;
+        } else if (StringUtils.config_noMolestar.equals(modo)) {
+            return new Aviso(aviso.nivel, Modo.SILENCIOSA);
+        }
+        return aviso;
     }
 
     /** Una alerta requiere respuesta del usuario si esta activa, no la creo el y todavia no la respondio. */
