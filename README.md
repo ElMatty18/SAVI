@@ -106,7 +106,28 @@ La migración es idempotente: se puede volver a correr sin efectos. Deja intacto
 - **Con la app cerrada**, `pushAlerta` y `pushNotificacion` (en `functions/`) mandan un mensaje de datos, y `SaviMessagingService` lo recibe.
 - Las dos vías terminan en `ProcesadorAlertas`. Las reglas de cada tipo de alerta viven en `PoliticaAlertas` y `PoliticaNotificaciones`, que tienen tests.
 
+## Estructura
+
+```
+app/src/main/java/com/tangorra/matias/savi/
+  ui/            Pantallas, una carpeta por area, cada una con su ViewModel
+    acceso/        login y registro (splash incluido)
+    inicio/        pantalla principal y menu lateral
+    alertas/       emitir, detalle en vivo e historial
+    familia/  grupo/  notificaciones/  perfil/  configuracion/  informacion/
+    comun/         piezas compartidas: lista de alertas, selector de ubicacion, dialogo QR
+  data/          Repositorios de Firebase, FirebaseLiveData y Sesion (usuario en vivo)
+  Service/       Servicios de escucha, FCM y reglas de negocio (PoliticaAlertas, ...)
+  Entidades/     Modelos guardados en la base
+  Utils/         Validaciones, fechas, notificaciones del sistema
+```
+
+- **Firebase se usa solo a través de los repositorios**, obtenidos con `FirebaseUtils.db()` y `storage()`. `FirebaseDatabase.getInstance()` puede devolver una instancia sin la configuración del emulador.
+- **Las reglas de negocio no dependen de Android** y tienen tests: `PoliticaAlertas`, `PoliticaNotificaciones`, `Configuracion.vigente()` y `Validaciones`.
+- **Tema Material 3** (`Theme.Savi`) con modo claro y oscuro; los textos de interfaz están en `res/values/strings_ui.xml`.
+
 ## Pendiente conocido
 
 - **Cualquier usuario autenticado puede leer los perfiles** (incluidos DNI y teléfonos), porque el grupo y la familia los necesitan. Una mejora posible es separar los datos sensibles en un nodo privado.
-- **Las pantallas acceden a Firebase directamente.** El siguiente paso de arquitectura es una capa de repositorio con ViewModel/LiveData y pasar los textos de `StringUtils` a `strings.xml`.
+- **`StringUtils` todavía tiene los tipos de alerta y los estados.** Son valores que se guardan en la base (por ejemplo `"Sospecha de robo"`), así que no pueden pasar a recursos traducibles sin migrar los datos.
+- **`SesionManager` (estático) convive con `Sesion`**, que lo mantiene sincronizado. Se puede eliminar migrando sus usos a `Sesion.usuario()`.
