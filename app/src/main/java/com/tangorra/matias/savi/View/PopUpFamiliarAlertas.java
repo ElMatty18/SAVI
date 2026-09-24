@@ -71,7 +71,7 @@ public class PopUpFamiliarAlertas extends AppCompatActivity {
 
         //consulta a base de datos
         if (usuario.getIdGrupo() != null){
-            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(usuario.getIdGrupo()).child("alertas");
+            dbGrupoVecinal = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo).child(usuario.getIdGrupo()).child("alertas");
             dbGrupoVecinal.addValueEventListener(alarmasFamiliar);
         }
     }

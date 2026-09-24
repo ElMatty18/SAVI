@@ -3,6 +3,12 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def localProps = new Properties()
+def localFile = rootProject.file('local.properties')
+if (localFile.exists()) {
+    localFile.withInputStream { localProps.load(it) }
+}
+
 android {
     namespace 'com.tangorra.matias.savi'
     compileSdk 35
@@ -16,17 +22,22 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // La key de Maps se lee de local.properties (MAPS_API_KEY=...) o de la variable de entorno.
-        def localProps = new Properties()
-        def localFile = rootProject.file('local.properties')
-        if (localFile.exists()) {
-            localFile.withInputStream { localProps.load(it) }
-        }
         manifestPlaceholders = [
                 mapsApiKey: localProps.getProperty('MAPS_API_KEY', System.getenv('MAPS_API_KEY') ?: '')
         ]
+        buildConfigField 'boolean', 'USAR_EMULADOR', 'false'
     }
 
     buildTypes {
+        // Igual a debug pero contra el emulador local de Firebase (cd tools && npm run emulador).
+        // Se instala como una app aparte ("SAVI emu") para no mezclarla con la que usa produccion.
+        emulador {
+            initWith debug
+            applicationIdSuffix ".emu"
+            versionNameSuffix "-emu"
+            matchingFallbacks = ['debug']
+            buildConfigField 'boolean', 'USAR_EMULADOR', 'true'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

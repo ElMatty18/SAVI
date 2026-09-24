@@ -88,7 +88,7 @@ public class RespuestaAlertaActivity extends AppCompatActivity implements OnMapR
 
     private LocationListener locationListener = getLocationListener();
 
-    private StorageReference storageUsuarios = FirebaseStorage.getInstance().getReference();
+    private StorageReference storageUsuarios = FirebaseUtils.storage().getReference();
 
     private DatabaseReference dbGrupoVecinal;
 

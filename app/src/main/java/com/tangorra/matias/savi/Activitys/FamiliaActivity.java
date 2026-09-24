@@ -43,11 +43,11 @@ public class FamiliaActivity extends AppCompatActivity {
     private Button cancelar;
     private Button salirFamilia;
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener usuarioListener = getUsuarioListener();
     private ValueEventListener usuarioListenerFamiliar = getUsuarioListenerFamiliar();
 
-    private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
+    private DatabaseReference dbFamilias = FirebaseUtils.db().getReference(FirebaseUtils.dbFamilia);
     private ValueEventListener familiaListener = getFamiliaListener();
     private ValueEventListener familiaBorrarListener = getBorrarFamiliaListener();
 
@@ -221,7 +221,7 @@ public class FamiliaActivity extends AppCompatActivity {
                     agregarAFamilia(cambios, idFamilia, yo.getId());
                     yo.setIdFamilia(idFamilia);
                 }
-                FirebaseDatabase.getInstance().getReference().updateChildren(cambios);
+                FirebaseUtils.db().getReference().updateChildren(cambios);
 
                 cargarFamilia();
             }

@@ -40,7 +40,7 @@ public class SaviMessagingService extends FirebaseMessagingService {
             return;
         }
         usuario.setFcmToken(token);
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario)
+        FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario)
                 .child(usuario.getId()).child("fcmToken").setValue(token);
     }
 
@@ -74,7 +74,7 @@ public class SaviMessagingService extends FirebaseMessagingService {
             if (idNotificacion == null) {
                 return;
             }
-            FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion).child(idNotificacion)
+            FirebaseUtils.db().getReference(FirebaseUtils.dbNotificacion).child(idNotificacion)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

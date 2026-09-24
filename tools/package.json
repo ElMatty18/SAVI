@@ -4,7 +4,8 @@
   "description": "Tests de reglas de Firebase y scripts de mantenimiento de la base",
   "scripts": {
     "test": "firebase emulators:exec --project demo-savi --config ../firebase.json --only database,auth \"node --test --test-concurrency=1 test/*.test.js\"",
-    "migrar": "node migracion/migrar-uid.js"
+    "migrar": "node migracion/migrar-uid.js",
+    "emulador": "firebase emulators:exec --project demo-savi --config ../firebase.json --only auth,database,storage --ui \"node emulador/seed.js && echo 'Emulador listo: http://localhost:4000 (Ctrl+C para terminar)' && node -e 'setInterval(() => {}, 1 << 30)'\""
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.2",

@@ -42,10 +42,10 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
     private ListView listAlarmas;
 
     private Context popAlarmasFamilia;
-    private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
+    private DatabaseReference dbFamilias = FirebaseUtils.db().getReference(FirebaseUtils.dbFamilia);
     private ValueEventListener familiaListener = getFamiliaListener();
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private ArrayList<Usuario> listFamiliares = new ArrayList<Usuario>();
     private ValueEventListener usuarioListenerFamiliar = getUsuarioListenerFamiliar();
 
@@ -169,7 +169,7 @@ public class PopUpAlertasFamilia extends AppCompatActivity {
                     listFamiliares.add(usuarioFamiliar);
 
                     if (usuarioFamiliar != null && usuarioFamiliar.getIdGrupo() != null){
-                        dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(usuarioFamiliar.getIdGrupo()).child("alertas");
+                        dbGrupoVecinal = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo).child(usuarioFamiliar.getIdGrupo()).child("alertas");
                         dbGrupoVecinal.addListenerForSingleValueEvent(alarmasFamiliar);
                     }
                 }

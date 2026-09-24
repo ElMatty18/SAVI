@@ -31,7 +31,7 @@ public class NotificacionService extends Service {
 
     private static final String TAG = "NotificacionService";
 
-    private final DatabaseReference dbNotificacion = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion);
+    private final DatabaseReference dbNotificacion = FirebaseUtils.db().getReference(FirebaseUtils.dbNotificacion);
     private final ChildEventListener listenerNotificaciones = getListenerNotificaciones();
     private boolean escuchando;
 
@@ -80,7 +80,7 @@ public class NotificacionService extends Service {
             return;
         }
         // Cada usuario marca solo su propia entrada: no hace falta transaccion
-        FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion).child(idNotificacion)
+        FirebaseUtils.db().getReference(FirebaseUtils.dbNotificacion).child(idNotificacion)
                 .child("vistoPor").child(idUsuario).setValue(idUsuario);
     }
 

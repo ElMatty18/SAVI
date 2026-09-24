@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "000000000000",
+    "firebase_url": "https://demo-savi-default-rtdb.firebaseio.com",
+    "project_id": "demo-savi",
+    "storage_bucket": "demo-savi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+        "android_client_info": {
+          "package_name": "com.tangorra.matias.savi.emu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "demo-api-key-solo-para-el-emulador"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

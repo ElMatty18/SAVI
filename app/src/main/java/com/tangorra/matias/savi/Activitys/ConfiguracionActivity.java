@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class ConfiguracionActivity extends AppCompatActivity {
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
 
     private Switch vacaciones;
     private Switch casaSola;

@@ -59,7 +59,7 @@ public class PopUpAlertasGrupo extends AppCompatActivity {
 
         //consulta a base de datos
         if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
-            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas");
+            dbGrupoVecinal = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId()).child("alertas");
 
             alertasListener = dbGrupoVecinal.addValueEventListener(new ValueEventListener() {
                 @Override

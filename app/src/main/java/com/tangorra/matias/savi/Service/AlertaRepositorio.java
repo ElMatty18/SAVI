@@ -16,7 +16,7 @@ public final class AlertaRepositorio {
     }
 
     public static DatabaseReference alertas(String idGrupo) {
-        return FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(idGrupo).child(FirebaseUtils.dbAlerta);
+        return FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo).child(idGrupo).child(FirebaseUtils.dbAlerta);
     }
 
     public static RespuestaAlerta nuevaRespuesta(Usuario usuario, String idAlerta) {

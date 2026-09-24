@@ -57,7 +57,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     private static final int GALERY_INTENT=1;
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private StorageReference storageUsuarios;
 
     private TextView mDisplayDate;
@@ -100,7 +100,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         cargarDatosUsuario();
 
-        storageUsuarios = FirebaseStorage.getInstance().getReference();
+        storageUsuarios = FirebaseUtils.storage().getReference();
 
         fotoCasa.setOnClickListener(new View.OnClickListener() {
             @Override

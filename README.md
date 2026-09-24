@@ -36,6 +36,26 @@ scripts/run.sh --headless        # igual, sin ventana
 
 También se puede abrir la carpeta en Android Studio y ejecutar la configuración `app`.
 
+### Probar sin tocar producción
+
+La variante **`emulador`** se instala como una app aparte, "SAVI emu", y usa los emuladores locales de Firebase con datos de demo. Aplica las mismas reglas de seguridad que producción.
+
+```bash
+cd tools && npm ci && npm run emulador   # terminal 1: Auth + Database + Storage, UI en http://localhost:4000
+scripts/run.sh --emulador                # terminal 2: instala y abre SAVI emu
+```
+
+Usuarios de demo, todos con clave `Demo1234`:
+
+| Usuario | Grupo | Familia |
+|---|---|---|
+| `ana@demo.com` | Barrio Demo | con Beto |
+| `beto@demo.com` | Barrio Demo | con Ana |
+| `caro@demo.com` | Barrio Demo | sin familia |
+| `dani@demo.com` | sin grupo | sin familia |
+
+Los datos se reinician cada vez que se levanta el emulador.
+
 ## Firebase
 
 La configuración está en `firebase.json`:

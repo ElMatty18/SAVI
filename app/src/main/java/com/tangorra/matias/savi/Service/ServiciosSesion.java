@@ -34,7 +34,7 @@ public final class ServiciosSesion {
         context.stopService(new Intent(context, NotificacionService.class));
         if (SesionManager.haySesion()) {
             // El dispositivo deja de recibir push para este usuario
-            FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario)
+            FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario)
                     .child(SesionManager.getUsuario().getId()).child("fcmToken").removeValue();
         }
     }

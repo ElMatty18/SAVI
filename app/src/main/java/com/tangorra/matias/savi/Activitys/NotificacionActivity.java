@@ -58,7 +58,7 @@ public class NotificacionActivity extends AppCompatActivity implements OnMapRead
     private Button crearNotificacion;
     private Button cancelar;
 
-    private DatabaseReference dbNotificacion = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion);
+    private DatabaseReference dbNotificacion = FirebaseUtils.db().getReference(FirebaseUtils.dbNotificacion);
 
     private Notificacion notificacion;
 

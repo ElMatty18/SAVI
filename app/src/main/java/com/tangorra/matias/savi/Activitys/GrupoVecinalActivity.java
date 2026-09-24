@@ -61,8 +61,8 @@ public class GrupoVecinalActivity extends AppCompatActivity implements OnMapRead
     private Button crearGrupo;
     private Button cancelar;
 
-    private DatabaseReference dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbGrupoVecinal = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
 
 
     @Override

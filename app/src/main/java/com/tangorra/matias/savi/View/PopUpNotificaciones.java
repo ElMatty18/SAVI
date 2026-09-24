@@ -66,7 +66,7 @@ public class PopUpNotificaciones extends AppCompatActivity {
 
         popNotificaciones = this;
 
-        dbNotificaciones = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbNotificacion);
+        dbNotificaciones = FirebaseUtils.db().getReference(FirebaseUtils.dbNotificacion);
 
         notificacionesListener = dbNotificaciones.addValueEventListener(new ValueEventListener() {
             @Override

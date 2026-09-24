@@ -43,17 +43,17 @@ public class AdaptadorCombinado extends BaseExpandableListAdapter {
     private ArrayList<Alerta> listAlertas;
     private Map<Alerta, ArrayList<Alerta>> mapChild;
 
-    private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
+    private DatabaseReference dbGrupo = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo);
     private ValueEventListener grupoListener = getGrupoListener();
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener integrantesListener = getIntegrantesListener();
 
 
     private ValueEventListener domicilioListener = getDomicilioListener();
     private ValueEventListener domicilioAlternoListener = getDomicilioAlternoListener();
 
-    private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
+    private DatabaseReference dbFamilias = FirebaseUtils.db().getReference(FirebaseUtils.dbFamilia);
     private ValueEventListener familiarBorrarListener = getBorrarFamiliarListener();
 
     private Usuario usuarioSelecc = new Usuario();

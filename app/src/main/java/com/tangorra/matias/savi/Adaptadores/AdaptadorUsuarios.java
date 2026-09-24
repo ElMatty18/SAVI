@@ -43,14 +43,14 @@ public class AdaptadorUsuarios extends BaseAdapter {
 
     private StorageReference storageUsuarios;
 
-    private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
+    private DatabaseReference dbGrupo = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo);
     private ValueEventListener grupoListener = getGrupoListener();
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener domicilioListener = getDomicilioListener();
     private ValueEventListener domicilioAlternoListener = getDomicilioAlternoListener();
 
-    private DatabaseReference dbFamilias = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbFamilia);
+    private DatabaseReference dbFamilias = FirebaseUtils.db().getReference(FirebaseUtils.dbFamilia);
     private ValueEventListener familiarBorrarListener = getBorrarFamiliarListener();
 
 
@@ -84,7 +84,7 @@ public class AdaptadorUsuarios extends BaseAdapter {
         TextView titulo = convertView.findViewById(R.id.nombrePersona);
         TextView usuario = convertView.findViewById(R.id.descripcion);
 
-            storageUsuarios = FirebaseStorage.getInstance().getReference();
+            storageUsuarios = FirebaseUtils.storage().getReference();
 
             storageUsuarios.child("Fotos").child(usuarioSelecc.getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override

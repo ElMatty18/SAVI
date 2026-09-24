@@ -58,12 +58,12 @@ public class AlertaActivity extends AppCompatActivity {
     private String alarmaSeleccion;
 
     private DatabaseReference dbGrupoVecinal;
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener integrantesListener = getIntegrantesListener();
 
     private ArrayList<Usuario> listIntegrantes = new ArrayList<Usuario>();
 
-    private StorageReference storageUsuarios = FirebaseStorage.getInstance().getReference();
+    private StorageReference storageUsuarios = FirebaseUtils.storage().getReference();
     private ImageView[] usuariosImages;
     private String[] usuariosNames;
 
@@ -86,7 +86,7 @@ public class AlertaActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         if (SesionManager.getGrupo() != null && SesionManager.getGrupo().getId() != null){
-            dbGrupoVecinal = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
+            dbGrupoVecinal = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo).child(SesionManager.getGrupo().getId());
             recuperarIntegrantesGrupo();
         }
 

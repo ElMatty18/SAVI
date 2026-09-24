@@ -50,11 +50,11 @@ public class AccesoActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
     private ValueEventListener usuarioListener = getUsuarioListener();
     private ValueEventListener integrantesListener = getIntegrantesListener();
 
-    private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
+    private DatabaseReference dbGrupo = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo);
     private ValueEventListener grupoListener = getGrupoListener();
 
     private Usuario usuario = new Usuario();

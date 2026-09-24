@@ -76,8 +76,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
 
     private StorageReference storageUsuarios;
 
-    private DatabaseReference dbUsuarios = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbUsuario);
-    private DatabaseReference dbGrupo = FirebaseDatabase.getInstance().getReference(FirebaseUtils.dbGrupo);
+    private DatabaseReference dbUsuarios = FirebaseUtils.db().getReference(FirebaseUtils.dbUsuario);
+    private DatabaseReference dbGrupo = FirebaseUtils.db().getReference(FirebaseUtils.dbGrupo);
     private ValueEventListener grupoListener = getGrupoListener();
 
     private Grupo grupo = new Grupo();
@@ -135,7 +135,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements Navigati
     private void cargarImagenPerfil() {
 
         if (SesionManager.getUsuario() != null && SesionManager.getUsuario().getId() != null){
-            storageUsuarios = FirebaseStorage.getInstance().getReference();
+            storageUsuarios = FirebaseUtils.storage().getReference();
 
             storageUsuarios.child("Fotos").child(SesionManager.getUsuario().getId()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
