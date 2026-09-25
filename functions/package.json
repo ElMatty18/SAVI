@@ -1,6 +1,7 @@
 {
   "name": "savi-functions",
   "description": "Push de alertas y notificaciones de SAVI",
+  "license": "MIT",
   "main": "index.js",
   "engines": {
     "node": "22"

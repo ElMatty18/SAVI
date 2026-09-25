@@ -131,3 +131,9 @@ app/src/main/java/com/tangorra/matias/savi/
 - **Cualquier usuario autenticado puede leer los perfiles** (incluidos DNI y teléfonos), porque el grupo y la familia los necesitan. Una mejora posible es separar los datos sensibles en un nodo privado.
 - **`StringUtils` todavía tiene los tipos de alerta y los estados.** Son valores que se guardan en la base (por ejemplo `"Sospecha de robo"`), así que no pueden pasar a recursos traducibles sin migrar los datos.
 - **`SesionManager` (estático) convive con `Sesion`**, que lo mantiene sincronizado. Se puede eliminar migrando sus usos a `Sesion.usuario()`.
+
+## Licencia
+
+[MIT](LICENSE) © 2019-2026 Jesús Matías Ezequiel Tangorra.
+
+Los íconos de interfaz (`ic_*.xml`) son [Material Symbols](https://fonts.google.com/icons) de Google, con licencia Apache 2.0.
