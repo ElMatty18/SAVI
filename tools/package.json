@@ -2,6 +2,7 @@
   "name": "savi-tools",
   "private": true,
   "description": "Tests de reglas de Firebase y scripts de mantenimiento de la base",
+  "license": "MIT",
   "scripts": {
     "test": "firebase emulators:exec --project demo-savi --config ../firebase.json --only database,auth \"node --test --test-concurrency=1 test/*.test.js\"",
     "migrar": "node migracion/migrar-uid.js",
